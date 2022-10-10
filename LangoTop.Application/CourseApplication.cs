@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using _0_Framework.Application;
 using LangoTop.Application.Contract.Course;
-using LangoTop.Domain.CourseAgg;
-using LangoTop.Interfaces.CourseAgg;
+using LangoTop.Domain;
+using LangoTop.Interfaces;
 
 namespace LangoTop.Application
 {

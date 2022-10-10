@@ -3,8 +3,8 @@ using System.Linq;
 using _0_Framework.Application;
 using _0_Framework.Infrastructure;
 using LangoTop.Application.Contract.Course;
-using LangoTop.Domain.CourseAgg;
-using LangoTop.Interfaces.CourseAgg;
+using LangoTop.Domain;
+using LangoTop.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace LangoTop.Infrastructure.Repository
@@ -45,13 +45,13 @@ namespace LangoTop.Infrastructure.Repository
 
         public List<CourseViewModel> GetCourses()
         {
-            return _context.Courses.Include(x => x.CourseCategory) /*.Include(x => x.Teacher)*/.Select(x =>
+            return _context.Courses.Include(x => x.CourseCategory).Include(x => x.Teacher).Select(x =>
                 new CourseViewModel
                 {
                     Id = x.Id,
                     PageTitle = x.PageTitle,
                     TeacherId = x.TeacherId,
-                    //Teacher = x.Teacher.Fullname,
+                    Teacher = x.Teacher.Fullname,
                     Title = x.Title,
                     Price = x.Price,
                     Level = x.Level,
@@ -60,20 +60,21 @@ namespace LangoTop.Infrastructure.Repository
                     IsRemoved = x.IsRemoved,
                     CourseCategory = x.CourseCategory.Name,
                     CreationDate = x.CreationDate.ToFarsi(),
-                    ShortLink = x.ShortLink
+                    ShortLink = x.ShortLink,
+                    PictureSmall = x.PictureSmall
                 }).OrderByDescending(x => x.Id).ToList();
         }
 
         public List<CourseViewModel> Search(CourseSearchModel searchModel)
         {
-            var query = _context.Courses.Include(x => x.CourseCategory) /*.Include(x => x.Teacher)*/.Select(x =>
+            var query = _context.Courses.Include(x => x.CourseCategory).Include(x => x.Teacher).Select(x =>
                 new CourseViewModel
                 {
                     Id = x.Id,
                     Title = x.Title,
                     PageTitle = x.PageTitle,
                     TeacherId = x.TeacherId,
-                    //Teacher = x.Teacher.Fullname,
+                    Teacher = x.Teacher.Fullname,
                     Price = x.Price,
                     Level = x.Level,
                     Picture = x.Picture,
@@ -81,7 +82,8 @@ namespace LangoTop.Infrastructure.Repository
                     IsRemoved = x.IsRemoved,
                     CourseCategory = x.CourseCategory.Name,
                     CreationDate = x.CreationDate.ToFarsi(),
-                    ShortLink = x.ShortLink
+                    ShortLink = x.ShortLink,
+                    PictureSmall = x.PictureSmall
                 });
 
             if (!string.IsNullOrWhiteSpace(searchModel.Title))

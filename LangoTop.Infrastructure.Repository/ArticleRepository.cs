@@ -3,8 +3,8 @@ using System.Linq;
 using _0_Framework.Application;
 using _0_Framework.Infrastructure;
 using LangoTop.Application.Contract.Article;
-using LangoTop.Domain.ArticleAgg;
-using LangoTop.Interfaces.ArticleAgg;
+using LangoTop.Domain;
+using LangoTop.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace LangoTop.Infrastructure.Repository
@@ -41,14 +41,14 @@ namespace LangoTop.Infrastructure.Repository
 
         public List<ArticleViewModel> GetArticles()
         {
-            return _context.Articles.Include(x => x.ArticleCategory) /*.Include(x => x.Author)*/.Select(x =>
+            return _context.Articles.Include(x => x.ArticleCategory).Include(x => x.Author).Select(x =>
                 new ArticleViewModel
                 {
                     Id = x.Id,
                     Title = x.Title,
                     PageTitle = x.PageTitle,
                     AuthorId = x.AuthorId,
-                    //Author = x.Author.Fullname,
+                    Author = x.Author.Fullname,
                     Picture = x.Picture,
                     PictureSmall = x.PictureSmall,
                     ShortDescription = x.ShortDescription,
@@ -62,14 +62,14 @@ namespace LangoTop.Infrastructure.Repository
 
         public List<ArticleViewModel> Search(ArticleSearchModel searchModel)
         {
-            var query = _context.Articles.Include(x => x.ArticleCategory) /*.Include(x => x.Author)*/.Select(x =>
+            var query = _context.Articles.Include(x => x.ArticleCategory).Include(x => x.Author).Select(x =>
                 new ArticleViewModel
                 {
                     Id = x.Id,
                     Title = x.Title,
                     PageTitle = x.PageTitle,
                     AuthorId = x.AuthorId,
-                    //Author = x.Author.Fullname,
+                    Author = x.Author.Fullname,
                     Picture = x.Picture,
                     PictureSmall = x.PictureSmall,
                     ShortDescription = x.ShortDescription,

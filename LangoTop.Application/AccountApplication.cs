@@ -2,8 +2,8 @@
 using _0_Framework.Application;
 using _0_Framework.Application.Email;
 using LangoTop.Application.Contract.Account;
-using LangoTop.Domain.AccountAgg;
-using LangoTop.Interfaces.AccountAgg;
+using LangoTop.Domain;
+using LangoTop.Interfaces;
 
 namespace LangoTop.Application
 {

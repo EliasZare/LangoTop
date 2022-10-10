@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>_01_Query</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Contracts\Course\" />
+    <Folder Include="Query\" />
+  </ItemGroup>
+
+</Project>

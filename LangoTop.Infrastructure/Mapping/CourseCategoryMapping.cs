@@ -1,4 +1,4 @@
-﻿using LangoTop.Domain.CourseCategoryAgg;
+﻿using LangoTop.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

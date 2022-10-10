@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using _0_Framework.Application;
 using LangoTop.Application.Contract.DiscountCode;
-using LangoTop.Domain.DiscountCodeAgg;
-using LangoTop.Interfaces.DiscountCodeAgg;
+using LangoTop.Domain;
+using LangoTop.Interfaces;
 
 namespace LangoTop.Application
 {

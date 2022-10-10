@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using _0_Framework.Application;
 using LangoTop.Application.Contract.CourseCategory;
-using LangoTop.Domain.CourseCategoryAgg;
-using LangoTop.Interfaces.CourseCategoryAgg;
+using LangoTop.Domain;
+using LangoTop.Interfaces;
 
 namespace LangoTop.Application
 {
-    internal class CourseCategoryApplication : ICourseCategoryApplication
+    public class CourseCategoryApplication : ICourseCategoryApplication
     {
         private readonly ICourseCategoryRepository _courseCategoryRepository;
         private readonly IFileUploader _fileUploader;

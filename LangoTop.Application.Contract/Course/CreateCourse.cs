@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _0_Framework.Domain;
+using LangoTop.Application.Contract.Account;
 using LangoTop.Application.Contract.CourseCategory;
 using Microsoft.AspNetCore.Http;
 
@@ -26,5 +27,6 @@ namespace LangoTop.Application.Contract.Course
         public string Slug { get; set; }
         public string ShortLink { get; set; }
         public List<CourseCategoryViewModel> CourseCategories { get; set; }
+        public List<AccountViewModel> Teachers { get; set; }
     }
 }

@@ -3,8 +3,8 @@ using System.Linq;
 using _0_Framework.Application;
 using _0_Framework.Infrastructure;
 using LangoTop.Application.Contract.CustomerDiscount;
-using LangoTop.Domain.CustomerDiscountAgg;
-using LangoTop.Interfaces.CustomerDiscountAgg;
+using LangoTop.Domain;
+using LangoTop.Interfaces;
 
 namespace LangoTop.Infrastructure.Repository
 {

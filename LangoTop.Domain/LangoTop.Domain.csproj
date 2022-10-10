@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\0_Framework\0_Framework.csproj" />
-    <ProjectReference Include="..\LangoTop.Application.Contract\LangoTop.Application.Contract.csproj" />
   </ItemGroup>
 
 </Project>

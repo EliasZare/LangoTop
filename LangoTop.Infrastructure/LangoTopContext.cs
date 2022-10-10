@@ -1,10 +1,5 @@
-﻿using LangoTop.Domain.AccountAgg;
-using LangoTop.Domain.ArticleAgg;
-using LangoTop.Domain.ArticleCategoryAgg;
-using LangoTop.Domain.CourseAgg;
-using LangoTop.Domain.CourseCategoryAgg;
-using LangoTop.Domain.CustomerDiscountAgg;
-using LangoTop.Domain.DiscountCodeAgg;
+﻿using LangoTop.Domain;
+using LangoTop.Infrastructure.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace LangoTop.Infrastructure
@@ -18,6 +13,9 @@ namespace LangoTop.Infrastructure
         public DbSet<Account> Accounts { get; set; }
         public DbSet<CustomerDiscount> CustomerDiscounts { get; set; }
         public DbSet<DiscountCode> DiscountCodes { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Section> Sections { get; set; }
+        public DbSet<Part> Parts { get; set; }
 
         public LangoTopContext(DbContextOptions<LangoTopContext> options) : base(options)
         {
@@ -25,6 +23,8 @@ namespace LangoTop.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var assembly = typeof(AccountMapping).Assembly;
+            modelBuilder.ApplyConfigurationsFromAssembly(assembly);
             base.OnModelCreating(modelBuilder);
         }
     }

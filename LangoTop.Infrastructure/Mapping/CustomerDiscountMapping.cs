@@ -1,4 +1,4 @@
-﻿using LangoTop.Domain.CustomerDiscountAgg;
+﻿using LangoTop.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
