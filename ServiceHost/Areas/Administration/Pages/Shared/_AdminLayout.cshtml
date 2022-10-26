@@ -228,8 +228,12 @@
                     </a>
                 </li>
                 @*@if (authHelper.CurrentAccountRole() == Roles.Administrator)
-                        {*@
-               
+        {*@
+                <li>
+                    <a asp-page="/Order/Index" class="waves-effect">
+                        <i class="md md-message"></i><span> فاکتور ها </span>
+                    </a>
+                </li>
                 <li class="has_sub">
                     <a class="waves-effect">
                         <i class="md md-add-shopping-cart"></i><span> دوره ها </span>

@@ -156,7 +156,10 @@ a:focus {
     top: 0;
 }
 
-.page-title { margin-bottom: 24px; }
+.page-title {
+    margin-bottom: 15px;
+    margin-top: 20px;
+}
 
 .breadcrumb {
     background-color: transparent;

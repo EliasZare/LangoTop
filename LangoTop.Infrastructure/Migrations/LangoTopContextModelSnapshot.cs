@@ -27,7 +27,12 @@ namespace LangoTop.Infrastructure.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ActiveCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Biography")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
@@ -55,7 +60,11 @@ namespace LangoTop.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePhoto")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -63,6 +72,8 @@ namespace LangoTop.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Accounts");
                 });
@@ -462,6 +473,46 @@ namespace LangoTop.Infrastructure.Migrations
                     b.ToTable("DiscountCodes");
                 });
 
+            modelBuilder.Entity("LangoTop.Domain.Order", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("DiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsCanceled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("IssueTrackingNo")
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
+                    b.Property<double>("PayAmount")
+                        .HasColumnType("float");
+
+                    b.Property<long>("RefId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("TotalAmount")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("LangoTop.Domain.Part", b =>
                 {
                     b.Property<long>("Id")
@@ -496,6 +547,26 @@ namespace LangoTop.Infrastructure.Migrations
                     b.ToTable("Parts");
                 });
 
+            modelBuilder.Entity("LangoTop.Domain.Role", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("LangoTop.Domain.Section", b =>
                 {
                     b.Property<long>("Id")
@@ -522,6 +593,17 @@ namespace LangoTop.Infrastructure.Migrations
                     b.HasIndex("CourseId");
 
                     b.ToTable("Sections");
+                });
+
+            modelBuilder.Entity("LangoTop.Domain.Account", b =>
+                {
+                    b.HasOne("LangoTop.Domain.Role", "Role")
+                        .WithMany("Accounts")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("LangoTop.Domain.Article", b =>
@@ -573,6 +655,48 @@ namespace LangoTop.Infrastructure.Migrations
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("LangoTop.Domain.Order", b =>
+                {
+                    b.OwnsMany("LangoTop.Domain.OrderItem", "Items", b1 =>
+                        {
+                            b1.Property<long>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("bigint")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<int>("Count")
+                                .HasColumnType("int");
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<int>("DiscountRate")
+                                .HasColumnType("int");
+
+                            b1.Property<long>("OrderId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<long>("ProductId")
+                                .HasColumnType("bigint");
+
+                            b1.Property<double>("UnitPrice")
+                                .HasColumnType("float");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("OrderId");
+
+                            b1.ToTable("OrderItems");
+
+                            b1.WithOwner("Order")
+                                .HasForeignKey("OrderId");
+
+                            b1.Navigation("Order");
+                        });
+
+                    b.Navigation("Items");
+                });
+
             modelBuilder.Entity("LangoTop.Domain.Part", b =>
                 {
                     b.HasOne("LangoTop.Domain.Section", "Section")
@@ -582,6 +706,36 @@ namespace LangoTop.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Section");
+                });
+
+            modelBuilder.Entity("LangoTop.Domain.Role", b =>
+                {
+                    b.OwnsMany("LangoTop.Domain.Permission", "Permissions", b1 =>
+                        {
+                            b1.Property<long>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("bigint")
+                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<int>("Code")
+                                .HasColumnType("int");
+
+                            b1.Property<long>("RoleId")
+                                .HasColumnType("bigint");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("RoleId");
+
+                            b1.ToTable("RolePermissions");
+
+                            b1.WithOwner("Role")
+                                .HasForeignKey("RoleId");
+
+                            b1.Navigation("Role");
+                        });
+
+                    b.Navigation("Permissions");
                 });
 
             modelBuilder.Entity("LangoTop.Domain.Section", b =>
@@ -615,6 +769,11 @@ namespace LangoTop.Infrastructure.Migrations
             modelBuilder.Entity("LangoTop.Domain.CourseCategory", b =>
                 {
                     b.Navigation("Courses");
+                });
+
+            modelBuilder.Entity("LangoTop.Domain.Role", b =>
+                {
+                    b.Navigation("Accounts");
                 });
 
             modelBuilder.Entity("LangoTop.Domain.Section", b =>

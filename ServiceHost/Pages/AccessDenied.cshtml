@@ -1,0 +1,26 @@
+﻿@page
+@model ServiceHost.Pages.AccessDeniedModel
+@{
+    ViewData["Title"] = "خطا 404";
+    ViewData["Image"] = "Theme/img/Logo.png";
+    ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
+    ViewData["metaDescription"] = "خطای 404";
+    ViewData["Url"] = "AccessDenied";
+}
+<section class="error-wrap">
+    <div class="container">
+        <div class="row justify-content-center">
+						
+            <div class="col-lg-6 col-md-10">
+                <div class="text-center">
+								
+                    <img src="assets/img/404.png" class="img-fluid" alt="">
+                    <p>شله مدن اینجه؟</p>
+                    <a class="btn theme-bg text-white btn-md" asp-page="./Index">بازگشت به خانه</a>
+								
+                </div>
+            </div>
+						
+        </div>
+    </div>
+</section>

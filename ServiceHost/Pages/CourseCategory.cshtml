@@ -1,0 +1,136 @@
+﻿@page "{id}"
+@model ServiceHost.Pages.CourseCategoryModel
+@{
+    ViewData["Title"] = Model.CourseCategory.Name;
+    ViewData["Image"] = $"ProductPictures/{@Model.CourseCategory.Picture}";
+    ViewData["keywords"] = Model.CourseCategory.Keywords;
+    ViewData["metaDescription"] = Model.CourseCategory.MetaDescription;
+    ViewData["Url"] = $"Article/{Model.CourseCategory.Slug}";
+    ViewData["author"] = "Elyas Zare";
+}
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<div class="page-title" style="margin-top:20px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title font-2">@Model.CourseCategory.Name</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb p-0 bg-white">
+                            <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                            <li class="breadcrumb-item active theme-cl" aria-current="page">@Model.CourseCategory.Name</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="gray">
+    <div class="container">
+
+
+        <div class="row justify-content-center">
+
+            @foreach (var course in Model.CourseCategory.Courses)
+            {
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                    <div class="crs_grid">
+                        <div class="crs_grid_thumb">
+                            <a asp-page="./Course" asp-route-id="@course.Slug" class="crs_detail_link">
+                                <img src="~/Pictures/@course.PictureSmall" title="@course.PictureTitle" class="img-fluid rounded" alt="@course.PictureAlt" />
+                            </a>
+                            @if (course.HasDiscount)
+                            {
+                                <div class="crs_locked_ico">
+                                    <img src="~/Theme/img/giftIcon.gif" style="width: 30px; height: 30px" alt="تخفیف لنگوتاپ" />
+                                </div>
+                            }
+                        </div>
+                        <div class="crs_grid_caption">
+                            
+                            <div class="crs_title"><h4><a asp-page="./Course" asp-route-id="@course.Slug" class="crs_title_link">@course.Title</a></h4></div>
+                            <div class="crs_info_detail">
+                                <ul>
+                                    <li><i class="fa fa-signal text-warning"></i><span>@course.Level</span></li>
+                                    <li><i class="fa fa-clock text-danger"></i><span>@course.Time</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="crs_grid_foot">
+                            <div class="crs_flex">
+                                <div class="crs_fl_first">
+                                    <div class="crs_tutor">
+                                        <div class="crs_tutor_thumb"><a asp-page="./TeacherProfile" asp-route-id="@course.Teacher"><img src="~/Pictures/@course.TeacherProfile" class="img-fluid circle" alt="@course.Teacher" /></a></div><div class="crs_tutor_name"><a asp-page="./TeacherProfile" asp-route-id="@course.Teacher">@course.Teacher</a></div>
+                                    </div>
+                                </div>
+                                <div class="crs_fl_last">
+                                    @if (course.DoublePrice < 1)
+                                    {
+                                        <div class="crs_price">
+                                            <h4>
+                                                <span class="theme-cl">رایگان!</span>
+                                            </h4>
+                                        </div>
+                                   
+                                    }
+                                    else
+                                    {
+                                        @if (course.HasDiscount)
+                                        {
+                                            <div class="crs_price">
+                                                <h4>
+                                                    <span class="theme-cl">@course.PriceWithDiscount ت</span>
+                                                    <span class="old_prc" style="color: #4e6579; font-size: 15px; text-decoration: line-through; font-weight: 400;">@course.Price ت</span>
+                                                </h4>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="crs_price">
+                                                <h4>
+                                                    <span class="theme-cl">@course.Price ت</span>
+                                                </h4>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        <!-- Pagination -->
+        @*<div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <ul class="pagination p-center">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span class="ti-arrow-right"></span>
+                                <span class="sr-only">قبل</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#">18</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span class="ti-arrow-left"></span>
+                                <span class="sr-only">بعد</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>*@
+
+    </div>
+</section>

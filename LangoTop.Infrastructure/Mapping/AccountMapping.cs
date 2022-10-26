@@ -16,7 +16,7 @@ namespace LangoTop.Infrastructure.Mapping
             builder.Property(x => x.Mobile).IsRequired().HasMaxLength(30);
             builder.Property(x => x.Password).IsRequired();
             builder.Property(x => x.Username).IsRequired().HasMaxLength(100);
-
+            builder.Property(x => x.Biography).HasMaxLength(150);
 
             builder
                 .HasMany(x => x.Courses)
@@ -27,6 +27,10 @@ namespace LangoTop.Infrastructure.Mapping
                 .HasMany(x => x.Articles)
                 .WithOne(x => x.Author)
                 .HasForeignKey(x => x.AuthorId);
+
+            builder.HasOne(x => x.Role)
+                .WithMany(x => x.Accounts)
+                .HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

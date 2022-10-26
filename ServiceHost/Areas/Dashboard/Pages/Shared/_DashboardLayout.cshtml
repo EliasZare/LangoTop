@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
+
+    <title>@ViewData["Title"] | لنگوتاپ</title>
+    <link href="~/Theme/css/styles.css" rel="stylesheet">
+
+    <!--meta tags-->
+    <meta name="description" content="@ViewData[" metaDescription"]">
+    <meta name="author" content="@ViewData[" author"]">
+    <meta name="keywords" content="@ViewData[" keywords"]" />
+
+
+    <!--Open Graph meta tag-->
+    <meta property="og:title" content="@ViewData[" Title"] | لنگوتاپ" />
+    <meta property="og:type" content="video_lecture" />
+    <meta property="og:url" content="https://www.langotop.ir/@ViewData[" Url"]" />
+    <meta property="og:image" content="https://langotop.ir/@ViewData[" Image"]" />
+    <meta property="og:image:url" content="https://langotop.ir/@ViewData[" Image"]">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="700">
+    <meta property="og:image:height" content="500">
+    <meta property="og:image:alt" content="@ViewData[" Title"] | لنگوتاپ">
+    <meta property="og:site_name" content="آموزش زبان انگلیسی | لنگوتاپ" />
+    <meta property="og:description" content="@ViewData[" metaDescription"]" />
+    <meta property="og:locale" content="ir_FA">
+
+    <!--Twitter meta tag-->
+    <meta name="twitter:title" content="@ViewData[" Title"] | لنگوتاپ">
+    <meta name="twitter:description" content="@ViewData[" metaDescription"]">
+    <meta name="twitter:image" content="https://langotop.ir/@ViewData[" Image"]">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@@langotop.ir" />
+    <meta name="twitter:creator" content="لنگوتاپ" />
+
+
+    <!-- Custom CSS -->
+
+</head>
+
+<body dir="rtl">
+
+    <div id="main-wrapper">
+        
+        
+
+        @await Component.InvokeAsync("Menu")
+
+        @RenderBody()
+
+        @await Component.InvokeAsync("Footer")
+
+
+        <a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
+
+    </div>
+
+    <script src="~/Theme/js/jquery.min.js"></script>
+    <script src="~/Theme/js/popper.min.js"></script>
+    <script src="~/Theme/js/bootstrap.min.js"></script>
+    <script src="~/Theme/js/select2.min.js"></script>
+    <script src="~/Theme/js/slick.js"></script>
+    <script src="~/Theme/js/moment.min.js"></script>
+    <script src="~/Theme/js/daterangepicker.js"></script>
+    <script src="~/Theme/js/summernote.min.js"></script>
+    <script src="~/Theme/js/metisMenu.min.js"></script>
+    <script src="~/Theme/js/plugins.js"></script>
+    <script src="~/Theme/js/custom.js"></script>>
+<!-- Morris.js charts -->
+<script src="~/Theme/js/raphael.min.js"></script>
+<script src="~/Theme/js/morris.min.js"></script>
+		
+<!-- Custom Morrisjs JavaScript -->
+<script src="~/Theme/js/morris.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            updateCart();
+        });
+    </script>
+</body>
+
+</html>
+
+

@@ -1,0 +1,61 @@
+﻿@page
+@using _0_Framework.Application
+@model ServiceHost.Areas.Dashboard.Pages.IndexModel
+@inject IAuthHelper _authHelper
+@{
+    var accountInfo = _authHelper.CurrentAccountInfo();
+    bool isAuthenticated = _authHelper.IsAuthenticated();
+    ViewData["Title"] = "داشبورد";
+    ViewData["Image"] = "Theme/img/Logo.png";
+}
+
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<section class="gray pt-4">
+    <div class="container-fluid">
+
+        <div class="row">
+
+
+            @await Component.InvokeAsync("Navbar")
+
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 gray">
+                <div class="crs_trt_grid">
+                    <div class="dash_crs_cat_caption">
+                        <div class="dash_crs_cat_head">
+                            <h2>اطلاعات حساب کاربری</h2>
+                            <span>@accountInfo.Role</span>
+                        </div>
+                        <div class="dash_crs_cat_body">
+                            <ul>
+                                <li><span>@Model.Account.Fullname</span></li>
+                                <li>
+                                    @if (string.IsNullOrWhiteSpace(Model.Account.Mobile))
+                                    {
+                                        <span class="alert alert-danger">شماره تلفن شما ثبت نشده است.</span>
+
+                                    }
+                                    else
+                                    {
+                                <span>@Model.Account.Mobile</span>
+
+                                    }
+                                </li>
+                                <li><span>@Model.Account.Email</span></li>
+                                <li><span>@Model.Account.Username@@</span></li>
+                                <li><span>@Model.Account.Biography</span></li>
+                            </ul>
+                        </div>
+                        <div class="dash_crs_cat_bottom">
+                            <a asp-page="/EditProfile" class="btn full-width theme-bg-light theme-cl">ویرایش</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+

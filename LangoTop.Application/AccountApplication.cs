@@ -40,13 +40,16 @@ namespace LangoTop.Application
             var password = _passwordHasher.Hash(command.Password);
 
             var path = $"ProfilePhotos//{command.Fullname}";
-
-            var fileName = _fileUploader.Upload(command.ProfilePhoto, path);
+            var fileName = "";
+            if (command.ProfilePhoto != null)
+                fileName = _fileUploader.Upload(command.ProfilePhoto, path);
+            else
+                fileName = "User.png";
 
             var activeCode = AccountCodeGenerator.Generate();
 
             var account = new Account(command.Fullname, command.Username, command.Email, command.Mobile, password,
-                fileName, activeCode);
+                fileName, command.Biography, command.RoleId, activeCode);
 
             _accountRepository.Create(account);
             _accountRepository.SaveChanges();
@@ -69,10 +72,10 @@ namespace LangoTop.Application
                 return operation.Failed("جساب کاربری با این مشخصات وجود دارد. لطفا وارد شوید");
 
             var path = $"ProfilePhotos//{command.Fullname}";
-
             var fileName = _fileUploader.Upload(command.ProfilePhoto, path);
-            account.Edit(command.Fullname, command.Username, command.Email, command.Mobile, fileName,
-                command.ActiveCode);
+            account.Edit(command.Fullname, command.Username, command.Email, command.Mobile, fileName, command.Biography,
+                command.RoleId,
+                account.ActiveCode);
             _accountRepository.SaveChanges();
             return operation.Success();
         }
@@ -96,6 +99,39 @@ namespace LangoTop.Application
             return operation.Success();
         }
 
+        public OperationResult ChangePasswordByCode(ChangePassword command)
+        {
+            var operation = new OperationResult();
+            var account = _accountRepository.GetByCode(command.Code);
+
+            if (account == null)
+                return operation.Failed(ApplicationMessages.RecordNotFound);
+
+            if (command.Password != command.RePassword)
+                return operation.Failed(ApplicationMessages.PasswordNotMatch);
+
+            //Hashing Password
+            var password = _passwordHasher.Hash(command.Password);
+
+            account.ChangePassword(password);
+            _accountRepository.SaveChanges();
+            return operation.Success();
+        }
+
+        public OperationResult VerifyEmail(string email)
+        {
+            var operation = new OperationResult();
+            var account = _accountRepository.GetBy(email);
+
+            if (account == null)
+                return operation.Failed(ApplicationMessages.RecordNotFound);
+
+            _emailService.SendEmail(email, "فراموشی رمز عبور", $"کاربر گرامی با ایتفاده از لینک زیر می توانید رمز عبور خود را در لنگوتاپ تغییر دهید. \n https://langotop.ir/ChangePassword/{account.ActiveCode} ");
+
+            return operation.Success(
+                "ایمیلی حاوی یک لینک به ایمیل شما ارسال شده است از طریق لینک وارد شوید و اقدام به تغییر رمز عبور خود فرمایید.");
+        }
+
         public OperationResult Login(Login command)
         {
             var operation = new OperationResult();
@@ -110,7 +146,7 @@ namespace LangoTop.Application
                 return operation.Failed(ApplicationMessages.WrongUserPass);
 
             var authViewModel = new AuthViewModel(account.Id, 1, account.Fullname, account.Username, account.Mobile,
-                account.Email, new List<int>());
+                account.Email, account.Biography, new List<int>(), account.ProfilePhoto);
             _authHelper.Signin(authViewModel);
             return operation.Success();
         }

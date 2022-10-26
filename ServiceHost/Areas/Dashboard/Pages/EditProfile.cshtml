@@ -1,0 +1,98 @@
+﻿@page
+@using _0_Framework.Application
+@model ServiceHost.Areas.Dashboard.Pages.EditProfileModel
+@inject IAuthHelper _authHelper
+@{
+    var accountInfo = _authHelper.CurrentAccountInfo();
+    bool isAuthenticated = _authHelper.IsAuthenticated();
+    ViewData["Title"] = "ویرایش حساب کاربری";
+    ViewData["Image"] = "Theme/img/Logo.png";
+}
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<section class="gray pt-4">
+    <div class="container-fluid">
+
+        <div class="row">
+
+            @await Component.InvokeAsync("Navbar")
+
+            <div class="col-lg-9 col-md-9 col-sm-12">
+
+                <!-- Row -->
+                <div class="row justify-content-between">
+                    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+                        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+                            <div class="arion">
+                                <nav class="transparent">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a asp-page="/Index">خانه</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">حساب کاربری</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Row -->
+
+                <div class="row">
+                    <div class="col-xl-7 col-lg-6 col-md-12">
+                        <div class="dashboard_wrap">
+
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 mb-4">
+                                    <h6 class="m-0">اطلاعات حساب کاربری</h6>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center">
+                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                    <form method="post">
+                                        <div class="form-group smalls">
+                                            <label>پروفایل</label>
+                                            <input class="form-control form-control-sm" id="formFileSm" type="file"  asp-for="@Model.EditAccount.ProfilePhoto" accept="image/*"/>
+                                        </div>
+                                        <div class="form-group smalls">
+                                            <label>نام*</label>
+                                            <input type="text" name="Fullname" class="form-control" asp-for="@Model.EditAccount.Fullname"/>
+                                        </div>
+
+                                        <div class="form-group smalls">
+                                            <label>ایمیل</label>
+                                            <input type="email" name="email" class="form-control" asp-for="@Model.EditAccount.Email"/>
+                                        </div>
+                                        <div class="form-group smalls">
+                                            <label>شماره تماس</label>
+                                            <input type="text" name="Mobile" class="form-control" asp-for="@Model.EditAccount.Mobile"/>
+                                        </div>
+
+                                        <div class="form-group smalls">
+                                            <label>نام کاربری</label>
+                                            <input type="text" name="username" class="form-control" asp-for="@Model.EditAccount.Username"/>
+                                        </div>
+                                        <div class="form-group smalls">
+                                            <label>بیوگرافی</label>
+                                            <textarea class="form-control" name="biography" aria-valuetext="@Model.EditAccount.Biography" >@Model.EditAccount.Biography</textarea>
+                                        </div>
+                                        <input type="hidden" name="Id" value="@accountInfo.Id"/>
+                                        <div class="form-group smalls">
+                                            <button class="btn theme-bg text-white" type="submit">ذخیره</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,54 @@
+﻿@using _01_Query.Contracts.Article
+@model List<ArticleQueryModel>
+
+<section class="min">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-8">
+                <div class="sec-heading center">
+                    <h3 class="font-2">آخرین اخبار و <span class="theme-cl">مقالات</span></h3>
+                    <p>با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+
+            @foreach (var article in Model)
+            {
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                    <div class="blg_grid_box">
+                        <div class="blg_grid_thumb">
+                            <a asp-page="./Article" asp-route-id="@article.Slug"><img src="~/Pictures/@article.PictureSmall" title="@article.PictureTitle" class="img-fluid" alt="@article.PictureAlt" /></a>
+                        </div>
+                        <div class="blg_grid_caption">
+                            <div class="blg_tag"><span>@article.CategoryName</span></div>
+                            <div class="blg_title"><h3><a asp-page="./Article" asp-route-id="@article.Slug">@article.Title</a></h3></div>
+                            <div class="blg_desc"><p>@article.ShortDescription</p></div>
+                        </div>
+                        <div class="crs_grid_foot">
+                            <div class="crs_flex">
+                                <div class="crs_fl_first">
+                                    <div class="crs_tutor">
+                                        <div class="crs_tutor_thumb"><a asp-page="./TeacherProfile" asp-route-id="@article.AuthorName"><img src="~/Pictures/@article.AuthorProfile" class="img-fluid circle" alt="@article.AuthorName" /></a></div><div class="crs_tutor_name"><a asp-page="./TeacherProfile" asp-route-id="@article.AuthorName">@article.AuthorName</a></div>
+                                    </div>
+                                </div>
+                                <div class="crs_fl_last">
+                                    <div class="foot_list_info">
+                                        <ul>
+                                            <li><div class="elsio_ic"><i class="fa fa-clock text-warning"></i></div><div class="elsio_tx">@article.PublishDate</div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+</section>
+<div class="clearfix"></div>

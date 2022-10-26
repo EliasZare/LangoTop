@@ -5,5 +5,6 @@
         public long Id { get; set; }
         public string Password { get; set; }
         public string RePassword { get; set; }
+        public string Code { get; set; }
     }
 }

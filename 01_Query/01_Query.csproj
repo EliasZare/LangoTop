@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Course\" />
-    <Folder Include="Query\" />
+    <ProjectReference Include="..\LangoTop.Application.Contract\LangoTop.Application.Contract.csproj" />
+    <ProjectReference Include="..\LangoTop.Infrastructure\LangoTop.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

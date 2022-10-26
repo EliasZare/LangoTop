@@ -1,17 +1,22 @@
-﻿@*@model List<01_Query.Contracts.Product.ProductQueryModel>*@
-<!-- Start Navigation -->
+﻿@using _0_Framework.Application
+@model _01_Query.Contracts.MenuQueryModel
+@inject IAuthHelper _authHelper
+@{
+    var accountInfo = _authHelper.CurrentAccountInfo();
+    bool isAuthenticated = _authHelper.IsAuthenticated();
+}
 <div class="header header-transparent change-logo">
     <div class="container">
         <nav id="navigation" class="navigation navigation-landscape">
             <div class="nav-header">
                 <a class="nav-brand" href="#">
-                    <img src="~/Theme/img/logo-light.png" class="logo" alt="" />
+                    <img src="~/Theme/img/LangoTopLogoSite4Artboard 1.png" class="logo" alt=" لنگو تاپ" />
                 </a>
                 <div class="nav-toggle"></div>
                 <div class="mobile_nav">
                     <ul>
                         <li>
-                            <a href="javascript:void(0);" data-toggle="modal" data-target="#login" class="crs_yuo12 w-auto text-white theme-bg">
+                            <a asp-page="./Login" class="crs_yuo12 w-auto text-white theme-bg">
                                 <span class="embos_45"><i class="fas fa-sign-in-alt ml-1 rotate-img"></i>ورود</span>
                             </a>
                         </li>
@@ -22,98 +27,81 @@
                 <ul class="nav-menu">
 
                     <li class="active">
-                        <a href="#">خانه<span class="submenu-indicator"></span></a>
-                        <ul class="nav-dropdown nav-submenu">
-                            <li><a href="index.html">خانه 1</a></li>
-                            <li><a href="home-2.html">خانه 2</a></li>
-                            <li><a href="home-3.html">خانه 3</a></li>
-                            <li><a href="home-4.html">خانه 4</a></li>
-                            <li><a href="home-5.html">خانه 5</a></li>
-                            <li><a href="home-6.html">خانه 6</a></li>
-                            <li><a href="home-7.html">خانه 7</a></li>
-                        </ul>
+                        <a asp-page="./Index">خانه</a>
                     </li>
 
                     <li>
-                        <a href="#">دوره های آموزشی<span class="submenu-indicator"></span></a>
+                        <a asp-page="./Courses">دوره های آموزشی<span class="submenu-indicator"></span></a>
                         <ul class="nav-dropdown nav-submenu">
-                            <li>
-                                <a href="#">نمای شبکه ای<span class="submenu-indicator"></span></a>
-                                <ul class="nav-dropdown nav-submenu">
-                                    <li><a href="grid-layout-with-sidebar.html">نسخه 1</a></li>
-                                    <li><a href="grid-layout-with-sidebar-2.html">نسخه 2</a></li>
-                                    <li><a href="grid-layout-with-sidebar-3.html">نسخه 3</a></li>
-                                    <li><a href="grid-layout-with-sidebar-4.html">نسخه 4</a></li>
-                                    <li><a href="grid-layout-with-sidebar-5.html">نسخه 5</a></li>
-                                    <li><a href="grid-layout-full.html">نمای تمام صفحه نسخه 1</a></li>
-                                    <li><a href="grid-layout-full-2.html">نمای تمام صفحه نسخه 2</a></li>
-                                    <li><a href="grid-layout-full-3.html">نمای تمام صفحه نسخه 3</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">نمای لیستی<span class="submenu-indicator"></span></a>
-                                <ul class="nav-dropdown nav-submenu">
-                                    <li><a href="list-layout-with-sidebar.html">با سایدبار</a></li>
-                                    <li><a href="list-layout-with-full.html">تمام صفحه</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">جزئیات دوره<span class="submenu-indicator"></span></a>
-                                <ul class="nav-dropdown nav-submenu">
-                                    <li><a href="course-detail.html">نسخه 1</a></li>
-                                    <li><a href="course-detail-2.html">نسخه 2</a></li>
-                                    <li><a href="course-detail-3.html">نسخه 3</a></li>
-                                    <li><a href="course-detail-4.html">نسخه 4</a></li>
-                                </ul>
-                            </li>
-
-                            <li><a href="explore-category.html">انتخاب دسته بندی</a></li>
-                            <li><a href="find-instructor.html">لیست مدرسین</a></li>
-                            <li><a href="instructor-detail.html">جزئیات مدرس</a></li>
+                            @foreach (var item in Model.CourseCategories)
+                            {
+                                <li><a asp-page="/CourseCategory" asp-route-id="@item.Slug">@item.Name</a></li>
+                            }
                         </ul>
                     </li>
-
-                    <li>
-                        <a href="#">صفحات<span class="submenu-indicator"></span></a>
-                        <ul class="nav-dropdown nav-submenu">
-                            <li>
-                                <a href="#">فروشگاه<span class="submenu-indicator"></span></a>
-                                <ul class="nav-dropdown nav-submenu">
-                                    <li><a href="shop-with-sidebar.html">سایدبار راست</a></li>
-                                    <li><a href="shop-with-left-sidebar.html">سایدبار چپ</a></li>
-                                    <li><a href="list-shop-with-sidebar.html">نمای لیستی با سایدبار</a></li>
-                                    <li><a href="wishlist.html">موردعلاقه ها</a></li>
-                                    <li><a href="checkout.html">تسویه حساب</a></li>
-                                    <li><a href="product-detail.html">جزئیات محصول</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="about.html">درباره ما</a></li>
-                            <li><a href="contact.html">تماس با ما</a></li>
-                            <li><a href="blogs.html">لیست وبلاگ</a></li>
-                            <li><a href="pricing.html">قیمت گذاری</a></li>
-                            <li><a href="404.html">صفحه 404</a></li>
-                            <li><a href="component.html">المان ها</a></li>
-                            <li><a href="faq.html">سوالات متداول</a></li>
-                            <li><a href="login.html">ورود</a></li>
-                            <li><a href="signup.html">ثبت نام</a></li>
-                            <li><a href="forgot.html">فراوشی رمز عبور</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="dashboard.html">حساب کاربری</a></li>
+                    <li><a asp-page="./Blog">بلاگ</a></li>
+                    <li><a asp-page="./AboutUs">درباره ما</a></li>
+                    <li><a >قوانین سایت</a></li>
+                    <li><a >تدریس در لنگوتاپ</a></li>
 
                 </ul>
 
                 <ul class="nav-menu nav-menu-social align-to-left">
 
-                    <li>
-                        <a href="#" class="alio_green" data-toggle="modal" data-target="#login">
-                            <i class="fas fa-sign-in-alt ml-1 rotate-img"></i><span class="dn-lg">ورود</span>
-                        </a>
-                    </li>
-                    <li class="add-listing theme-bg">
-                        <a href="signup.html" class="text-white">ثبت نام</a>
-                    </li>
+                    @if (isAuthenticated)
+                    {
+                        <ul class="nav-menu nav-menu-social align-to-left">
+                            <li class="account-drop">
+                                <a href="javascript:void(0);" class="crs_yuo12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="embos_45"><i class="fas fa-shopping-basket"></i><i class="embose_count" id="cart_items_count">0</i></span>
+                                </a>
+                                <div class="dropdown-menu pull-right animated flipInX">
+                                    <div class="drp_menu_headr bg-purple">
+                                        <h4>سبد خرید</h4>
+                                    </div>
+                                    <div class="ground-list ground-hover-list" >
+                                        <div id="cart_items_wrapper">
+
+                                        </div>
+                                        <div class="ground ground-list-single">
+                                            <a asp-page="/Checkout" class="btn theme-bg text-white full-width">مشاهده سبد</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <li>
+                                <div class="btn-group account-drop">
+                                    <a href="javascript:void(0);" class="crs_yuo12 btn btn-order-by-filt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="~/Pictures/@accountInfo.ProfilePicture" class="avater-img" alt="">
+                                    </a>
+                                    <div class="dropdown-menu pull-right animated flipInX">
+                                        <div class="drp_menu_headr">
+                                            <h4>سلام، @accountInfo.Fullname</h4>
+                                        </div>
+                                        <ul>
+                                            <li><a href="/Dashboard"><i class="fa fa-tachometer-alt"></i>پیشخوان<span class="notti_coun style-1">4</span></a></li>
+                                            <li><a href="/Dashboard/Profile"><i class="fa fa-user-tie"></i>پروفایل کاربری</a></li>
+                                            <li><a href="/Dashboard/Courses"><i class="fas fa-shopping-basket"></i>دوره های من<span class="notti_coun style-2">7</span></a></li>
+                                            <li><a href="/Dashboard/Message"><i class="fas fa-comments"></i>پیام ها</a></li>
+                                            <li><a asp-page="/Login" asp-page-handler="Logout"><i class="fa fa-unlock-alt"></i>خروج</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-page="./Login">
+                                <i class="fas fa-sign-in-alt ml-1 rotate-img"></i><span class="dn-lg">ورود</span>
+                            </a>
+                        </li>
+                        <li class="add-listing theme-bg">
+                            <a asp-page="./Signup" class="text-white">ثبت نام</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </nav>

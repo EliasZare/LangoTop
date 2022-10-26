@@ -1,0 +1,257 @@
+﻿@page "{id}"
+@model ServiceHost.Pages.ArticleModel
+@{
+    ViewData["Title"] = Model.Article.PageTitle;
+    ViewData["Image"] = $"ProductPictures/{@Model.Article.Picture}";
+    ViewData["keywords"] = Model.Article.Keywords;
+    ViewData["metaDescription"] = Model.Article.MetaDescription;
+    ViewData["Url"] = $"Article/{Model.Article.Slug}";
+    ViewData["author"] = Model.Article.AuthorName;
+}
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<section class="gray">
+
+    <div class="container">
+
+        <!-- row Start -->
+        <div class="row">
+
+            <!-- Blog Detail -->
+            <div class="col-lg-8 col-md-12 col-sm-12 col-12">
+                <div class="article_detail_wrapss single_article_wrap format-standard">
+                    <div class="article_body_wrap">
+
+                        <div class="article_featured_image">
+                            <img class="img-fluid" src="~/Pictures/@Model.Article.Picture" alt="@Model.Article.PictureAlt" title="@Model.Article.PictureTitle">
+                        </div>
+
+                        <div class="article_top_info">
+                            <ul class="article_middle_info">
+                                <li><a href="#"><span class="icons"><i class="ti-user"></i></span>نویسنده: @Model.Article.AuthorName</a></li>
+                                <li><a href="#"><span class="icons"><i class="ti-comment-alt"></i></span>@Model.Article.Comments.Count دیدگاه</a></li>
+                            </ul>
+                        </div>
+                        <h1 class="post-title">@Model.Article.Title</h1>
+                        <p>
+                            @Html.Raw(@Model.Article.Description)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Author Detail -->
+                <div class="article_detail_wrapss single_article_wrap format-standard">
+
+                    <div class="article_posts_thumb">
+                        <span class="img"><img class="img-fluid" src="~/Pictures/@Model.Article.AuthorProfile" alt=""></span>
+                        <h3 class="pa-name">@Model.Article.AuthorName</h3>
+                        <ul class="social-links">
+                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fab fa-behance"></i></a></li>
+                            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
+                        <p class="pa-text">@Model.Article.AuthorBio</p>
+                    </div>
+
+                </div>
+
+                <!-- Blog Comment -->
+                <div class="article_detail_wrapss single_article_wrap format-standard">
+
+                    <div class="comment-area">
+                        <div class="all-comments">
+                            <h3 class="comments-title">دیدگاه کاربران</h3>
+                            <div class="comment-list">
+                                <ul>
+                                    <li class="article_comments_wrap">
+                                        <article>
+                                            <div class="article_comments_thumb" style="width: 70px; float: right;">
+                                                <img src="~/Theme/img/user-1.jpg" alt="">
+                                            </div>
+                                            <div class="comment-details">
+                                                <div class="comment-meta">
+                                                    <div class="comment-left-meta">
+                                                        <h4 class="author-name">علی مرشدی <span class="selected"><i class="fas fa-bookmark"></i></span></h4>
+                                                        <div class="comment-date">19 آذر 1400</div>
+                                                    </div>
+                                                    <div class="comment-reply">
+                                                        <a href="#" class="reply"><span class="icona"><i class="ti-back-left"></i></span> پاسخ</a>
+                                                    </div>
+                                                </div>
+                                                <div class="comment-text">
+                                                    <p>مداد سفید تا صبح ماه کشید مهتاب کشید و انقدر ستاره کشید که کوچک و کوچکتر شد صبح توی جعبه مداد رنگی جای خالی او با هیچ رنگی  پر نشد، به یاد هم باشیم شاید فردا ما هم در کنار هم نباشیم…</p>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        <ul class="children">
+                                            <li class="article_comments_wrap">
+                                                <article>
+                                                    <div class="article_comments_thumb">
+                                                        <img src="~/Theme/img/user-2.jpg" alt="">
+                                                    </div>
+                                                    <div class="comment-details">
+                                                        <div class="comment-meta">
+                                                            <div class="comment-left-meta">
+                                                                <h4 class="author-name">مرضیه حسینی</h4>
+                                                                <div class="comment-date">28 مرداد 1400</div>
+                                                            </div>
+                                                            <div class="comment-reply">
+                                                                <a href="#" class="reply"><span class="icons"><i class="ti-back-left"></i></span> پاسخ</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="comment-text">
+                                                            <p>انقدر ستاره کشید که کوچک و کوچکتر شد صبح توی جعبه مداد رنگی جای خالی او با هیچ رنگی پر نشد، به یاد هم باشیم شاید فردا ما هم در کنار هم نباشیم…</p>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                                <ul class="children">
+                                                    <li class="article_comments_wrap">
+                                                        <article>
+                                                            <div class="article_comments_thumb">
+                                                                <img src="~/Theme/img/user-4.jpg" alt="">
+                                                            </div>
+                                                            <div class="comment-details">
+                                                                <div class="comment-meta">
+                                                                    <div class="comment-left-meta">
+                                                                        <h4 class="author-name">الهام علیزاده</h4>
+                                                                        <div class="comment-date">19 مهر 1399</div>
+                                                                    </div>
+                                                                    <div class="comment-reply">
+                                                                        <a href="#" class="reply"><span class="icons"><i class="ti-back-left"></i></span> پاسخ</a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="comment-text">
+                                                                    <p>داد سفید تا صبح ماه کشید مهتاب کشید و انقدر ستاره کشید که کوچک و کوچکتر شد صبح توی جعبه مداد رنگی جای خالی او با هیچ رنگی پر نشد</p>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="article_comments_wrap">
+                                        <article>
+                                            <div class="article_comments_thumb">
+                                                <img src="~/Theme/img/user-5.jpg" alt="">
+                                            </div>
+                                            <div class="comment-details">
+                                                <div class="comment-meta">
+                                                    <div class="comment-left-meta">
+                                                        <h4 class="author-name">محمد حسنی</h4>
+                                                        <div class="comment-date">20 بهمن 1399</div>
+                                                    </div>
+                                                    <div class="comment-reply">
+                                                        <a href="#" class="reply"><span class="icons"><i class="ti-back-left"></i></span> پاسخ</a>
+                                                    </div>
+                                                </div>
+                                                <div class="comment-text">
+                                                    <p>کوچک و کوچکتر شد صبح توی جعبه مداد رنگی جای خالی او با هیچ رنگی پر نشد، به یاد هم باشیم شاید فردا ما هم در کنار هم نباشیم…</p>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="comment-box submit-form">
+                            <h3 class="reply-title">ثبت دیدگاه</h3>
+                            <div class="comment-form">
+                                <form action="#">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="نام خود را وارد کنید">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="آدرس ایمیل">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <textarea name="comment" class="form-control" cols="30" rows="6" placeholder="نظر خود را بنویسید..."></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group">
+                                                <a href="#" class="btn theme-bg text-white">ثبت دیدگاه</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <!-- Single blog Grid -->
+            <div class="col-lg-4 col-md-12 col-sm-12 col-12">
+
+                <!-- Searchbard -->
+                <div class="single_widgets widget_search">
+                    <h4 class="title">جستجو</h4>
+                    <form action="#" class="sidebar-search-form">
+                        <input type="search" name="search" placeholder="عنوان مورد نظر...">
+                        <button type="submit"><i class="ti-search"></i></button>
+                    </form>
+                </div>
+
+                <!-- Categories -->
+                <div class="single_widgets widget_category">
+                    <h4 class="title">دسته بندی</h4>
+                    <ul>
+                        @foreach (var item in Model.LatestArticleCategories)
+                        {
+                            <li><a href="#">@item.Name<span>@item.ArticlesCounts</span></a></li>
+
+                        }
+                    </ul>
+                </div>
+
+                <!-- Trending Posts -->
+                <div class="single_widgets widget_thumb_post">
+                    <h4 class="title">جدیدترین وبلاگ</h4>
+                    <ul>
+                        @foreach (var article in Model.LatestArticles)
+                        {
+                            <li>
+                                <span class="left">
+                                    <img src="~/Pictures/@article.PictureSmall" alt="@article.PictureAlt" class="">
+                                </span>
+                                <span class="right">
+                                    <a class="feed-title" href="#">@article.Title</a>
+                                    <span class="post-date"><i class="ti-calendar"></i>@article.PublishDate</span>
+                                </span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <!-- Tags Cloud -->
+                <div class="single_widgets widget_tags">
+                    <h4 class="title">برچسب</h4>
+                    <ul>
+                        @foreach (var keyword in Model.Article.KeywordList)
+                        {
+                            <li><a href="#">@keyword</a></li>
+
+                        }
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /row -->
+
+    </div>
+
+</section>

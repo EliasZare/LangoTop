@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using _0_Framework.Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -26,12 +27,16 @@ namespace _0_Framework.Application
                 return result;
 
             var claims = _contextAccessor.HttpContext.User.Claims.ToList();
-            result.Id = long.Parse(claims.FirstOrDefault(x => x.Type == "AccountId").Value);
-            result.Username = claims.FirstOrDefault(x => x.Type == "Username").Value;
-            result.RoleId = long.Parse(claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value);
-            result.Fullname = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name).Value;
-            //result.Role = Roles.GetRoleBy(result.RoleId);
-            result.Email = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
+            result.Id = long.Parse(claims.FirstOrDefault(x => x.Type == "AccountId")?.Value);
+            result.Username = claims.FirstOrDefault(x => x.Type == "Username")?.Value;
+            result.RoleId = long.Parse(claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value);
+            result.Fullname = claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+            result.Role = Roles.GetRoleBy(result.RoleId);
+            result.Email = claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            result.ProfilePicture = claims.FirstOrDefault(x => x.Type == "ProfilePicture")?.Value;
+            result.Biography = claims.FirstOrDefault(x => x.Type == "Biography")?.Value;
+            result.Mobile = claims.FirstOrDefault(x => x.Type == ClaimTypes.MobilePhone)?.Value;
+
             return result;
         }
 
@@ -70,11 +75,6 @@ namespace _0_Framework.Application
         public bool IsAuthenticated()
         {
             return _contextAccessor.HttpContext.User.Identity.IsAuthenticated;
-            //var claims = _contextAccessor.HttpContext.User.Claims.ToList();
-            ////if (claims.Count > 0)
-            ////    return true;
-            ////return false;
-            //return claims.Count > 0;
         }
 
         public void Signin(AuthViewModel account)
@@ -87,16 +87,18 @@ namespace _0_Framework.Application
                 new(ClaimTypes.Name, account.Fullname),
                 new(ClaimTypes.Role, account.RoleId.ToString()),
                 new("Username", account.Username), // Or Use ClaimTypes.NameIdentifier
-                new("Mobile", account.Mobile),
+                new(ClaimTypes.MobilePhone, account.Mobile),
                 new("permissions", permissions),
-                new(ClaimTypes.Email, account.Email)
+                new(ClaimTypes.Email, account.Email),
+                new("ProfilePicture", account.ProfilePicture),
+                new("Biography", account.Biography)
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var authProperties = new AuthenticationProperties
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(14)
+                ExpiresUtc = DateTimeOffset.UtcNow.AddDays(30)
             };
 
             _contextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,

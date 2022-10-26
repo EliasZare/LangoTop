@@ -1,0 +1,94 @@
+﻿@page
+@model ServiceHost.Pages.SignupModel
+@{
+    ViewData["Title"] = "ثبت نام";
+    ViewData["Image"] = "Theme/img/Logo.png";
+    ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
+    ViewData["metaDescription"] = "لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند.";
+    ViewData["Url"] = "Signup";
+    ViewData["author"] ="Elyas Zare";
+
+}
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<section>
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12">
+                <form method="post">
+                    <div class="crs_log_wrap">
+                        <div class="crs_log__thumb">
+                            <img src="~/Theme/img/banner-8.jpg" class="img-fluid" alt="ثبت نام در لنگو تاپ" />
+                        </div>
+                        <div class="crs_log__caption">
+                            <div class="rcs_log_123">
+                                <div class="rcs_ico"><i class="fas fa-user"></i></div>
+                            </div>
+                           
+                            @if (Model.RegisterMessage != null)
+                            {
+                                <div class="alert alert-danger">@Model.RegisterMessage</div>
+                            }
+                            @if (Model.RegisterMessageSuccess != null)
+                            {
+                                <div class="alert alert-success">@Model.RegisterMessageSuccess</div>
+                            }
+                            <div class="rcs_log_124">
+                                <div class="Lpo09"><h4>ایجاد حساب کاربری</h4></div>
+                                <div class="form-group row mb-0">
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label>نام</label>
+                                            <input type="text" name="fullname" class="form-control" placeholder="محمد محمدی" required="" />
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group">
+                                            <label>نام کاربری</label>
+                                            <input type="text" name="username" class="form-control" placeholder="username43" required=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>ایمیل</label>
+                                    <input type="text" name="email" class="form-control" placeholder="support@example.com" required="" />
+                                </div>
+                                <div class="form-group">
+                                    <label>شماره همراه</label>
+                                    <input type="number" name="mobile" class="form-control" placeholder="09*********" required=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label>رمز عبور</label>
+                                    <input type="password" name="password" class="form-control" placeholder="*******" required=""/>
+                                </div>
+                                <div class="form-group">
+                                    <label> تکرار رمز عبور</label>
+                                    <input type="password" name="repassword" class="form-control" placeholder="*******" required=""/>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn full-width btn-md theme-bg text-white">ثبت نام</button>
+                                </div>
+                            </div>
+                            <div class="rcs_log_125">
+                                <span>یا ورود از طریق شبکه های اجتماعی</span>
+                            </div>
+                            <div class="rcs_log_126">
+                                <ul class="social_log_45 row">
+                                    <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-facebook text-info"></i>Facebook</a></li>
+                                    <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-google text-danger"></i>Google</a></li>
+                                    <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-twitter theme-cl"></i>Twitter</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="crs_log__footer d-flex justify-content-between">
+                            <div class="fhg_45"><p class="musrt">آیا حساب  کاربری دارید؟ <a asp-page="./Login" class="theme-cl">ورود</a></p></div>
+                            <div class="fhg_45"><p class="musrt"><a asp-page="./ForgotPassword" class="text-danger">آیا رمز عبور خود را فراموش کرده اید؟</a></p></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>

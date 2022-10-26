@@ -1,0 +1,62 @@
+﻿@page
+@model ServiceHost.Pages.AboutusModel
+@{
+    ViewData["Title"] = "درباره ما";
+    ViewData["Image"] = "Theme/img/Logo.png";
+    ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
+    ViewData["metaDescription"] = "لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند.";
+    ViewData["Url"] = "Aboutus";
+    ViewData["author"] ="Elyas Zare";
+}
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<section class="page-title gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title font-2">درباره ما</h1>
+                    <nav class="transparent">
+                        <ol class="breadcrumb p-0">
+                            <li class="breadcrumb-item"><a asp-page="./Index">خانه</a></li>
+                            <li class="breadcrumb-item active theme-cl" aria-current="page">درباره ما</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="pt-0">
+    <div class="container">
+        <div class="row align-items-center justify-content-between mt-5">
+            <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
+                <div class="lmp_thumb">
+                    <img src="~/Theme/img/news.png" class="img-fluid" alt="" />
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="lmp_caption">
+                    <span class="theme-cl">به بیش از 25000 دانشجو در لنگوتاپ بپیوندید</span>
+                    <h1 class="mb-3 font-2">آموزش زبان انگلیسی</h1>
+                    <p>
+                        لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند
+                        ما در لنگوتاپ تلاش داشته ایم بستری کاملا آموزشی و کاربردی برای تمام سطوح از مبتدی تا پیشرفته را با بهترین کیفیت آموزشی ایجاد کنیم.
+                    </p>
+                    <p>اگر شما قصد استفاده از آموزش های آنلاین برای یادگیری زبان انگلیسی را دارید لنگو تاپ یکی از بهترین گزنه های برای شماست.</p>
+                    <div class="foot-news-last mt-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control brd" placeholder="ایمیل خود را وارد کنید...">
+                            <div class="input-group-append">
+                                <button type="button" class="input-group-text theme-bg b-0 text-light">عضویت</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

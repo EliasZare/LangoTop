@@ -8,6 +8,8 @@ namespace LangoTop.Application.Contract.Account
         OperationResult Register(RegisterAccount command);
         OperationResult Edit(EditAccount command);
         OperationResult ChangePassword(ChangePassword command);
+        OperationResult ChangePasswordByCode(ChangePassword command);
+        OperationResult VerifyEmail(string email);
         OperationResult Login(Login command);
         OperationResult Active(string activeCode);
         OperationResult Active(long id);

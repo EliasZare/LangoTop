@@ -28,7 +28,7 @@ namespace LangoTop.Domain
         public string Keywords { get; private set; }
         public string Slug { get; private set; }
         public bool IsRemoved { get; private set; }
-        public ICollection<Course> Courses { get; set; }
+        public List<Course> Courses { get; set; }
 
         public void Edit(string name, string description, string picture, string pictureAlt, string pictureTitle,
             string metaDescription, string keywords, string slug)

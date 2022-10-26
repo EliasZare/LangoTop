@@ -1,0 +1,87 @@
+﻿@page
+@model ServiceHost.Areas.Dashboard.Pages.OrderModel
+@{
+}
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<section class="gray pt-4">
+    <div class="container-fluid">
+
+        <div class="row">
+
+            @await Component.InvokeAsync("Navbar")
+
+            <div class="col-lg-9 col-md-9 col-sm-12">
+
+                <!-- Row -->
+                <div class="row justify-content-between">
+                    <div class="col-lg-12 col-md-12 col-sm-12 pb-4">
+                        <div class="dashboard_wrap d-flex align-items-center justify-content-between">
+                            <div class="arion">
+                                <nav class="transparent">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a asp-page="/Index">خانه</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">فاکتور ها</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Row -->
+
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="dashboard_wrap">
+
+
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 mb-2">
+                                    <div class="table-responsive">
+                                        <table class="table dash_list">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">خریدار</th>
+                                                    <th scope="col">جمع کل</th>
+                                                    <th scope="col">تخفیف</th>
+                                                    <th scope="col">پرداختی</th>
+                                                    <th scope="col">وضعیت</th>
+                                                    <th scope="col">تاریخ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               @foreach (var order in Model.Orders)
+                                               {
+                                                <tr>
+                                                    <td><div class="smalls lg">@order.AccountFullName</div></td>
+                                                    <td><span class="smalls lg">@order.TotalAmount تومان</span></td>
+                                                    <td><span class="trip theme-cl theme-bg-light">@order.DiscountAmount تومان</span></td>
+                                                    <td><span class="smalls lg">@order.PayAmount</span></td>
+                                                    @if (order.IsPaid)
+                                                    {
+                                                        <td><span class="trip theme-cl theme-bg-light">پرداخت</span></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td><span class="trip theme-cl dangerlable">ناموفق</span></td>
+                                                    }
+                                                    <td><span class="smalls lg">@order.CreationDate</span></td>
+                                                </tr>
+                                               }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</section>

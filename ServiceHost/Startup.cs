@@ -2,6 +2,15 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using _0_Framework.Application;
 using _0_Framework.Application.Email;
+using _0_Framework.Application.ZarinPal;
+using _0_Framework.Infrastructure;
+using _01_Query.Contracts;
+using _01_Query.Contracts.Article;
+using _01_Query.Contracts.ArticleCategory;
+using _01_Query.Contracts.Course;
+using _01_Query.Contracts.CourseCategory;
+using _01_Query.Contracts.Order;
+using _01_Query.Query;
 using LangoTop.Application;
 using LangoTop.Application.Contract.Account;
 using LangoTop.Application.Contract.Article;
@@ -11,13 +20,18 @@ using LangoTop.Application.Contract.Course;
 using LangoTop.Application.Contract.CourseCategory;
 using LangoTop.Application.Contract.CustomerDiscount;
 using LangoTop.Application.Contract.DiscountCode;
+using LangoTop.Application.Contract.Order;
 using LangoTop.Application.Contract.Part;
+using LangoTop.Application.Contract.Role;
 using LangoTop.Application.Contract.Section;
 using LangoTop.Infrastructure;
 using LangoTop.Infrastructure.Repository;
+using LangoTop.Infrastructure.Repository.Permissions;
 using LangoTop.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +56,8 @@ namespace ServiceHost
             var connectionString = Configuration.GetConnectionString("LangoTop_DB");
 
             services.AddDbContext<LangoTopContext>(x => x.UseSqlServer(connectionString));
+
+            #region Transient
 
             services.AddTransient<IAccountApplication, AccountApplication>();
             services.AddTransient<IAccountRepository, AccountRepository>();
@@ -73,11 +89,51 @@ namespace ServiceHost
             services.AddTransient<IPartApplication, PartApplication>();
             services.AddTransient<IPartRepository, PartRepository>();
 
+            services.AddTransient<IOrderApplication, OrderApplication>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+
+            services.AddTransient<ICourseCategoryQuery, CourseCategoryQuery>();
+            services.AddTransient<IArticleQuery, ArticleQuery>();
+            services.AddTransient<IArticleCategoryQuery, ArticleCategoryQuery>();
+            services.AddTransient<ICourseQuery, CourseQuery>();
+
+            services.AddTransient<IRoleApplication, RoleApplication>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
+
+            services.AddTransient<IPermissionExposer, AccountPermissionExposer>();
+
+            services.AddTransient<IOrderApplication, OrderApplication>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+
+            services.AddTransient<IOrderQuery, OrderQuery>();
+
+
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Arabic));
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddTransient<IFileUploader, FileUploader>();
             services.AddTransient<IAuthHelper, AuthHelper>();
             services.AddTransient<IEmailService, EmailService>();
+
+            services.AddSingleton<ICartService, CartService>();
+            services.AddTransient<ICartCalculateService, CartCalculateService>();
+            services.AddTransient<IZarinPalFactory, ZarinPalFactory>();
+
+            #endregion
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+                {
+                    o.LoginPath = new PathString("/Login");
+                    o.LogoutPath = new PathString("/Login");
+                    o.AccessDeniedPath = new PathString("/AccessDenied");
+                });
+            services.AddAuthorization(option => { });
             services.AddRazorPages();
         }
 
@@ -95,9 +151,10 @@ namespace ServiceHost
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseCookiePolicy();
             app.UseRouting();
 
             app.UseAuthorization();

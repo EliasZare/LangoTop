@@ -1,0 +1,39 @@
+﻿@using _0_Framework.Application
+@inject IAuthHelper _authHelper
+@{
+    var accountInfo = _authHelper.CurrentAccountInfo();
+    bool isAuthenticated = _authHelper.IsAuthenticated();
+}
+<div class="col-lg-3 col-md-3">
+    <div class="dashboard-navbar">
+
+        <div class="d-user-avater">
+            <img src="~/Pictures/@accountInfo.ProfilePicture" class="img-fluid avater" alt="@accountInfo.Fullname">
+            <h4>@accountInfo.Fullname</h4>
+            <span>@accountInfo.Role</span>
+            <div class="elso_syu89">
+                <ul>
+                    <li><a href="#"><i class="ti-facebook"></i></a></li>
+                    <li><a href="#"><i class="ti-twitter"></i></a></li>
+                    <li><a href="#"><i class="ti-instagram"></i></a></li>
+                    <li><a href="#"><i class="ti-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-navigation">
+            <ul id="side-menu">
+                <li class="active"><a asp-page="/Index"><i class="fas fa-th"></i>پیشخوان</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);"><i class="fas fa-shopping-basket"></i>دوره های آموزش<span class="ti-angle-left"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a asp-page="/Courses">لیست دوره ها</a></li>
+                        <li><a asp-page="/Order">فاکتور ها</a></li>
+                    </ul>
+                </li>
+                <li><a asp-page="/EditProfile"><i class="fas fa-address-card"></i>پروفایل کاربری</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>

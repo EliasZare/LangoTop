@@ -5,6 +5,7 @@ using _0_Framework.Infrastructure;
 using LangoTop.Application.Contract.Account;
 using LangoTop.Domain;
 using LangoTop.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LangoTop.Infrastructure.Repository
 {
@@ -20,7 +21,7 @@ namespace LangoTop.Infrastructure.Repository
 
         public Account GetBy(string email)
         {
-            return _context.Accounts.Where(x => x.IsActive).FirstOrDefault(x => x.Email == email);
+            return _context.Accounts.FirstOrDefault(x => x.Email == email);
         }
 
         public EditAccount GetDetails(long id)
@@ -33,13 +34,15 @@ namespace LangoTop.Infrastructure.Repository
                 Mobile = x.Mobile,
                 Password = x.Password,
                 ActiveCode = x.ActiveCode,
-                Email = x.Email
+                Email = x.Email,
+                RoleId = x.RoleId,
+                Biography = x.Biography
             }).FirstOrDefault(x => x.Id == id);
         }
 
         public List<AccountViewModel> Search(AccountSearchModel searchModel)
         {
-            var query = _context.Accounts.Select(x => new AccountViewModel
+            var query = _context.Accounts.Include(x => x.Role).Select(x => new AccountViewModel
             {
                 Id = x.Id,
                 Fullname = x.Fullname,
@@ -48,7 +51,10 @@ namespace LangoTop.Infrastructure.Repository
                 ProfilePhoto = x.ProfilePhoto,
                 IsActive = x.IsActive,
                 Email = x.Email,
-                CreationDate = x.CreationDate.ToFarsi()
+                CreationDate = x.CreationDate.ToFarsi(),
+                RoleId = x.RoleId,
+                Role = x.Role.Name,
+                Biography = x.Biography
             });
 
 
@@ -73,10 +79,19 @@ namespace LangoTop.Infrastructure.Repository
 
         public List<AccountViewModel> GetAccounts()
         {
-            return _context.Accounts.Select(x => new AccountViewModel
+            return _context.Accounts.Include(x => x.Role).Select(x => new AccountViewModel
             {
                 Id = x.Id,
-                Fullname = x.Fullname
+                Fullname = x.Fullname,
+                Username = x.Username,
+                Mobile = x.Mobile,
+                ProfilePhoto = x.ProfilePhoto,
+                IsActive = x.IsActive,
+                Email = x.Email,
+                CreationDate = x.CreationDate.ToFarsi(),
+                RoleId = x.RoleId,
+                Role = x.Role.Name,
+                Biography = x.Biography
             }).ToList();
         }
 
@@ -84,5 +99,6 @@ namespace LangoTop.Infrastructure.Repository
         {
             return _context.Accounts.FirstOrDefault(x => x.ActiveCode == activeCode);
         }
+
     }
 }

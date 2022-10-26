@@ -1,0 +1,39 @@
+﻿@using _01_Query.Contracts.CourseCategory
+@model List<CourseCategoryQueryModel>
+
+<section class="min gray">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-8">
+                <div class="sec-heading center">
+                    <h3 class="font-2">دسته بندی های <span class="theme-cl">منتخب</span></h3>
+                    <p>سریع تر به مقصد برس!! با استفاده از گروه بندی سایت مطالب مورد نیاز خودت رو سریع تر پیدا کن</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+
+            @foreach (var Item in Model)
+            {
+                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                    <div class="cates_crs_wrip">
+                        <div class="crs_trios">
+                            <div class="crs_cate_icon"><i class="fa fa-window-restore"></i></div>
+                            <div class="crs_cate_link"><a asp-page="/CourseCategory" asp-route-id="@Item.Slug">مشاهده</a></div>
+                        </div>
+                        <div class="crs_capt_cat">
+                            <h3>@Item.Name</h3>
+                            <p>@Item.Description</p>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+
+    </div>
+</section>
+<div class="clearfix"></div>

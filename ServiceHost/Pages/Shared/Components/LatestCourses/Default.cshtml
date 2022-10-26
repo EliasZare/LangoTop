@@ -1,0 +1,95 @@
+﻿@using _01_Query.Contracts.Course
+@model List<CourseQueryModel>
+
+<section>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-8">
+                <div class="sec-heading center">
+                    <h3 class="font-2">آموزش های <span class="theme-cl">جدید</span></h3>
+                    <p>جدیدترین دوره های آموزشی لنگوتاپ را مشاهده کنید.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <!-- Single Grid -->
+            @foreach (var course in Model)
+            {
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                <div class="crs_grid">
+                    <div class="crs_grid_thumb">
+                        <a asp-page="./Course" asp-route-id="@course.Slug" class="crs_detail_link">
+                            <img src="~/Pictures/@course.PictureSmall" title="@course.PictureTitle" class="img-fluid rounded" alt="@course.PictureAlt" />
+                        </a>
+                        @if (course.HasDiscount)
+                       {
+                           <div class="crs_locked_ico">
+                               <img src="~/Theme/img/giftIcon.gif" style="width: 30px; height: 30px" alt="تخفیف لنگوتاپ" />
+                           </div>
+                       }
+                    </div>
+                    <div class="crs_grid_caption">
+                        <div class="crs_title"><h4><a asp-page="./Course" asp-route-id="@course.Slug" class="crs_title_link">@course.Title</a></h4></div>
+                        <div class="crs_info_detail">
+                            <ul>
+                                <li><i class="fa fa-signal text-warning"></i><span>@course.Level</span></li>
+                                <li><i class="fa fa-clock text-danger"></i><span>@course.Time</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="crs_grid_foot">
+                        <div class="crs_flex">
+                            <div class="crs_fl_first">
+                                <div class="crs_tutor">
+                                    <div class="crs_tutor_thumb"><a asp-page="./TeacherProfile" asp-route-id="@course.Teacher"><img src="~/Pictures/@course.TeacherProfile" class="img-fluid circle" alt="@course.Teacher" /></a></div><div class="crs_tutor_name"><a asp-page="./TeacherProfile" asp-route-id="@course.Teacher">@course.Teacher</a></div>
+                                </div>
+                            </div>
+                            <div class="crs_fl_last">
+                                @if (course.DoublePrice < 1)
+                                {
+                                    <div class="crs_price">
+                                        <h4>
+                                            <span class="theme-cl">رایگان!</span>
+                                        </h4>
+                                    </div>
+                                   
+                                }
+                                else
+                                {
+                                    @if (course.HasDiscount)
+                                    {
+                                        <div class="crs_price">
+                                            <h4>
+                                                <span class="theme-cl">@course.PriceWithDiscount ت</span>
+                                                <span class="old_prc" style="color: #4e6579; font-size: 15px; text-decoration: line-through; font-weight: 400;">@course.Price ت</span>
+                                            </h4>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="crs_price">
+                                            <h4>
+                                                <span class="theme-cl">@course.Price ت</span>
+                                            </h4>
+                                        </div>
+                                    }
+                                }
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-8 mt-2">
+                <div class="text-center"><a asp-page="./Courses" asp-route-id="1" class="btn btn-md theme-bg-light theme-cl">سایر دوره های لنگوتاپ</a></div>
+            </div>
+        </div>
+
+    </div>
+</section>

@@ -153,6 +153,15 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="ShortLink" class="control-label">لینک کوتاه</label>
+                    <input type="text" class="form-control" asp-for="ShortLink">
+                    <span asp-validation-for="ShortLink" class="error"></span>
+                </div>
+            </div>
+        </div>
     </div>
     <input type="hidden" asp-for="Id" value="@Model.Id"/>
     <div class="modal-footer">

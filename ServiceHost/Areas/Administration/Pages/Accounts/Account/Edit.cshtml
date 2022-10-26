@@ -36,7 +36,7 @@
                     <span asp-validation-for="Mobile" class="error"></span>
                 </div>
             </div>
-            @*<div class="col-md-6">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label asp-for="RoleId" class="control-label">نقش کاربر</label>
                     <select class="form-control" asp-for="RoleId" asp-items='new SelectList(Model.Roles,"Id","Name")'>
@@ -44,7 +44,7 @@
                     </select>
                     <span asp-validation-for="RoleId" class="error"></span>
                 </div>
-            </div>*@
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -60,6 +60,15 @@
                     <input type="file" class="form-control" asp-for="ProfilePhoto" accept="image/*">
                     <span asp-validation-for="ProfilePhoto" class="error"></span>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Biography" class="control-label">بیوگرافی</label>
+                <textarea class="form-control" asp-for="Biography"></textarea>
+                <span asp-validation-for="Biography" class="error"></span>
             </div>
         </div>
     </div>

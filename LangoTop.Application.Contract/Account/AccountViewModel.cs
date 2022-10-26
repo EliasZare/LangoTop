@@ -11,7 +11,10 @@ namespace LangoTop.Application.Contract.Account
         public string Mobile { get; set; }
         public string ProfilePhoto { get; set; }
         public bool IsActive { get; set; }
+        public long RoleId { get; set; }
+        public string Role { get; set; }
         public string CreationDate { get; set; }
+        public string Biography { get; set; }
         public List<string> Courses { get; set; }
         public List<string> Articles { get; set; }
     }
