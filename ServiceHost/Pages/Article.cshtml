@@ -44,7 +44,8 @@
 
                     <div class="article_posts_thumb">
                         <span class="img"><img class="img-fluid" src="~/Pictures/@Model.Article.AuthorProfile" alt=""></span>
-                        <h3 class="pa-name">@Model.Article.AuthorName</h3>
+                        <a asp-page="/Profile" asp-route-id="@Model.Article.AuthorUsername"><h3 class="pa-name">@Model.Article.AuthorName</h3> </a>
+
                         <ul class="social-links">
                             <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                             <li><a href="#"><i class="fab fa-twitter"></i></a></li>
@@ -62,97 +63,38 @@
 
                     <div class="comment-area">
                         <div class="all-comments">
-                            <h3 class="comments-title">دیدگاه کاربران</h3>
+                            @if (Model.Article.Comments.Count > 1)
+                            {
+                                <h3 class="comments-title">دیدگاه کاربران</h3>
+                            }
+                            else
+                            {
+                                <h5 class="comments-title alert alert-success">اولین دیدگاه را ثبت کنید</h5>
+                            }
                             <div class="comment-list">
                                 <ul>
-                                    <li class="article_comments_wrap">
-                                        <article>
-                                            <div class="article_comments_thumb" style="width: 70px; float: right;">
-                                                <img src="~/Theme/img/user-1.jpg" alt="">
-                                            </div>
-                                            <div class="comment-details">
-                                                <div class="comment-meta">
-                                                    <div class="comment-left-meta">
-                                                        <h4 class="author-name">علی مرشدی <span class="selected"><i class="fas fa-bookmark"></i></span></h4>
-                                                        <div class="comment-date">19 آذر 1400</div>
-                                                    </div>
-                                                    <div class="comment-reply">
-                                                        <a href="#" class="reply"><span class="icona"><i class="ti-back-left"></i></span> پاسخ</a>
-                                                    </div>
+                                    @*<li class="article_comments_wrap">
+                                            <article>
+                                                <div class="article_comments_thumb">
+                                                    <img src="~/Theme/img/user-1.jpg" alt="">
                                                 </div>
-                                                <div class="comment-text">
-                                                    <p>مداد سفید تا صبح ماه کشید مهتاب کشید و انقدر ستاره کشید که کوچک و کوچکتر شد صبح توی جعبه مداد رنگی جای خالی او با هیچ رنگی  پر نشد، به یاد هم باشیم شاید فردا ما هم در کنار هم نباشیم…</p>
-                                                </div>
-                                            </div>
-                                        </article>
-                                        <ul class="children">
-                                            <li class="article_comments_wrap">
-                                                <article>
-                                                    <div class="article_comments_thumb">
-                                                        <img src="~/Theme/img/user-2.jpg" alt="">
-                                                    </div>
-                                                    <div class="comment-details">
-                                                        <div class="comment-meta">
-                                                            <div class="comment-left-meta">
-                                                                <h4 class="author-name">مرضیه حسینی</h4>
-                                                                <div class="comment-date">28 مرداد 1400</div>
-                                                            </div>
-                                                            <div class="comment-reply">
-                                                                <a href="#" class="reply"><span class="icons"><i class="ti-back-left"></i></span> پاسخ</a>
-                                                            </div>
+                                                <div class="comment-details">
+                                                    <div class="comment-meta">
+                                                        <div class="comment-left-meta">
+                                                            <h4 class="author-name">علی مرشدی <span class="selected"><i class="fas fa-bookmark"></i></span></h4>
+                                                            <div class="comment-date">19 آذر 1400</div>
                                                         </div>
-                                                        <div class="comment-text">
-                                                            <p>انقدر ستاره کشید که کوچک و کوچکتر شد صبح توی جعبه مداد رنگی جای خالی او با هیچ رنگی پر نشد، به یاد هم باشیم شاید فردا ما هم در کنار هم نباشیم…</p>
+                                                        <div class="comment-reply">
+                                                            <a href="#" class="reply"><span class="icona"><i class="ti-back-left"></i></span> پاسخ</a>
                                                         </div>
                                                     </div>
-                                                </article>
-                                                <ul class="children">
-                                                    <li class="article_comments_wrap">
-                                                        <article>
-                                                            <div class="article_comments_thumb">
-                                                                <img src="~/Theme/img/user-4.jpg" alt="">
-                                                            </div>
-                                                            <div class="comment-details">
-                                                                <div class="comment-meta">
-                                                                    <div class="comment-left-meta">
-                                                                        <h4 class="author-name">الهام علیزاده</h4>
-                                                                        <div class="comment-date">19 مهر 1399</div>
-                                                                    </div>
-                                                                    <div class="comment-reply">
-                                                                        <a href="#" class="reply"><span class="icons"><i class="ti-back-left"></i></span> پاسخ</a>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="comment-text">
-                                                                    <p>داد سفید تا صبح ماه کشید مهتاب کشید و انقدر ستاره کشید که کوچک و کوچکتر شد صبح توی جعبه مداد رنگی جای خالی او با هیچ رنگی پر نشد</p>
-                                                                </div>
-                                                            </div>
-                                                        </article>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="article_comments_wrap">
-                                        <article>
-                                            <div class="article_comments_thumb">
-                                                <img src="~/Theme/img/user-5.jpg" alt="">
-                                            </div>
-                                            <div class="comment-details">
-                                                <div class="comment-meta">
-                                                    <div class="comment-left-meta">
-                                                        <h4 class="author-name">محمد حسنی</h4>
-                                                        <div class="comment-date">20 بهمن 1399</div>
-                                                    </div>
-                                                    <div class="comment-reply">
-                                                        <a href="#" class="reply"><span class="icons"><i class="ti-back-left"></i></span> پاسخ</a>
+                                                    <div class="comment-text">
+                                                        <p>مداد سفید تا صبح ماه کشید مهتاب کشید و انقدر ستاره کشید که کوچک و کوچکتر شد صبح توی جعبه مداد رنگی جای خالی او با هیچ رنگی  پر نشد، به یاد هم باشیم شاید فردا ما هم در کنار هم نباشیم…</p>
                                                     </div>
                                                 </div>
-                                                <div class="comment-text">
-                                                    <p>کوچک و کوچکتر شد صبح توی جعبه مداد رنگی جای خالی او با هیچ رنگی پر نشد، به یاد هم باشیم شاید فردا ما هم در کنار هم نباشیم…</p>
-                                                </div>
-                                            </div>
-                                        </article>
-                                    </li>
+                                            </article>
+                                        </li>*@
+
                                 </ul>
                             </div>
                         </div>
@@ -189,7 +131,6 @@
 
                 </div>
 
-
             </div>
 
             <!-- Single blog Grid -->
@@ -215,7 +156,11 @@
                         }
                     </ul>
                 </div>
-
+                <!-- Ads -->
+                <div class="single_widgets widget_tags">
+                    <h4 class="title">تبلیغات</h4>
+                    <a href="@Model.AdsBanner.Link" rel="nofollow" target="_blank"> <img src="~/Pictures/@Model.AdsBanner.BannerPicture" alt="@Model.AdsBanner.PictureAlt" title="@Model.AdsBanner.PictureTitle" style="width:100%;height: 100%" /></a>
+                </div>
                 <!-- Trending Posts -->
                 <div class="single_widgets widget_thumb_post">
                     <h4 class="title">جدیدترین وبلاگ</h4>

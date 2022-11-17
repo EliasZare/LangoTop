@@ -9,6 +9,7 @@ namespace LangoTop.Application.Contract.DiscountCode
     {
         public long CourseId { get; set; }
 
+        [Required(ErrorMessage = ValidationMessage.IsRequired)]
         public string Code { get; set; }
 
         [Range(1, 100000, ErrorMessage = ValidationMessage.IsRequired)]

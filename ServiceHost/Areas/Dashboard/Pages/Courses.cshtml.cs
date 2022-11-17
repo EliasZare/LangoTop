@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _0_Framework.Application;
+using _0_Framework.Infrastructure;
 using _01_Query.Contracts.Course;
 using _01_Query.Contracts.Order;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -22,8 +23,13 @@ namespace ServiceHost.Areas.Dashboard.Pages
 
         public void OnGet()
         {
-            var accountId = _authHelper.CurrentAccountId();
-            Courses = _orderQuery.GetCoursesBy(accountId);
+            var account = _authHelper.CurrentAccountInfo();
+            var accountRole = _authHelper.CurrentAccountRole();
+
+            if (accountRole == Roles.Teacher)
+                Courses = _courseQuery.GetCoursesBy(account.Id);
+            else
+                Courses = _orderQuery.GetCoursesBy(account.Id);
         }
     }
 }

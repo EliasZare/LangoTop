@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _01_Query.Contracts.Account;
 using _01_Query.Contracts.Course;
 
 namespace _01_Query.Contracts.Order
@@ -10,5 +11,6 @@ namespace _01_Query.Contracts.Order
         List<OrderQueryModel> GetOrdersBy(long accountId);
         List<OrderItemQueryModel> GetItems(long orderId);
         long GetStudentCourseCount(long courseId);
+        List<AccountQueryModel> GetCourseStudents(long courseId);
     }
 }

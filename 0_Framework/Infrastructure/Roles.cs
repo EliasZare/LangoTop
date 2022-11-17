@@ -4,9 +4,8 @@
     {
         public const string Administrator = "1";
         public const string SystemUser = "2";
-        public const string ContentUploader = "3";
-        public const string ColleagueUser = "4";
-
+        public const string Teacher = "3";
+        public const string Admin = "4";
 
         public static string GetRoleBy(long id)
         {
@@ -14,10 +13,14 @@
             {
                 case 1:
                     return "مدیر سیستم";
+                case 2:
+                    return "کاربر";
                 case 3:
-                    return "محتوا گذار";
+                    return "مدرس";
+                case 4:
+                    return "ادمین";
                 default:
-                    return "";
+                    return "Default";
             }
         }
     }

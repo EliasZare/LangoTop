@@ -24,6 +24,7 @@ namespace _01_Query.Contracts.Article
         public long CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string CategorySlug { get; set; }
+        public string AuthorUsername { get; set; }
         public List<CommentQueryModel> Comments { get; set; }
         public bool IsRemoved { get; set; }
         public string AuthorBio { get; set; }

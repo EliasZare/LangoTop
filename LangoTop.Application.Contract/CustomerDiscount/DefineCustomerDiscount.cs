@@ -19,6 +19,8 @@ namespace LangoTop.Application.Contract.CustomerDiscount
         [Required(ErrorMessage = ValidationMessage.IsRequired)]
         public string EndDate { get; set; }
 
+        [Required(ErrorMessage = ValidationMessage.IsRequired)]
+        [MaxLength(500, ErrorMessage = "تعداد کاراکترها بیشتر از حد مجاز می باشد")]
         public string Reason { get; set; }
         public List<CourseViewModel> Courses { get; set; }
     }

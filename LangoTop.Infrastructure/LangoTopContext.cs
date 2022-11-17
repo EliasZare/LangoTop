@@ -18,6 +18,7 @@ namespace LangoTop.Infrastructure
         public DbSet<Part> Parts { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Banner> Banners { get; set; }
 
         public LangoTopContext(DbContextOptions<LangoTopContext> options) : base(options)
         {

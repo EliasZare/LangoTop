@@ -1,0 +1,26 @@
+﻿@page "{activeCode}"
+@model ServiceHost.Pages.ActiveAccountModel
+@{
+}
+<section>
+    <div class="container">
+        @if (!string.IsNullOrWhiteSpace(Model.Message) && Model.IsSuccess)
+        {
+            <div class="alert alert-success">
+                <i class="fa fa-check"></i> @Model.Message
+            </div>
+            <br />
+            <div class="col-md-12">
+                <a class="btn btn-success" asp-page="/Account">ورود </a>
+            </div>
+            <br />
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Message) && !Model.IsSuccess)
+        {
+            <div class="alert alert-warning">
+                <i class="fa fa-warning"></i> @Model.Message
+            </div>
+
+        }
+    </div>
+</section>

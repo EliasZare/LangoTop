@@ -40,7 +40,7 @@ namespace ServiceHost.Pages
 
         public void OnGet()
         {
-            if (Request.Cookies["cart-items"] != null)
+            if (!string.IsNullOrWhiteSpace(Request.Cookies["cart-items"]))
             {
                 var serializer = new JavaScriptSerializer();
                 var value = Request.Cookies[CookieName];
@@ -53,7 +53,7 @@ namespace ServiceHost.Pages
                 _cartService.Set(Cart);
             }
         }
-
+       
         public IActionResult OnPostPay()
         {
             var cart = _cartService.Get();

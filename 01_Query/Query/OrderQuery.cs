@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using _0_Framework.Application;
+using _01_Query.Contracts.Account;
 using _01_Query.Contracts.Course;
 using _01_Query.Contracts.Order;
 using LangoTop.Domain;
@@ -52,7 +53,7 @@ namespace _01_Query.Query
                         Price = x.Price.ToMoney(),
                         Teacher = x.Teacher.Fullname,
                         Category = x.CourseCategory.Name,
-                        IsLocked = true,
+                        IsPaid = true,
                         Picture = x.Picture,
                         Slug = x.Slug,
                         CategorySlug = x.CourseCategory.Slug
@@ -133,6 +134,54 @@ namespace _01_Query.Query
             }
 
             return count;
+        }
+
+        public List<AccountQueryModel> GetCourseStudents(long courseId)
+        {
+            var students = new List<AccountQueryModel>();
+
+            var orderQuery = new List<OrderQueryModel>();
+
+            var student = new AccountQueryModel();
+
+            var products = _context.Courses.Select(x => new {x.Id, x.Title}).ToList();
+
+            var orders = _context.Orders.Select(x => new OrderQueryModel
+            {
+                Id = x.Id,
+                AccountId = x.AccountId,
+                DiscountAmount = x.DiscountAmount,
+                IsCanceled = x.IsCanceled,
+                IsPaid = x.IsPaid,
+                PayAmount = x.PayAmount,
+                TotalAmount = x.TotalAmount,
+                CreationDate = x.CreationDate.ToFarsi(),
+                OrderItems = MapItems(x.Items)
+            }).AsNoTracking().ToList();
+
+
+            foreach (var order in orders)
+            foreach (var item in order.OrderItems)
+                if (products.FirstOrDefault(x => x.Id == item.CourseId && x.Id == courseId) != null)
+                    orderQuery.Add(orders.FirstOrDefault(x => x.Id == item.OrderId));
+
+
+            foreach (var item in orderQuery)
+            {
+                student = _context.Accounts.Include(x => x.Role).Select(x => new AccountQueryModel
+                {
+                    Id = x.Id,
+                    Email = x.Email,
+                    Fullname = x.Fullname,
+                    PaidDate = item.CreationDate,
+                    Role = x.Role.Name,
+                    RoleId = x.RoleId,
+                    ProfilePhoto = x.ProfilePhoto
+                }).FirstOrDefault(x => x.Id == item.AccountId);
+                students.Add(student);
+            }
+
+            return students.OrderByDescending(x => x.PaidDate).ToList();
         }
 
         public static List<OrderItemQueryModel> MapItems(List<OrderItem> section)

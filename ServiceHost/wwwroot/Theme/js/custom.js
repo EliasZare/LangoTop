@@ -471,11 +471,26 @@ function addToCart(id, name, price, picture) {
 }
 
 function updateCart() {
+    debugger;
     let products = $.cookie(cookieName);
     products = JSON.parse(products);
     $("#cart_items_count").text(products.length);
     $("#cart_items_count_Mobile").text(products.length);
     const cartItemsWrapper = $("#cart_items_wrapper");
+    cartItemsWrapper.html('');
+    products.forEach(x => {
+        const product =
+            `<div class="ground ground-list-single">
+                      <div class="grd_thum"><img src="/Pictures/${x.picture}" class="img-fluid rounded" width="90px" style="border-radius: 10px;" alt="${x.name}" /></div>
+                      <div class="ground-content">
+                          <h6>${x.name}<small class="float-left text-fade">${x.unitPrice}ت</small></h6>
+                          <a  class="small text-danger" onclick="removeFromCart('${x.id}')>حذف</a>
+                      </div>
+             </div>`;
+        cartItemsWrapper.append(product);
+    });
+
+    const cartItemsWrapper = $("#cart_items_wrapper_mobile");
     cartItemsWrapper.html('');
     products.forEach(x => {
         const product =

@@ -1,6 +1,11 @@
 ﻿@page
+@using _0_Framework.Application
+@using _0_Framework.Infrastructure
 @model ServiceHost.Areas.Dashboard.Pages.CoursesModel
+@inject IAuthHelper _authHelper
 @{
+    var account = _authHelper.CurrentAccountInfo();
+    var accountRole = _authHelper.CurrentAccountRole();
     ViewData["Title"] = "دوره های خریداری شده";
     ViewData["Image"] = "Theme/img/Logo.png";
 }
@@ -55,6 +60,10 @@
                                                     <th scope="col">دسته بندی</th>
                                                     <th scope="col">وضعیت</th>
                                                     <th scope="col">قیمت</th>
+                                                    @if (accountRole==Roles.Teacher)
+                                                    {
+                                                        <th scope="col">عملیات</th>
+                                                    }
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -63,20 +72,25 @@
                                                     <tr>
                                                         <td><a asp-page="./Course" asp-route-id="@course.Slug">@course.Title</a><p>مدرس:<span>@course.Teacher</span></p></td>
                                                         <td><div class="dhs_tags">@course.Category</div></td>
-                                                        @if (course.IsLocked)
+                                                        @if (course.IsPaid)
                                                         {
                                                             <td><span class="trip theme-cl theme-bg-light">فعال</span></td>
 
                                                         }
                                                         else
                                                         {
-                                                        <td><span class="trip text-danger bg-light-danger">پرداخت</span></td>
+                                                            <td><span class="trip text-danger bg-light-danger">پرداخت</span></td>
 
                                                         }
                                                         <td><span class="trip theme-cl theme-bg-light">@course.Price</span></td>
-                                                        
-                                                    </tr>
 
+                                                        @if (accountRole == Roles.Teacher)
+                                                        {
+                                                            <td>
+                                                                <a asp-page="Students" asp-route-id="@course.Id" class="btn theme-bg btn-rounded">دانشجوها</a>
+                                                            </td>
+                                                        }
+                                                    </tr>
                                                 }
                                             </tbody>
                                         </table>

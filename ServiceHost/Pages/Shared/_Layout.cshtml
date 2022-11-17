@@ -73,12 +73,16 @@
     <script src="~/Theme/js/plugins.js"></script>
     <script src="~/Theme/js/custom.js"></script>>
 
+    <script src="~/AdminTheme/assets/js/jquery.todo.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
-<script>
-    $(document).ready(function () {
-        updateCart();
-    });
-</script>
+    <script>
+        $(document).ready(function () {
+            updateCart();
+        });
+    </script>
 </body>
 
 </html>

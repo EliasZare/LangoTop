@@ -17,12 +17,18 @@
     },
     "ServiceHost": {
       "commandName": "Project",
-      "dotnetRunMessages": "true",
       "launchBrowser": false,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "applicationUrl": "https://localhost:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
+  },
+  "Kestrel": {
+    "launchBrowser": false,
+    "EndPoints": {
+      "Http1": { "Url": "http://localhost:5000" },
+      "Http2": { "Url": "http://172.16.1.120:22222" }
+    }
   }
-}
+} 

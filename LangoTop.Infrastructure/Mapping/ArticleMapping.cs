@@ -14,7 +14,7 @@ namespace LangoTop.Infrastructure.Mapping
             builder.Property(x => x.Title).IsRequired().HasMaxLength(150);
             builder.Property(x => x.PageTitle).IsRequired().HasMaxLength(60);
             builder.Property(x => x.ShortDescription).IsRequired().HasMaxLength(150);
-            builder.Property(x => x.Description).IsRequired().HasMaxLength(2000);
+            builder.Property(x => x.Description).IsRequired();
             builder.Property(x => x.Slug).IsRequired().HasMaxLength(500);
             builder.Property(x => x.Picture).IsRequired().HasMaxLength(2000);
             builder.Property(x => x.Keywords).IsRequired().HasMaxLength(120);

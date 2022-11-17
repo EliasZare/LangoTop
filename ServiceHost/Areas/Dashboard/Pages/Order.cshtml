@@ -1,6 +1,7 @@
 ﻿@page
 @model ServiceHost.Areas.Dashboard.Pages.OrderModel
 @{
+    var counter = 0;
 }
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
 </section>
@@ -41,6 +42,7 @@
                                         <table class="table dash_list">
                                             <thead>
                                                 <tr>
+                                                    <th scope="col">#</th>
                                                     <th scope="col">خریدار</th>
                                                     <th scope="col">جمع کل</th>
                                                     <th scope="col">تخفیف</th>
@@ -53,6 +55,7 @@
                                                @foreach (var order in Model.Orders)
                                                {
                                                 <tr>
+                                                    <td><div class="smalls lg">@{ counter++;}</div></td>
                                                     <td><div class="smalls lg">@order.AccountFullName</div></td>
                                                     <td><span class="smalls lg">@order.TotalAmount تومان</span></td>
                                                     <td><span class="trip theme-cl theme-bg-light">@order.DiscountAmount تومان</span></td>

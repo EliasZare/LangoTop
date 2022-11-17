@@ -18,11 +18,13 @@ namespace _01_Query.Query
     {
         private readonly LangoTopContext _context;
         private readonly IOrderQuery _orderQuery;
+        private readonly IAuthHelper _authHelper;
 
-        public CourseQuery(LangoTopContext context, IOrderQuery orderQuery)
+        public CourseQuery(LangoTopContext context, IOrderQuery orderQuery, IAuthHelper authHelper)
         {
             _context = context;
             _orderQuery = orderQuery;
+            _authHelper = authHelper;
         }
 
         public List<CourseQueryModel> LatestCourses(int counts)
@@ -49,7 +51,8 @@ namespace _01_Query.Query
                     Price = x.Price.ToMoney(),
                     TeacherProfile = x.Teacher.ProfilePhoto,
                     Teacher = x.Teacher.Fullname,
-                    DoublePrice = x.Price
+                    DoublePrice = x.Price,
+                    TeacherUsername = x.Teacher.Username
                 }).Where(x => !x.IsRemoved).OrderByDescending(x => x.Id).Take(counts).ToList();
 
 
@@ -93,7 +96,8 @@ namespace _01_Query.Query
                     Price = x.Price.ToMoney(),
                     TeacherProfile = x.Teacher.ProfilePhoto,
                     Teacher = x.Teacher.Fullname,
-                    DoublePrice = x.Price
+                    DoublePrice = x.Price,
+                    TeacherUsername = x.Teacher.Username
                 }).Where(x => !x.IsRemoved).OrderByDescending(x => x.Id).ToList();
 
 
@@ -236,6 +240,9 @@ namespace _01_Query.Query
                 .Where(x => x.StartDate < DateTime.Now && x.EndDate > DateTime.Now)
                 .Select(x => new {x.DiscountRate, x.CourseId}).ToList();
 
+            var accountId = _authHelper.CurrentAccountId();
+
+            var paidCourses = _orderQuery.GetCoursesBy(accountId);
 
             var course = _context.Courses.Include(x => x.CourseCategory).Include(x => x.Teacher).Select(x =>
                 new CourseQueryModel
@@ -265,10 +272,15 @@ namespace _01_Query.Query
                     TeacherId = x.TeacherId,
                     PageTitle = x.PageTitle,
                     TeacherBio = x.Teacher.Biography,
+                    TeacherUsername = x.Teacher.Username,
                     Sections = MapSections(x.Sections)
                 }).Where(x => !x.IsRemoved).FirstOrDefault(x => x.Slug == slug);
 
-            var a = course;
+            foreach (var paidCourse in paidCourses)
+                if (paidCourse.Id == course.Id)
+                    course.IsPaid = true;
+
+
             if (course == null) return new CourseQueryModel();
 
 
@@ -324,6 +336,98 @@ namespace _01_Query.Query
 
             return course;
         }
+
+        public List<CourseQueryModel> GetCoursesBy(long teacherId)
+        {
+            var discounts = _context.CustomerDiscounts
+                .Where(x => x.StartDate < DateTime.Now && x.EndDate > DateTime.Now)
+                .Select(x => new {x.DiscountRate, x.CourseId}).ToList();
+
+
+            var products = _context.Courses.Where(x => x.TeacherId == teacherId).Include(x => x.CourseCategory)
+                .Include(x => x.Teacher).Select(x =>
+                    new CourseQueryModel
+                    {
+                        Id = x.Id,
+                        Title = x.Title,
+                        PictureTitle = x.PictureTitle,
+                        Picture = x.Picture,
+                        PictureAlt = x.PictureAlt,
+                        Category = x.CourseCategory.Name,
+                        Slug = x.Slug,
+                        IsRemoved = x.IsRemoved,
+                        PictureSmall = x.PictureSmall,
+                        Level = x.Level,
+                        Time = x.Time,
+                        Price = x.Price.ToMoney(),
+                        TeacherProfile = x.Teacher.ProfilePhoto,
+                        Teacher = x.Teacher.Fullname,
+                        DoublePrice = x.Price,
+                        TeacherUsername = x.Teacher.Username
+                    }).Where(x => !x.IsRemoved).OrderByDescending(x => x.Id).ToList();
+
+
+            foreach (var product in products)
+            {
+                var discount = discounts.FirstOrDefault(x => x.CourseId == product.Id);
+                if (discount != null)
+                {
+                    var discountRate = discount.DiscountRate;
+                    product.DiscountRate = discountRate;
+                    product.HasDiscount = discountRate > 0;
+                    var discountAmount = Math.Round(product.DoublePrice * discountRate / 100);
+                    product.PriceWithDiscount = (product.DoublePrice - discountAmount).ToMoney();
+                }
+            }
+
+            return products;
+        }
+
+        public List<CourseQueryModel> GetCoursesBy(string username)
+        {
+            var discounts = _context.CustomerDiscounts
+                .Where(x => x.StartDate < DateTime.Now && x.EndDate > DateTime.Now)
+                .Select(x => new {x.DiscountRate, x.CourseId}).ToList();
+
+
+            var products = _context.Courses.Where(x => x.Teacher.Username == username).Include(x => x.CourseCategory)
+                .Include(x => x.Teacher).Select(x =>
+                    new CourseQueryModel
+                    {
+                        Id = x.Id,
+                        Title = x.Title,
+                        PictureTitle = x.PictureTitle,
+                        Picture = x.Picture,
+                        PictureAlt = x.PictureAlt,
+                        Category = x.CourseCategory.Name,
+                        Slug = x.Slug,
+                        IsRemoved = x.IsRemoved,
+                        PictureSmall = x.PictureSmall,
+                        Level = x.Level,
+                        Time = x.Time,
+                        Price = x.Price.ToMoney(),
+                        TeacherProfile = x.Teacher.ProfilePhoto,
+                        Teacher = x.Teacher.Fullname,
+                        DoublePrice = x.Price
+                    }).Where(x => !x.IsRemoved).OrderByDescending(x => x.Id).ToList();
+
+
+            foreach (var product in products)
+            {
+                var discount = discounts.FirstOrDefault(x => x.CourseId == product.Id);
+                if (discount != null)
+                {
+                    var discountRate = discount.DiscountRate;
+                    product.DiscountRate = discountRate;
+                    product.HasDiscount = discountRate > 0;
+                    var discountAmount = Math.Round(product.DoublePrice * discountRate / 100);
+                    product.PriceWithDiscount = (product.DoublePrice - discountAmount).ToMoney();
+                }
+            }
+
+            return products;
+        }
+
 
         public static List<SectionQueryModel> MapSections(List<Section> section)
         {

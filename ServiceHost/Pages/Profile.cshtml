@@ -1,0 +1,172 @@
+﻿@page "{id}"
+@model ServiceHost.Pages.ProfileModel
+@{
+    ViewData["Title"] = $"حساب کاربری {Model.Account.Fullname}";
+    ViewData["Image"] = $"/Pictures/{Model.Account.ProfilePhoto}";
+    ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
+    ViewData["metaDescription"] = $"{Model.Account.Biography}";
+    ViewData["Url"] = "Profile";
+    ViewData["author"] = "Elyas Zare";
+}
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<div class="ed_detail_head">
+    <div class="container">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-3 col-md-12 col-sm-12">
+                <div class="authi_125">
+                    <div class="authi_125_thumb">
+                        <img src="~/Pictures/@Model.Account.ProfilePhoto" class="img-fluid rounded" alt="@Model.Account.Fullname" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-12 col-sm-12">
+                <div class="dlkio_452">
+                    <div class="ed_detail_wrap">
+                        <div class="crs_cates cl_1"><span>زبان انگلیسی</span></div>
+                        <div class="ed_header_caption">
+                            <h2 class="ed_title font-2">@Model.Account.Fullname</h2>
+                            <ul>
+                                <li><i class="ti-control-forward"></i>@Model.Courses.Count دوره آموزشی</li>
+                            </ul>
+                        </div>
+                        <div class="ed_header_short">
+                            <p>@Model.Account.Biography</p>
+                        </div>
+
+                        <div class="ed_rate_info">
+                            <div class="star_info">
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                                <i class="fas fa-star filled"></i>
+                            </div>
+                            <div class="review_counter">
+                                امتیاز
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="dlkio_last">
+                        <div class="ed_view_link">
+                            <a href="#" class="btn theme-bg enroll-btn">ثبت نام<i class="ti-angle-left"></i></a>
+                            <a href="#" class="btn theme-border enroll-btn">اشتراک گذاری<i class="fas fa-share"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="gray">
+    <div class="container">
+
+
+        <div class="row justify-content-center">
+
+            @foreach (var course in Model.Courses)
+            {
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                    <div class="crs_grid">
+                        <div class="crs_grid_thumb">
+                            <a asp-page="./Course" asp-route-id="@course.Slug" class="crs_detail_link">
+                                <img src="~/Pictures/@course.PictureSmall" title="@course.PictureTitle" class="img-fluid rounded" alt="@course.PictureAlt" />
+                            </a>
+                            @if (course.HasDiscount)
+                            {
+                                <div class="crs_locked_ico">
+                                    <img src="~/Theme/img/giftIcon.gif" style="width: 30px; height: 30px" alt="تخفیف لنگوتاپ" />
+                                </div>
+                            }
+                        </div>
+                        <div class="crs_grid_caption">
+
+                            <div class="crs_title"><h4><a asp-page="./Course" asp-route-id="@course.Slug" class="crs_title_link">@course.Title</a></h4></div>
+                            <div class="crs_info_detail">
+                                <ul>
+                                    <li><i class="fa fa-signal text-warning"></i><span>@course.Level</span></li>
+                                    <li><i class="fa fa-clock text-danger"></i><span>@course.Time</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="crs_grid_foot">
+                            <div class="crs_flex">
+                                <div class="crs_fl_first">
+                                    <div class="crs_tutor">
+                                        <div class="crs_tutor_thumb"><a asp-page="./TeacherProfile" asp-route-id="@course.Teacher"><img src="~/Pictures/@course.TeacherProfile" class="img-fluid circle" alt="@course.Teacher" /></a></div><div class="crs_tutor_name"><a asp-page="./TeacherProfile" asp-route-id="@course.Teacher">@course.Teacher</a></div>
+                                    </div>
+                                </div>
+                                <div class="crs_fl_last">
+                                    @if (course.DoublePrice < 1)
+                                    {
+                                        <div class="crs_price">
+                                            <h4>
+                                                <span class="theme-cl">رایگان!</span>
+                                            </h4>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        @if (course.HasDiscount)
+                                        {
+                                            <div class="crs_price">
+                                                <h4>
+                                                    <span class="theme-cl">@course.PriceWithDiscount ت</span>
+                                                    <span class="old_prc" style="color: #4e6579; font-size: 15px; text-decoration: line-through; font-weight: 400;">@course.Price ت</span>
+                                                </h4>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="crs_price">
+                                                <h4>
+                                                    <span class="theme-cl">@course.Price ت</span>
+                                                </h4>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+        @*<div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <ul class="pagination p-center">
+                    @if (Model.Courses.CurrentPage > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-page="Courses" asp-route-id="@(Model.Courses.CurrentPage - 1)" aria-label="قبلی">
+                                <span class="ti-arrow-right"></span>
+                                <span class="sr-only">قبل</span>
+                            </a>
+                        </li>
+                    }
+                    @for (int i = 1; i <= Model.Courses.PageCount; i++)
+                    {
+                        <li class="page-item @((i==Model.Courses.CurrentPage)? "active" : "")"><a class="page-link" asp-page="Courses" asp-route-id="@i">@i</a></li>
+                    }
+                    @if (Model.Courses.CurrentPage < Model.Courses.PageCount)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-page="Courses" asp-route-id="@(Model.Courses.CurrentPage + 1)" aria-label="بعدی">
+                                <span class="ti-arrow-left"></span>
+                                <span class="sr-only">بعد</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>*@
+
+    </div>
+</section>

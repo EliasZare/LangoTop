@@ -1,4 +1,5 @@
 ﻿@page
+@using _0_Framework.Application
 @model ServiceHost.Pages.CheckOutModel
 @{
     ViewData["Title"] = "تایید سبد خرید / پرداخت";
@@ -11,88 +12,114 @@
 
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
 </section>
-<section class="page-title">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
+@if (!string.IsNullOrWhiteSpace(Request.Cookies["cart-items"]))
+{
+    <section class="page-title">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
 
-                <div class="breadcrumbs-wrap">
-                    <h1 class="breadcrumb-title font-2">تایید و پرداخت سبد خرید</h1>
-                    <nav class="transparent">
-                        <ol class="breadcrumb p-0 bg-white">
-                            <li class="breadcrumb-item"><a href="#">خانه</a></li>
-                            <li class="breadcrumb-item active theme-cl" aria-current="page">سبد خرید</li>
-                        </ol>
-                    </nav>
+                    <div class="breadcrumbs-wrap">
+                        <h1 class="breadcrumb-title font-2">تایید و پرداخت سبد خرید</h1>
+                        <nav class="transparent">
+                            <ol class="breadcrumb p-0 bg-white">
+                                <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                                <li class="breadcrumb-item active theme-cl" aria-current="page">سبد خرید</li>
+                            </ol>
+                        </nav>
+                    </div>
+
                 </div>
-
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="pt-0">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12">
-                <div class="table-responsive">
-                    <table class="table table-striped wishlist">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th>محصول</th>
-                                <th>قیمت</th>
-                                <th>درصد تخفیف</th>
-                                <th>سود از تخفیف</th>
-                                <th>قابل پرداخت</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var item in Model.Cart.Items)
-                        {
-                            <tr>
-                                <td><a href="#" class="remove_cart"><i class="ti-close"></i></a></td>
-                                <td>
-                                    <div class="tb_course_thumb"><img src="~/Pictures/@item.Picture" class="img-fluid" alt="@item.Picture" /></div>
-                                </td>
-                                <th>@item.Name</th>
-                                <td><span class="wish_price theme-cl">@item.UnitPrice ت</span></td>
-                                <td>@item.DiscountRate%</td>
-                                <td>@item.DiscountAmount ت</td>
-                                <td>@item.ItemPayAmount ت</td>
-                            </tr>
+    <section class="pt-0">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped wishlist">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>محصول</th>
+                                    <th>قیمت</th>
+                                    <th>درصد تخفیف</th>
+                                    <th>سود از تخفیف</th>
+                                    <th>قابل پرداخت</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Cart.Items)
+                                {
+                                    <tr>
+                                        <td><a href="#" class="remove_cart"><i class="ti-close"></i></a></td>
+                                        <td>
+                                            <div class="tb_course_thumb"><img src="~/Pictures/@item.Picture" class="img-fluid" alt="@item.Picture" /></div>
+                                        </td>
+                                        <th>@item.Name</th>
+                                        <td><span class="wish_price theme-cl">@item.UnitPrice.ToMoney() ت</span></td>
+                                        <td>@item.DiscountRate%</td>
+                                        <td>@item.DiscountAmount.ToMoney() ت</td>
+                                        <td>@item.ItemPayAmount.ToMoney() ت</td>
+                                    </tr>
 
-                        }
-                        </tbody>
-                    </table>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
 
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <h3 class="font-2">خرید شما</h3>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="pro_product_wrap">
+                            <h5>فاکتور</h5>
+                            <ul>
+                                <li><strong>مبلغ کل</strong>@Model.Cart.TotalAmount.ToMoney() تومان</li>
+                                <li><strong>تخفیف</strong>@Model.Cart.DiscountAmount تومان</li>
+                                <li><strong>مبلغ قابل پرداخت</strong>@Model.Cart.PayAmount.ToMoney() تومان</li>
+                            </ul>
+                            <br />
+                            <form asp-page-handler="Pey" method="post">
+                                @if (Model.Cart.Items.Count>1)
+                                {
+                                    <button asp-page-handler="Pay" class="btn theme-bg btm-md">پرداخت</button>
+                                }
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="col-lg-4 col-md-12 col-sm-12">
 
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h3 class="font-2">خرید شما</h3>
-                </div>
+        </div>
 
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="pro_product_wrap">
-                        <h5>فاکتور</h5>
-                        <ul>
-                            <li><strong>مبلغ کل</strong>@Model.Cart.TotalAmount تومان</li>
-                            <li><strong>تخفیف</strong>@Model.Cart.DiscountAmount تومان</li>
-                            <li><strong>مبلغ قابل پرداخت</strong>@Model.Cart.PayAmount تومان</li>
-                        </ul>
-                        <br />
-                        <form asp-page-handler="Pey" method="post">
-                            <button asp-page-handler="Pay" class="btn theme-bg btm-md">پرداخت</button>
-                        </form>
+    </section>
+}
+else
+{
+    <section class="error-wrap">
+        <div class="container">
+            <div class="row justify-content-center">
+
+                <div class="col-lg-6 col-md-10">
+                    <div class="text-center">
+
+                        <img src="assets/img/404.png" class="img-fluid" alt="">
+                        <p class="alert alert-danger">کاربر گرامی صبد خرید شما خالی است !!!</p>
+                        <a class="btn theme-bg text-white btn-md" asp-page="./Index">بازگشت به خانه</a>
+
                     </div>
                 </div>
 
             </div>
         </div>
-
-    </div>
-
-</section>
+    </section>
+}

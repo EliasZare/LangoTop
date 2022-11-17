@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using _0_Framework.Application;
 using _0_Framework.Application.Email;
 using LangoTop.Application.Contract.Account;
@@ -14,15 +15,20 @@ namespace LangoTop.Application
         private readonly IEmailService _emailService;
         private readonly IFileUploader _fileUploader;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IEncryption _encryption;
+        private readonly IRoleRepository _roleRepository;
 
         public AccountApplication(IAccountRepository accountRepository, IPasswordHasher passwordHasher,
-            IFileUploader fileUploader, IAuthHelper authHelper, IEmailService emailService)
+            IFileUploader fileUploader, IAuthHelper authHelper, IEmailService emailService, IEncryption encryption,
+            IRoleRepository roleRepository)
         {
             _accountRepository = accountRepository;
             _passwordHasher = passwordHasher;
             _fileUploader = fileUploader;
             _authHelper = authHelper;
             _emailService = emailService;
+            _encryption = encryption;
+            _roleRepository = roleRepository;
         }
 
         public OperationResult Register(RegisterAccount command)
@@ -54,7 +60,7 @@ namespace LangoTop.Application
             _accountRepository.Create(account);
             _accountRepository.SaveChanges();
             _emailService.SendEmail(command.Email, "ثبت نام موفق!",
-                $"سلام و عرض ادب خدمت شما کاربر عزیز سایت دیجی آجیلی :) \n به سایت دیجی آجیلی خوش آمدید \n باعث افتخار ماست که برای خرید آسان و مطمئن دیجی آجیلی را انتخاب کرده اید... \n جهت فعال سازی حساب کاربری خود از لینک {"https://digiajili.ir/ActiveAccount/" + activeCode} وارد شوید \n باتشکر، مدیریت دیجی آجیلی");
+                $"سلام و درود به شما کاربر عزیز سایت لنگوتاپ :) \n به سایت لنگوتاپ خوش آمدید \n باعث افتخار ماست که برای یادگیری زبان انگلیسی لنگوتاپ را انتخاب کرده اید... \n جهت فعال سازی حساب کاربری خود از لینک {"https://langotop.ir/ActiveAccount/" + activeCode} وارد شوید \n باتشکر، مدیریت دیجی آجیلی");
             return operation.Success(
                 "کاربر گرامی \n لینک فعالسازی حساب کربری به ایمیل شما ارسال شده است جهت فعالسازی وارد لینک ارسالی شوید و سپس وارد حساب کاربری خود شوید.  ");
         }
@@ -137,6 +143,7 @@ namespace LangoTop.Application
             var operation = new OperationResult();
             var account = _accountRepository.GetBy(command.Email);
 
+
             if (account == null)
                 return operation.Failed("حساب کاربری با این اطلاعات وجود ندارد، لطفا ثبت نام کنید.");
 
@@ -145,8 +152,18 @@ namespace LangoTop.Application
             if (!passwordResult.Verified)
                 return operation.Failed(ApplicationMessages.WrongUserPass);
 
-            var authViewModel = new AuthViewModel(account.Id, 1, account.Fullname, account.Username, account.Mobile,
-                account.Email, account.Biography, new List<int>(), account.ProfilePhoto);
+            if (!account.IsActive)
+                return operation.Failed(
+                    "کاربر گرامی حساب کاربری شما فعال نیست، لطفا جهت فعال سازی حساب کاربری خود به لینک ارسال شده در ایمیل خود وارد شوید. ");
+
+            var permission = _roleRepository
+                .Get(account.RoleId)
+                ?.Permissions
+                .Select(x => x.Code).ToList();
+
+            var authViewModel = new AuthViewModel(account.Id, account.RoleId, account.Fullname, account.Username,
+                account.Mobile,
+                account.Email, account.Biography, permission, account.ProfilePhoto);
             _authHelper.Signin(authViewModel);
             return operation.Success();
         }
@@ -154,6 +171,7 @@ namespace LangoTop.Application
         public OperationResult Active(string activeCode)
         {
             var operation = new OperationResult();
+
             var account = _accountRepository.GetByCode(activeCode);
 
             if (account == null)

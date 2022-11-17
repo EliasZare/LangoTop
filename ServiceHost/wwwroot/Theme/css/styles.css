@@ -68,13 +68,13 @@
     overflow: hidden !important;
 }
 body {
-    background: #ffffff;
-    color: #3c4852;
-    font-size: 14px;
-    font-family: 'IRANSans', sans-serif;
-    margin: 0;
-    overflow-x: hidden !important;
-    font-weight: 400;
+	background: #ffffff;
+	color:#3c4852;
+	font-size:14px;
+	font-family: 'IRANSans', sans-serif;
+	margin: 0;
+	overflow-x: hidden !important;
+	font-weight: 400;
 }
 .position-absolute {
     position: absolute!important;
@@ -262,9 +262,6 @@ html body .db {
 }
 .theme-bg-light {
     background:rgba(3, 185, 124,0.12) !important;
-}
-.dangerlable {
-    background: rgba(220,50,60,30) !important;
 }
 /*------------ Global Settings: Ul List Style ----------------*/
 ul.list-style {
@@ -3153,18 +3150,17 @@ span.esli_vd {
     top: 20px;
 }
 .crs_locked_ico {
-    width: 53px;
-    height: 45px;
-    /*border-radius: 50%;*/
-    border-radius: 40px 999em 999em 40px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
     background: #ffffff;
-    color: #ff9800;
+    color:#ff9800;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 12px;
     position: absolute;
-    left: 0px;
+    left: 20px;
     top: 20px;
 }
 .crs_grid_caption {
@@ -5085,7 +5081,7 @@ span.tes_quote {
 =================================================*/
 /*--------------- Education Detail ----------------*/
 .ed_detail_head {
-    padding:1rem 0rem;
+    padding:3rem 0rem;
 }
 .ed_detail_head.lg{
     padding:4rem;
@@ -5269,7 +5265,8 @@ ul.list_ed_detail2 li.tag-5 strong, ul.list_ed_detail2 li.tag-5 i {
     border-radius: 1rem;
 }
 .property_video .thumb .pro_img {
-
+    min-height: 290px;
+    max-height: 290px;
 }
 .ed_view_box .property_video .thumb, .ed_view_box .property_video:before {
     border-radius: 6px;
@@ -5283,12 +5280,8 @@ ul.list_ed_detail2 li.tag-5 strong, ul.list_ed_detail2 li.tag-5 i {
     max-height: 220px;
 }
 .property_video.lg .thumb .pro_img {
-    height: 400px;
-}
-@media only screen and (max-width: 992px) {
-    .property_video.lg .thumb .pro_img {
-        height: 200px;
-    }
+    min-height:200px;
+    max-height:400px;
 }
 .property_video .bb-video-box {
     width: 50px;
@@ -7615,7 +7608,7 @@ footer.skin-dark-footer ul.footer-bottom-social li a:hover, footer.skin-dark-foo
 
 @media (min-width: 992px) {
 	.banner_title {
-		font-size: 35px;
+		font-size: 40px;
 		line-height: 1.2;
 	}
 	.min_large {
@@ -7664,7 +7657,7 @@ footer.skin-dark-footer ul.footer-bottom-social li a:hover, footer.skin-dark-foo
 		height: 100vh;
 	}
 	.banner_title {
-		font-size: 36px;
+		font-size: 28px;
 		line-height: 1.6;
 	}
 }

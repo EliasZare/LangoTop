@@ -9,19 +9,64 @@
     <div class="container">
         <nav id="navigation" class="navigation navigation-landscape">
             <div class="nav-header">
-                <a class="nav-brand" href="#">
+                <a class="nav-brand" asp-page="./Index">
                     <img src="~/Theme/img/LangoTopLogoSite4Artboard 1.png" class="logo" alt=" لنگو تاپ" />
                 </a>
                 <div class="nav-toggle"></div>
                 <div class="mobile_nav">
-                    <ul>
-                        <li>
-                            <a asp-page="./Login" class="crs_yuo12 w-auto text-white theme-bg">
-                                <span class="embos_45"><i class="fas fa-sign-in-alt ml-1 rotate-img"></i>ورود</span>
-                            </a>
-                        </li>
+                    <ul @*class="nav-menu nav-menu-social align-to-left"*@>
+                        @if (isAuthenticated)
+                        {
+                            <li class="account-drop">
+                                <a href="javascript:void(0);" class="crs_yuo12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="embos_45"><i class="fas fa-shopping-basket"></i><i class="embose_count" id="cart_items_count_Mobile">0</i></span>
+                                </a>
+                                <div class="dropdown-menu pull-right animated flipInX">
+                                    <div class="drp_menu_headr bg-purple">
+                                        <h4>سبد خرید</h4>
+                                    </div>
+                                    <div class="ground-list ground-hover-list">
+                                        <div id="cart_items_wrapper_mobile">
+
+                                        </div>
+                                        <div class="ground ground-list-single">
+                                            <a asp-page="/Checkout" class="btn theme-bg text-white full-width">مشاهده سبد</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="btn-group account-drop">
+                                    <a href="javascript:void(0);" class="crs_yuo12 btn btn-order-by-filt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="~/Pictures/@accountInfo.ProfilePicture" class="avater-img" alt="">
+                                    </a>
+                                    <div class="dropdown-menu pull-right animated flipInX">
+                                        <div class="drp_menu_headr">
+                                            <h4>سلام، @accountInfo.Fullname</h4>
+                                        </div>
+                                        <ul>
+                                            <li><a href="/Dashboard"><i class="fa fa-tachometer-alt"></i>پیشخوان<span class="notti_coun style-1">4</span></a></li>
+                                            <li><a href="/Dashboard/Profile"><i class="fa fa-user-tie"></i>پروفایل کاربری</a></li>
+                                            <li><a href="/Dashboard/Courses"><i class="fas fa-shopping-basket"></i>دوره های من<span class="notti_coun style-2">7</span></a></li>
+                                            <li><a href="/Dashboard/Message"><i class="fas fa-comments"></i>پیام ها</a></li>
+                                            <li><a asp-page="/Login" asp-page-handler="Logout"><i class="fa fa-unlock-alt"></i>خروج</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+
+                        }
+                        else
+                        {
+                                <li>
+                                    <a asp-page="./Login" class="crs_yuo12 w-auto text-white theme-bg">
+                                        <span class="embos_45"><i class="fas fa-sign-in-alt ml-1 rotate-img"></i>ورود</span>
+                                    </a>
+                                </li>
+                        }
                     </ul>
-                </div>
+                    </div>
             </div>
             <div class="nav-menus-wrapper">
                 <ul class="nav-menu">

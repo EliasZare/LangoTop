@@ -91,7 +91,7 @@ namespace _0_Framework.Application
                 new("permissions", permissions),
                 new(ClaimTypes.Email, account.Email),
                 new("ProfilePicture", account.ProfilePicture),
-                new("Biography", account.Biography)
+                new("Biography", account.Biography = "من از لنگوتاپ برای آموزش زبان انگلیسی استفاده می کنم")
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

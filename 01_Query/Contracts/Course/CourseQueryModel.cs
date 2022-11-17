@@ -26,7 +26,7 @@ namespace _01_Query.Contracts.Course
         public string TeacherProfile { get; set; }
         public long TeacherId { get; set; }
         public bool IsRemoved { get; set; }
-        public bool IsLocked { get; set; }
+        public bool IsPaid { get; set; }
         public string Time { get; set; }
         public long PartCount { get; set; }
         public string Level { get; set; }
@@ -43,5 +43,6 @@ namespace _01_Query.Contracts.Course
         public List<CommentQueryModel> Comments { get; set; }
         public List<SectionQueryModel> Sections { get; set; }
         public string PageTitle { get; set; }
+        public string TeacherUsername { get; set; }
     }
 }

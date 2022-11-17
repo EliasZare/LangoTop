@@ -88,7 +88,8 @@ namespace _01_Query.Query
                     AuthorBio = x.Author.Biography,
                     AuthorName = x.Author.Fullname,
                     CategoryId = x.CategoryId,
-                    PageTitle = x.PageTitle
+                    PageTitle = x.PageTitle,
+                    AuthorUsername = x.Author.Username
                 }).FirstOrDefault(x => x.Slug == slug);
 
             if (article == null) return new ArticleQueryModel();

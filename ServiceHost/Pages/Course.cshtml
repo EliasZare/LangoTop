@@ -10,9 +10,11 @@
     ViewData["author"] = Model.Course.Teacher;
 }
 @inject IAuthHelper _authHelper
+@inject IEncryption _encryption
 @{
     var accountInfo = _authHelper.CurrentAccountInfo();
     bool isAuthenticated = _authHelper.IsAuthenticated();
+    var id = _encryption.Encrypt(Model.Course.TeacherId.ToString());
 }
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
 </section>
@@ -82,13 +84,6 @@
                             <!-- Overview -->
                             <div class="edu_wraper">
                                 <h4 class="edu_title">سرفصل و جزئیات آموزش</h4>
-                                <div class="list-single-main-item-title fl-wrap">
-                                    <h3>ویدئو معرفی</h3>
-                                </div>
-
-                                <div id="96702607757">
-                                    <script type="text/JavaScript" src="https://www.aparat.com/embed/tF7zX?data[rnddiv]=96702607757&data[responsive]=yes"></script>
-                                </div>
                                 <br /><br />
                                 @Html.Raw(@Model.Course.Description)
                             </div>
@@ -113,7 +108,20 @@
                                                     <ul class="lectures_lists">
                                                         @foreach (var part in item.Parts)
                                                         {
-                                                            <li class="unview"><div class="lectures_lists_title"><i class="fa fa-lock dios lock"></i></div><a href="@part.DownloadLink">@part.Title</a><span class="cls_timing">@part.Time</span></li>
+                                                            if (Model.Course.DoublePrice < 1)
+                                                            {
+                                                                <li class="progressing"><div class="lectures_lists_title"><i class="fa fa-lock-open dios"></i></div><a asp-page-handler="DownloadFile" asp-route-partId="@part.Id" asp-route-courseId="@Model.Course.Id" target="_blank">@part.Title</a><span class="cls_timing">@part.Time</span></li>
+                                                            }
+                                                            else if (Model.Course.IsPaid)
+                                                            {
+                                                                <li class="progressing"><div class="lectures_lists_title"><i class="fa fa-lock-open dios"></i></div><a asp-page-handler="DownloadFile" asp-route-partId="@part.Id" asp-route-courseId="@Model.Course.Id" target="_blank">@part.Title</a><span class="cls_timing">@part.Time</span></li>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <li class="unview"><div class="lectures_lists_title"><i class="fa fa-lock dios lock"></i></div><p>@part.Title</p><span class="cls_timing">@part.Time</span></li>
+
+                                                            }
                                                         }
                                                     </ul>
                                                 </div>
@@ -132,7 +140,7 @@
                                     <a href="#"><img src="~/Pictures/@Model.Course.TeacherProfile" class="img-fluid" alt=""></a>
                                 </div>
                                 <div class="single_instructor_caption">
-                                    <h4><a href="#">@Model.Course.Teacher</a></h4>
+                                    <h4><a asp-page="/Profile" asp-route-id="@Model.Course.TeacherUsername">@Model.Course.Teacher</a></h4>
                                     <ul class="instructor_info">
                                         <li><i class="ti-control-forward"></i>@Model.Course.TeacherCourseCount دوره</li>
                                         <li><i class="ti-user"></i>عضویت : @Model.Course.TeacherJoinDate</li>
@@ -161,7 +169,7 @@
                                     {
                                         <div class="reviews-comments-item">
                                             <div class="review-comments-avatar">
-                                                <img src="~/Theme/img/CommentUser.png" class="img-fluid" alt="@comment.Name">
+                                                <img src="~/Pictures/User.png" class="img-fluid" alt="@comment.Name">
                                             </div>
                                             <div class="reviews-comments-item-text">
                                                 <h4><a href="#">@comment.Name</a><span class="reviews-comments-item-date"><i class="ti-calendar theme-cl"></i>@comment.CreationDate</span></h4>
@@ -258,7 +266,15 @@
                     <div class="ed_view_link">
                         @if (_authHelper.IsAuthenticated())
                         {
-                            <a onclick="addToCart('@Model.Course.Id', '@Model.Course.Title', '@Model.Course.DoublePrice', '@Model.Course.Picture')" class="btn theme-bg enroll-btn">ثبت نام دوره<i class="ti-angle-left"></i></a>
+                            @if (Model.Course.DoublePrice > 1)
+                            {
+                                <a onclick="addToCart('@Model.Course.Id', '@Model.Course.Title', '@Model.Course.DoublePrice', '@Model.Course.Picture')" class="btn theme-bg enroll-btn">ثبت نام دوره<i class="ti-angle-left"></i></a>
+                            }
+                            else
+                            {
+                                <div class="alert alert-success">تبریــــک! این دوره رایگان است</div>
+
+                            }
                         }
                         else
                         {
@@ -317,7 +333,7 @@
                                     }
                                 </div>
                                 <div class="crs_grid_caption">
-                                    
+
                                     <div class="crs_title"><h4><a asp-page="./Course" asp-route-id="@course.Slug" class="crs_title_link">@course.Title</a></h4></div>
                                     <div class="crs_info_detail">
                                         <ul>
@@ -341,7 +357,7 @@
                                                         <span class="theme-cl">رایگان!</span>
                                                     </h4>
                                                 </div>
-                                   
+
                                             }
                                             else
                                             {

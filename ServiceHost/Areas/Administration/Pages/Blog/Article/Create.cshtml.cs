@@ -33,7 +33,6 @@ namespace ServiceHost.Areas.Administration.Pages.Blog.Article
 
         public IActionResult OnPost(CreateArticle command)
         {
-            ;
             var result = _articleApplication.Create(command);
             return RedirectToPage("./Index");
         }

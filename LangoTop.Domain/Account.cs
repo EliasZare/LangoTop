@@ -48,9 +48,8 @@ namespace LangoTop.Domain
                 ProfilePhoto = profilePhoto;
 
             Biography = biography;
-            if (roleId >= 1) RoleId = roleId;
+            RoleId = roleId;
             ActiveCode = activeCode;
-            IsActive = false;
         }
 
         public void ChangePassword(string password)
