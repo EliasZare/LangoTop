@@ -1,0 +1,71 @@
+﻿@model LangoTop.Application.Contract.Page.EditPage
+@{
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title">ویرایش لینک دوره :@Model.Title</h4>
+</div>
+
+<form asp-page="./Index" asp-page-handler="Edit"
+      method="post"
+      data-ajax="true"
+      data-callback=""
+      data-action="Refresh"
+      enctype="multipart/form-data">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label">عنوان</label>
+                    <input type="text" class="form-control" asp-for="Title">
+                    <span asp-validation-for="Title" class="error"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Slug" class="control-label">اسلاگ</label>
+                    <input type="text" class="form-control" asp-for="Slug">
+                    <span asp-validation-for="Slug" class="error"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="Type" class="control-label">نوع</label>
+                    <select class="form-control" asp-for="Type">
+                        <option value="0">انتخاب</option>
+                        <option value="1">مقاله</option>
+                        <option value="2">دوره</option>
+                        <option value="3">صفحه دیگر</option>
+                    </select>
+                    <span asp-validation-for="Type" class="error"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label">توضیحات</label>
+                    <input required="" type="text" class="form-control" asp-for="Description" multiple="">
+                    <span asp-validation-for="Description" class="error"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label asp-for="ShortKey" class="control-label">کلید</label>
+                    <input required="" type="text" class="form-control" asp-for="ShortKey" maxlength="4">
+                    <span asp-validation-for="ShortKey" class="error"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+        <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
+    </div>
+</form>

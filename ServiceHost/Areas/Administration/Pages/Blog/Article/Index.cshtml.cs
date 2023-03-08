@@ -13,6 +13,7 @@ namespace ServiceHost.Areas.Administration.Pages.Blog.Article
         private readonly IArticleApplication _articleApplication;
         private readonly IArticleCategoryApplication _articleCategoryApplication;
         private readonly IAccountApplication _accountApplication;
+
         public List<ArticleViewModel> Articles;
         public ArticleSearchModel SearchModel;
         public string Message { get; set; }

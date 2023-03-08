@@ -39,6 +39,7 @@ namespace _01_Query.Contracts.Course
         public string TeacherInstagramLink { get; set; }
         public string TeacherTwitterLink { get; set; }
         public string TeacherBio { get; set; }
+        public string ShortLink { get; set; }
         public List<string> KeywordList { get; set; }
         public List<CommentQueryModel> Comments { get; set; }
         public List<SectionQueryModel> Sections { get; set; }

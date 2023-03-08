@@ -28,5 +28,6 @@ namespace _01_Query.Contracts.Article
         public List<CommentQueryModel> Comments { get; set; }
         public bool IsRemoved { get; set; }
         public string AuthorBio { get; set; }
+        public string ShortLink { get; set; }
     }
 }

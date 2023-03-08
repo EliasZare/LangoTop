@@ -88,7 +88,7 @@
                             </ul>
                             <br />
                             <form asp-page-handler="Pey" method="post">
-                                @if (Model.Cart.Items.Count>1)
+                                @if (Model.Cart.Items.Count>=1)
                                 {
                                     <button asp-page-handler="Pay" class="btn theme-bg btm-md">پرداخت</button>
                                 }
@@ -113,7 +113,7 @@ else
                     <div class="text-center">
 
                         <img src="assets/img/404.png" class="img-fluid" alt="">
-                        <p class="alert alert-danger">کاربر گرامی صبد خرید شما خالی است !!!</p>
+                        <p class="alert alert-danger">کاربر گرامی سبد خرید شما خالی است !!!</p>
                         <a class="btn theme-bg text-white btn-md" asp-page="./Index">بازگشت به خانه</a>
 
                     </div>

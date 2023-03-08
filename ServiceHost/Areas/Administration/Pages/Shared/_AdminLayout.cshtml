@@ -10,41 +10,44 @@
     <title>@ViewData["Title"] | لنگوتاپ</title>
 
     <!-- Base Css Files -->
-    <link href="~/AdminTheme/assets/css/bootstrap.min.css" rel="stylesheet"/>
-
+    <link href="~/AdminTheme/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/AdminTheme/assets/summernote/summernote.css" rel="stylesheet" />
+    <link href="~/AdminTheme/assets/summernote/summernote.min.css" rel="stylesheet" />
     <!-- Font Icons -->
-    <link href="~/AdminTheme/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="~/AdminTheme/assets/ionicon/css/ionicons.min.css" rel="stylesheet"/>
+    <link href="~/AdminTheme/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/AdminTheme/assets/ionicon/css/ionicons.min.css" rel="stylesheet" />
     <link href="~/AdminTheme/assets/css/material-design-iconic-font.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- animate css -->
-    <link href="~/AdminTheme/assets/css/animate.css" rel="stylesheet"/>
+    <link href="~/AdminTheme/assets/css/animate.css" rel="stylesheet" />
 
     <!-- Waves-effect -->
     <link href="~/AdminTheme/assets/css/waves-effect.css" rel="stylesheet">
 
-    <link href="~/AdminTheme/assets/datatables/jquery.dataTables.min.css" rel="stylesheet"/>
+    <link href="~/AdminTheme/assets/datatables/jquery.dataTables.min.css" rel="stylesheet" />
     <!-- sweet alerts -->
     <link href="~/AdminTheme/assets/sweet-alert/sweet-alert.min.css" rel="stylesheet">
 
     <!-- Custom Files -->
-    <link href="~/AdminTheme/assets/css/helper.css" rel="stylesheet" type="text/css"/>
-    <link href="~/AdminTheme/assets/css/style.css" rel="stylesheet" type="text/css"/>
-    <link href="~/AdminTheme/assets/jquery-multi-select/multi-select.css" rel="stylesheet" type="text/css"/>
-
-    @RenderSection("Css", false)
-
+    <link href="~/AdminTheme/assets/css/helper.css" rel="stylesheet" type="text/css" />
+    <link href="~/AdminTheme/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/AdminTheme/assets/jquery-multi-select/multi-select.css" rel="stylesheet" type="text/css" />
+    @await RenderSectionAsync("Css", false)
+<link href="~/AdminTheme/assets/ckeditor/prism_1.0.1/prism/lib/prism/prism_patched.min.css" rel="stylesheet" />
 
     <script src="~/AdminTheme/assets/js/modernizr.min.js"></script>
     <link href="~/AdminTheme/assets/css/persian-datepicker.min.css" rel="stylesheet">
     <script src="https://cdn.tiny.cloud/1/4l7ll64n9m6p5vwdighcgta9opzok7dz2hnspm7sd9iiytka/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
-        tinymce.init({
-            selector: 'textarea#BodyContent',
-            plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
-            toolbar_mode: 'floating'
-        });
-    </script>
+    <script src="~/AdminTheme/assets/ckeditor/ckeditor.js"></script>
+    @*<script>
+            tinymce.init({
+                selector: 'textarea#BodyContent',
+                plugins: 'advlist autolink lists link image charmap preview anchor pagebreak',
+                toolbar_mode: 'floating'
+            });
+        </script>*@
 </head>
 
 <body class="fixed-left">
@@ -184,15 +187,7 @@
             <div class="sidebar-inner slimscrollleft">
                 <div class="user-details">
                     <div class="pull-left">
-                        @*@if (currentRoleId == Roles.Administrator)
-                            {
-                                <img src="~/AdminTheme/assets/images/users/Administrator.png" alt="" class="thumb-md img-circle">
-                            }
-                            else
-                            {
-                                <img src="~/AdminTheme/assets/images/users/ContentUploader.png" alt="" class="thumb-md img-circle">
 
-                            }*@
                     </div>
                     <div class="user-info">
                         <div class="dropdown">
@@ -227,8 +222,7 @@
                                 <i class="md md-home"></i><span> داشبورد </span>
                             </a>
                         </li>
-                        @*@if (authHelper.CurrentAccountRole() == Roles.Administrator)
-                            {*@
+
                         <li>
                             <a asp-page="/Order/Index" class="waves-effect">
                                 <i class="md md-message"></i><span> فاکتور ها </span>
@@ -299,7 +293,6 @@
                                 </li>
                             </ul>
                         </li>
-                        @*}*@
 
                         <li class="has_sub">
                             <a class="waves-effect">
@@ -319,6 +312,11 @@
                                     <a asp-page="/blog/Comment/index"> نظرات </a>
                                 </li>
                             </ul>
+                        </li>
+                        <li>
+                            <a asp-page="/ShortLink/Index" class="waves-effect">
+                                <i class="md md-link"></i><span> لینک کوتاه </span>
+                            </a>
                         </li>
                         <li>
                             <a asp-page="/Message/Index" class="waves-effect">
@@ -400,7 +398,11 @@
     <script src="~/AdminTheme/assets/fastclick/fastclick.js"></script>
     <script src="~/AdminTheme/assets/jquery-slimscroll/jquery.slimscroll.js"></script>
     <script src="~/AdminTheme/assets/jquery-blockui/jquery.blockUI.js"></script>
-    <script src="~/Theme/js/summernote.min.js"></script>
+    @*<script src="~/AdminTheme/assets/summernote/summernote.min.js"></script>*@
+    <script src="~/AdminTheme/assets/js/Coustom.js"></script>
+    <!--CkEditor Jquery-->
+
+    <script src="~/AdminTheme/assets/ckeditor/prism_1.0.1/prism/lib/prism/prism_patched.min.js"></script>
 
     <!-- sweet alerts -->
     <script src="~/AdminTheme/assets/sweet-alert/sweet-alert.min.js"></script>
@@ -438,7 +440,9 @@
 
     <!-- Todo -->
     <!--Persian date piker-->
-
+    @*<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>*@
+    @*<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
     <link href="~/AdminTheme/assets/css/persian-datepicker.min.css" rel="stylesheet">
 
     <script src="~/AdminTheme/assets/js/persian-date.min.js"></script>
@@ -448,12 +452,19 @@
     <script type="text/javascript" src="~/AdminTheme/assets/jquery-multi-select/jquery.quicksearch.js"></script>
 
     @RenderSection("Scripts", false)
+
     <script>
         $('.persianDateInput').persianDatepicker({
             format: 'YYYY/MM/DD',
             autoClose: true,
             initialValueType: "persian"
         });
+                    //$(document).ready(function () {
+                    //    $('#summernote').summernote();
+                    //});
+    </script>
+    <script type="text/javascript">
+                    //$(document).ready(function () { $('.dropdown-toggle').dropdown(); $('#summernote').summernote(''); });
     </script>
 
 </body>

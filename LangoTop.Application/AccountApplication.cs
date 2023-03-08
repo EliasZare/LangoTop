@@ -132,7 +132,8 @@ namespace LangoTop.Application
             if (account == null)
                 return operation.Failed(ApplicationMessages.RecordNotFound);
 
-            _emailService.SendEmail(email, "فراموشی رمز عبور", $"کاربر گرامی با ایتفاده از لینک زیر می توانید رمز عبور خود را در لنگوتاپ تغییر دهید. \n https://langotop.ir/ChangePassword/{account.ActiveCode} ");
+            _emailService.SendEmail(email, "فراموشی رمز عبور",
+                $"کاربر گرامی با استفاده از لینک زیر می توانید رمز عبور خود را در لنگوتاپ تغییر دهید. \n https://langotop.ir/ChangePassword/{account.ActiveCode} ");
 
             return operation.Success(
                 "ایمیلی حاوی یک لینک به ایمیل شما ارسال شده است از طریق لینک وارد شوید و اقدام به تغییر رمز عبور خود فرمایید.");

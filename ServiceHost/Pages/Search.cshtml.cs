@@ -15,10 +15,10 @@ namespace ServiceHost.Pages
             _courseQuery = courseQuery;
         }
 
-        public void OnGet(string searchModel, int id = 1)
+        public void OnGet(string s, int id = 1)
         {
-            SearchModelInput = searchModel;
-            Courses = _courseQuery.Search(searchModel, id);
+            SearchModelInput = s;
+            Courses = _courseQuery.Search(s, id);
         }
     }
 }

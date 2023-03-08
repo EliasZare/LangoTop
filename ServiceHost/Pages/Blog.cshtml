@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id}"
 @model ServiceHost.Pages.BlogModel
 @{
     ViewData["Title"] = "وبلاگ";
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12">
 
-                <div class="breadcrumbs-wrap">          
+                <div class="breadcrumbs-wrap">
                     <h1 class="breadcrumb-title font-2">مقالات زبان انگلیسی</h1>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb p-0 bg-white">
@@ -36,7 +36,7 @@
             <div class="col-lg-7 col-md-8">
                 <div class="sec-heading center">
                     <h3 class="font-2">آخرین اخبار و <span class="theme-cl">مقالات</span></h3>
-                    <p>با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.</p>
+                    <p>هر چیزی که برای یادگیری زبان انگلیسی نیاز دارید در اینجاست!</p>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="row justify-content-center">
 
             <!-- Single Item -->
-            @foreach (var article in Model.Articles)
+            @foreach (var article in Model.Articles.Articles)
             {
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
                     <div class="blg_grid_box">
@@ -77,6 +77,34 @@
             }
 
         </div>
-
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <ul class="pagination p-center">
+                    @if (Model.Articles.CurrentPage > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-page="Blog" asp-route-id="@(Model.Articles.CurrentPage - 1)"  aria-label="قبلی">
+                                <span class="ti-arrow-right"></span>
+                                <span class="sr-only">قبل</span>
+                            </a>
+                        </li>
+                    }
+                    @for (int i = 1; i <= Model.Articles.PageCount; i++)
+                    {
+                        <li class="page-item @((i==Model.Articles.CurrentPage)? "active" : "")"><a class="page-link" asp-page="Blog" asp-route-id="@i">@i</a></li>
+                    }
+                    @if (Model.Articles.CurrentPage < Model.Articles.PageCount)
+                    {
+                        <li class="page-item">
+                            <a class="page-link"asp-page="Blog" asp-route-id="@(Model.Articles.CurrentPage + 1)" aria-label="بعدی">
+                                <span class="ti-arrow-left"></span>
+                                <span class="sr-only">بعد</span>
+                            </a>
+                        </li>
+                    }
+                      
+                </ul>
+            </div>
+        </div>
     </div>
 </section>

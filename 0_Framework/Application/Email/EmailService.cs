@@ -9,14 +9,15 @@ namespace _0_Framework.Application.Email
         public string SendEmail(string toAddress, string subject, string body)
         {
             var result = "Message Sent Successfully..!!";
-            var senderID = "Contact@digiajili.ir";
-            const string senderPassword = "O3ot39$u0";
+            var senderID = "Contact@langotop.ir";
+            const string senderPassword = "y29v4H$u9";
             try
             {
                 var smtp = new SmtpClient
                 {
-                    Host = "digiajili.ir",
+                    Host = "langotop.ir",
                     Port = 25,
+                    TargetName = "لنگوتاپ | LangoTop",
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     Credentials = new NetworkCredential(senderID, senderPassword),
                     Timeout = 30000

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using _01_Query.Contracts.Course;
+using _01_Query.Contracts.Banner;
 
 namespace _01_Query.Contracts
 {
     public class FooterQueryModel
     {
-        public List<CourseQueryModel> LatestCourses { get; set; }
+        public List<BannerQueryModel> Banners;
     }
 }

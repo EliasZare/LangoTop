@@ -33,7 +33,7 @@ namespace ServiceHost.Areas.Administration.Pages.Courses.Course
 
         public IActionResult OnPost(CreateCourse command)
         {
-            var result = _courseApplication.Create(command);
+            _courseApplication.Create(command);
             return RedirectToPage("/Index");
         }
     }

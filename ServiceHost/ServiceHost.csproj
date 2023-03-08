@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\AdminTheme\assets\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\AdminTheme\assets\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\AdminTheme\assets\fonts\IranianSans.svg" />
+    <None Include="wwwroot\AdminTheme\assets\fonts\IranianSans.woff2" />
+    <None Include="wwwroot\AdminTheme\assets\fonts\Material-Design-Iconic-Font.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
       <PrivateAssets>all</PrivateAssets>

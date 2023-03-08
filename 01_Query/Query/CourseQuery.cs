@@ -52,7 +52,8 @@ namespace _01_Query.Query
                     TeacherProfile = x.Teacher.ProfilePhoto,
                     Teacher = x.Teacher.Fullname,
                     DoublePrice = x.Price,
-                    TeacherUsername = x.Teacher.Username
+                    TeacherUsername = x.Teacher.Username,
+                    ShortLink = x.ShortLink
                 }).Where(x => !x.IsRemoved).OrderByDescending(x => x.Id).Take(counts).ToList();
 
 
@@ -97,7 +98,8 @@ namespace _01_Query.Query
                     TeacherProfile = x.Teacher.ProfilePhoto,
                     Teacher = x.Teacher.Fullname,
                     DoublePrice = x.Price,
-                    TeacherUsername = x.Teacher.Username
+                    TeacherUsername = x.Teacher.Username,
+                    ShortLink = x.ShortLink
                 }).Where(x => !x.IsRemoved).OrderByDescending(x => x.Id).ToList();
 
 
@@ -122,13 +124,12 @@ namespace _01_Query.Query
             IQueryable<Course> result = _context.Courses; //----lazy load
 
             //-------paging---------//
-            var take = 1;
+            var take = 9;
             var skip = (pageId - 1) * take;
 
             var list = new PagingCourseQueryModel();
             list.CurrentPage = pageId;
             list.PageCount = (int) Math.Ceiling(result.Count() / (double) take);
-
             var discounts = _context.CustomerDiscounts
                 .Where(x => x.StartDate < DateTime.Now && x.EndDate > DateTime.Now)
                 .Select(x => new {x.DiscountRate, x.CourseId}).ToList();
@@ -151,7 +152,8 @@ namespace _01_Query.Query
                     Price = x.Price.ToMoney(),
                     TeacherProfile = x.Teacher.ProfilePhoto,
                     Teacher = x.Teacher.Fullname,
-                    DoublePrice = x.Price
+                    DoublePrice = x.Price,
+                    ShortLink = x.ShortLink
                 }).Where(x => !x.IsRemoved).OrderByDescending(x => x.Id).Skip(skip).Take(take).ToList();
 
 
@@ -176,12 +178,12 @@ namespace _01_Query.Query
             IQueryable<Course> result = _context.Courses; //----lazy load
 
             //-------paging---------//
-            var take = 1;
+            var take = 9;
             var skip = (pageId - 1) * take;
 
             var list = new PagingCourseQueryModel();
             list.CurrentPage = pageId;
-            list.PageCount = (int) Math.Ceiling(result.Count() / (double) take);
+
 
             var discounts = _context.CustomerDiscounts
                 .Where(x => x.StartDate < DateTime.Now && x.EndDate > DateTime.Now)
@@ -207,7 +209,8 @@ namespace _01_Query.Query
                     Teacher = x.Teacher.Fullname,
                     ShortDescription = x.ShortDescription,
                     Keywords = x.Keywords,
-                    DoublePrice = x.Price
+                    DoublePrice = x.Price,
+                    ShortLink = x.ShortLink
                 }).Where(x => !x.IsRemoved).AsNoTracking().AsEnumerable();
 
             if (!string.IsNullOrWhiteSpace(searchModel))
@@ -230,7 +233,8 @@ namespace _01_Query.Query
                 }
             }
 
-            list.Courses = query.Skip(skip).Take(take).ToList();
+            list.PageCount = (int) Math.Ceiling(products.Count() / (double) take);
+            list.Courses = products.Skip(skip).Take(take).ToList();
             return list;
         }
 
@@ -273,7 +277,8 @@ namespace _01_Query.Query
                     PageTitle = x.PageTitle,
                     TeacherBio = x.Teacher.Biography,
                     TeacherUsername = x.Teacher.Username,
-                    Sections = MapSections(x.Sections)
+                    Sections = MapSections(x.Sections),
+                    ShortLink = x.ShortLink
                 }).Where(x => !x.IsRemoved).FirstOrDefault(x => x.Slug == slug);
 
             foreach (var paidCourse in paidCourses)
@@ -301,7 +306,7 @@ namespace _01_Query.Query
                         SectionId = x.SectionId,
                         Time = x.Time,
                         DownloadLink = x.DownloadLink
-                    }).OrderByDescending(x => x.Id).Where(x => !x.IsRemoved && x.SectionId == section.Id).ToList();
+                    }).OrderBy(x => x.Id).Where(x => !x.IsRemoved && x.SectionId == section.Id).ToList();
 
                 section.Parts = parts;
                 partCount += parts.Count;
@@ -363,7 +368,8 @@ namespace _01_Query.Query
                         TeacherProfile = x.Teacher.ProfilePhoto,
                         Teacher = x.Teacher.Fullname,
                         DoublePrice = x.Price,
-                        TeacherUsername = x.Teacher.Username
+                        TeacherUsername = x.Teacher.Username,
+                        ShortLink = x.ShortLink
                     }).Where(x => !x.IsRemoved).OrderByDescending(x => x.Id).ToList();
 
 
@@ -438,7 +444,7 @@ namespace _01_Query.Query
                 CourseId = x.CourseId,
                 Title = x.Title,
                 IsRemoved = x.IsRemoved
-            }).OrderByDescending(x => x.Id).ToList();
+            }).OrderBy(x => x.Id).ToList();
         }
     }
 }

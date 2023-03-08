@@ -4,6 +4,7 @@ using System.Text.Unicode;
 using _0_Framework.Application;
 using _0_Framework.Application.Email;
 using _0_Framework.Application.ZarinPal;
+using _0_Framework.Domain;
 using _0_Framework.Infrastructure;
 using _01_Query.Contracts;
 using _01_Query.Contracts.Account;
@@ -25,6 +26,7 @@ using LangoTop.Application.Contract.CourseCategory;
 using LangoTop.Application.Contract.CustomerDiscount;
 using LangoTop.Application.Contract.DiscountCode;
 using LangoTop.Application.Contract.Order;
+using LangoTop.Application.Contract.Page;
 using LangoTop.Application.Contract.Part;
 using LangoTop.Application.Contract.Role;
 using LangoTop.Application.Contract.Section;
@@ -56,6 +58,8 @@ namespace ServiceHost
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+
+            services.Configure<GoogleReCaptchaConfig>(Configuration.GetSection("GoogleRecaptcha"));
 
             var connectionString = Configuration.GetConnectionString("LangoTop_DB");
 
@@ -118,6 +122,11 @@ namespace ServiceHost
 
             services.AddTransient<IBannerQuery, BannerQuery>();
 
+            services.AddTransient<IGenerateShortKey, GenerateShortKey>();
+
+            services.AddTransient<IPageApplication, PageApplication>();
+            services.AddTransient<IPageRepository, PageRepository>();
+
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Arabic));
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddTransient<IFileUploader, FileUploader>();
@@ -127,6 +136,8 @@ namespace ServiceHost
             services.AddSingleton<ICartService, CartService>();
             services.AddTransient<ICartCalculateService, CartCalculateService>();
             services.AddTransient<IZarinPalFactory, ZarinPalFactory>();
+            services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
+            services.AddTransient<GoogleReCaptchaConfig>();
 
             #endregion
 
@@ -189,9 +200,10 @@ namespace ServiceHost
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseDeveloperExceptionPage();
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
             }
             else
             {

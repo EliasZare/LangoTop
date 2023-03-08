@@ -1,16 +1,42 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "صفحه اصلی";
+    ViewData["Title"] = "آموزش زبان انگلیسی";
     ViewData["Image"] = "Theme/img/Logo.png";
     ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
     ViewData["metaDescription"] = "لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند.";
     ViewData["Url"] = "";
-    ViewData["author"] ="Elyas Zare";
-
+    ViewData["author"] = "Elyas Zare";
 }
 
-
+@section Schema
+{
+    <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@type": "Organization",
+          "name": "لنگوتاپ | LangoTop",
+          "url": "https://langotop.ir/",
+          "logo": "https://langotop.ir/Theme/img/logo.png",
+          "alternateName": "لنگوتاپ | LangoTop",
+          "sameAs": [
+            "https://instagram.com/langotop",
+            "https://youtube.com/@@langotop"
+          ],
+          "contactPoint": [
+            {
+              "@@type": "ContactPoint",
+              "telephone": "+98 920 073 1235",
+              "contactType": "customer service",
+              "email": "contact@LangoTop.ir",
+              "contactOption": "TollFree",
+              "areaServed": "IR",
+              "availableLanguage": "fa"
+            }
+          ]
+        }
+    </script>
+}
 @await Component.InvokeAsync("Landing")
 @await Component.InvokeAsync("Services")
 @await Component.InvokeAsync("LatestCourses")

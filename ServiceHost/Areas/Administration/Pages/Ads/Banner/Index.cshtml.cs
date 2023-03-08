@@ -9,7 +9,7 @@ namespace ServiceHost.Areas.Administration.Pages.Ads.Banner
     public class IndexModel : PageModel
     {
         private readonly IBannerApplication _bannerApplication;
-        private AdsType _adsType = new();
+        private readonly AdsType _adsType = new();
         public List<BannerViewModel> Banners { get; set; }
         public string Message { get; set; }
 

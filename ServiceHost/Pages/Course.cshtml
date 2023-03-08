@@ -110,7 +110,14 @@
                                                         {
                                                             if (Model.Course.DoublePrice < 1)
                                                             {
-                                                                <li class="progressing"><div class="lectures_lists_title"><i class="fa fa-lock-open dios"></i></div><a asp-page-handler="DownloadFile" asp-route-partId="@part.Id" asp-route-courseId="@Model.Course.Id" target="_blank">@part.Title</a><span class="cls_timing">@part.Time</span></li>
+                                                                if (_authHelper.IsAuthenticated())
+                                                                {
+                                                                    <li class="progressing"><div class="lectures_lists_title"><i class="fa fa-lock-open dios"></i></div><a asp-page-handler="DownloadFile" asp-route-partId="@part.Id" asp-route-courseId="@Model.Course.Id" target="_blank">@part.Title</a><span class="cls_timing">@part.Time</span></li>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <li class="unview"><div class="lectures_lists_title"><i class="fa fa-lock dios lock"></i></div><a asp-page="/Login" target="_blank">@part.Title</a><span class="cls_timing">@part.Time</span></li>
+                                                                }
                                                             }
                                                             else if (Model.Course.IsPaid)
                                                             {
@@ -237,72 +244,87 @@
                 </div>
 
             </div>
+        <!-- Sidebar -->
+                <div class="col-lg-4 col-md-12 order-lg-last" style="position: sticky">
 
-            <!-- Sidebar -->
-            <div class="col-lg-4 col-md-12 order-lg-last" style="position: sticky">
-
-                <div class="ed_view_box style_2 border ovrlio stick_top min" style="margin-top: 10px;">
-                    <div class="ed_author">
-                        @if (Model.Course.DoublePrice < 1)
-                        {
-                            <h2 class="theme-cl m-0">رایگان!</h2>
-                        }
-                        else
-                        {
-                            @if (Model.Course.HasDiscount)
+                    <div class="ed_view_box style_2 border ovrlio stick_top min" style="margin-top: 10px;">
+                        <div class="ed_author">
+                            @if (Model.Course.DoublePrice < 1)
                             {
-
-                                <h2 class="theme-cl m-0">@Model.Course.PriceWithDiscount ت<span class="old_prc">@Model.Course.Price ت</span></h2>
+                                <h2 class="theme-cl m-0">رایـــگان!</h2>
                             }
                             else
                             {
+                                @if (Model.Course.HasDiscount)
+                                {
 
-                                <h2 class="theme-cl m-0">@Model.Course.Price ت</h2>
+                                    <h2 class="theme-cl m-0">@Model.Course.PriceWithDiscount ت<span class="old_prc">@Model.Course.Price ت</span></h2>
+                                }
+                                else
+                                {
+
+                                    <h2 class="theme-cl m-0">@Model.Course.Price ت</h2>
+                                }
                             }
-                        }
 
 
-                    </div>
-                    <div class="ed_view_link">
-                        @if (_authHelper.IsAuthenticated())
-                        {
-                            @if (Model.Course.DoublePrice > 1)
+                        </div>
+                        <div class="ed_view_link">
+                            @if (_authHelper.IsAuthenticated())
                             {
-                                <a onclick="addToCart('@Model.Course.Id', '@Model.Course.Title', '@Model.Course.DoublePrice', '@Model.Course.Picture')" class="btn theme-bg enroll-btn">ثبت نام دوره<i class="ti-angle-left"></i></a>
+                                @if (Model.Course.DoublePrice > 1)
+                                {
+                                    <a onclick="addToCart('@Model.Course.Id', '@Model.Course.Title', '@Model.Course.DoublePrice', '@Model.Course.Picture')" class="btn theme-bg enroll-btn">ثبت نام دوره<i class="ti-angle-left"></i></a>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-success">تبریــــک! این دوره برای شما رایگان است</div>
+                                }
                             }
                             else
                             {
-                                <div class="alert alert-success">تبریــــک! این دوره رایگان است</div>
+                                @if (Model.Course.DoublePrice < 1)
+                                {
+                                    <div class="alert alert-primary">تبریــــک! این دوره برای شما رایگان است <br /> جهت ثبت نام در دوره @Model.Course.Title وارد شوید</div>
+                                }
 
                             }
-                        }
-                        else
-                        {
-                            <div class="alert alert-danger">جهت ثبت نام در دوره وارد سایت شوید!</div>
-                        }
-                    </div>
-                    <div class="ed_view_features">
-                        <div class="eld mb-3">
-                            <h6 class="font-medium">مشخصات آموزش</h6>
-                            <p>@Model.Course.ShortDescription</p>
                         </div>
-                        <div class="eld mb-3">
-                            <ul class="edu_list right">
-                                <li><i class="ti-user"></i>تعداد شرکت کننده:<strong>@Model.Course.StudentsCount نفر</strong></li>
-                                <li><i class="ti-files"></i>موضوع:<strong>@Model.Course.Category</strong></li>
-                                <li><i class="ti-game"></i>زمان:<strong>@Model.Course.Time</strong></li>
-                                <li><i class="ti-time"></i>تعداد دوره:<strong>قسمت @Model.Course.PartCount</strong></li>
-                                <li><i class="ti-tag"></i>سطح:<strong>@Model.Course.Level</strong></li>
-                            </ul>
+                        <div class="ed_view_features">
+                            <div class="eld mb-3">
+                                <h6 class="font-medium">مشخصات آموزش</h6>
+                                <p>@Model.Course.ShortDescription</p>
+                            </div>
+                            <div class="eld mb-3">
+                                <ul class="edu_list right">
+                                    <li><i class="ti-user"></i>تعداد شرکت کننده:<strong>@Model.Course.StudentsCount نفر</strong></li>
+                                    <li><i class="ti-files"></i>موضوع:<strong>@Model.Course.Category</strong></li>
+                                    <li><i class="ti-game"></i>زمان:<strong>@Model.Course.Time</strong></li>
+                                    <li><i class="ti-time"></i>تعداد ویدئو:<strong>قسمت @Model.Course.PartCount</strong></li>
+                                    <li><i class="ti-tag"></i>سطح:<strong>@Model.Course.Level</strong></li>
+                                </ul>
+                            </div>
+                            <div>
+                                @*<input type="text" class="form-group" value="@Model.Course.ShortLink" id="myInput" readonly="">
+
+                                <button onclick="myFunction()">Copy text</button>*@
+                                <div class="foot-news-last">
+                                    <label>لینک کوتاه</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"value="@Model.Course.ShortLink" id="ShortLink" readonly="">
+                                        <div class="input-group-append">
+                                            <button type="button" onclick="Copy()" class="input-group-text theme-bg b-0 text-light">کپی</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        
                     </div>
 
                 </div>
-
             </div>
         </div>
-
-    </div>
 </section>
 <section>
     <div class="container">
@@ -320,7 +342,8 @@
                     @foreach (var course in Model.LatestCourses)
                     {
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
-                            <div class="crs_grid">
+                            @*<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">*@
+                            <div class="crs_grid ">
                                 <div class="crs_grid_thumb">
                                     <a asp-page="./Course" asp-route-id="@course.Slug" class="crs_detail_link">
                                         <img src="~/Pictures/@course.PictureSmall" title="@course.PictureTitle" class="img-fluid rounded" alt="@course.PictureAlt" />
@@ -378,11 +401,13 @@
                                                         </h4>
                                                     </div>
                                                 }
+
                                             }
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            @*</div>*@
                         </div>
                     }
 
@@ -392,3 +417,14 @@
 
     </div>
 </section>
+@section Copy
+{
+    <script>
+        function Copy() {
+            var copyText = document.getElementById("ShortLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+        }
+    </script>
+}

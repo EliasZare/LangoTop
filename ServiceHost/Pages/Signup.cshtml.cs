@@ -11,6 +11,7 @@ namespace ServiceHost.Pages
         [TempData] public string RegisterMessage { get; set; }
         [TempData] public string RegisterMessageSuccess { get; set; }
         private readonly IAccountApplication _accountApplication;
+        public RegisterAccount Command;
 
         public SignupModel(IAccountApplication accountApplication)
         {

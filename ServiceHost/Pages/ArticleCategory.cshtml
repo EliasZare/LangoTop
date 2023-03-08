@@ -1,0 +1,104 @@
+﻿@page "{slug}/{id}"
+@model ServiceHost.Pages.ArticleCategoryModel
+@{
+}
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<div class="page-title" style="margin-top:20px">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title font-2">مقالات زبان انگلیسی</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb p-0 bg-white">
+                            <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                            <li class="breadcrumb-item active theme-cl" aria-current="page">وبلاگ</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<section class="min">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-8">
+                <div class="sec-heading center">
+                    <h3 class="font-2">آخرین اخبار و <span class="theme-cl">مقالات</span></h3>
+                    <p>با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+
+            <!-- Single Item -->
+            @foreach (var article in Model.Articles.Articles)
+            {
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                    <div class="blg_grid_box">
+                        <div class="blg_grid_thumb">
+                            <a asp-page="./Article" asp-route-id="@article.Slug"><img src="~/Pictures/@article.PictureSmall" title="@article.PictureTitle" class="img-fluid" alt="@article.PictureAlt" /></a>
+                        </div>
+                        <div class="blg_grid_caption">
+                            <div class="blg_tag"><span>@article.CategoryName</span></div>
+                            <div class="blg_title"><h4><a asp-page="./Article" asp-route-id="@article.Slug">@article.Title</a></h4></div>
+                            <div class="blg_desc"><p>@article.ShortDescription</p></div>
+                        </div>
+                        <div class="crs_grid_foot">
+                            <div class="crs_flex">
+                                <div class="crs_fl_first">
+                                    <div class="crs_tutor">
+                                        <div class="crs_tutor_thumb"><a asp-page="./TeacherProfile" asp-route-id="@article.AuthorName"><img src="~/Pictures/@article.AuthorProfile" class="img-fluid circle" alt="@article.AuthorName" /></a></div><div class="crs_tutor_name"><a asp-page="./TeacherProfile" asp-route-id="@article.AuthorName">@article.AuthorName</a></div>
+                                    </div>
+                                </div>
+                                <div class="crs_fl_last">
+                                    <div class="foot_list_info">
+                                        <ul>
+                                            <li><div class="elsio_ic"><i class="fa fa-clock text-warning"></i></div><div class="elsio_tx">@article.PublishDate</div></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <ul class="pagination p-center">
+                    @if (Model.Articles.CurrentPage > 1)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-page="ArticleCategory" asp-route-id="@(Model.Articles.CurrentPage - 1)" aria-label="قبلی">
+                                <span class="ti-arrow-right"></span>
+                                <span class="sr-only">قبل</span>
+                            </a>
+                        </li>
+                    }
+                    @for (int i = 1; i <= Model.Articles.PageCount; i++)
+                    {
+                        <li class="page-item @((i==Model.Articles.CurrentPage)? "active" : "")"><a class="page-link" asp-page="ArticleCategory" asp-route-id="@i">@i</a></li>
+                    }
+                    @if (Model.Articles.CurrentPage < Model.Articles.PageCount)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" asp-page="ArticleCategory" asp-route-id="@(Model.Articles.CurrentPage + 1)" aria-label="بعدی">
+                                <span class="ti-arrow-left"></span>
+                                <span class="sr-only">بعد</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

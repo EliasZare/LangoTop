@@ -1,0 +1,145 @@
+﻿@page
+@model ServiceHost.Pages.ContactusModel
+@{
+    ViewData["Title"] = "تماس با ما";
+    ViewData["Image"] = "Theme/img/Logo.png";
+    ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
+    ViewData["metaDescription"] = "لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند.";
+    ViewData["Url"] = "contactus";
+    ViewData["author"] = "Elyas Zare";
+@section Schema
+{
+    <script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "Organization",
+  "name": "لنگوتاپ | LangoTop",
+  "url": "https://langotop.ir/",
+  "logo": "https://langotop.ir/Theme/img/logo.png",
+  "alternateName": "لنگوتاپ | LangoTop",
+  "sameAs": [
+    "https://instagram.com/langotop",
+    "https://youtube.com/@@langotop"
+  ],
+  "contactPoint": [
+    {
+      "@@type": "ContactPoint",
+      "telephone": "+98 920 073 1235",
+      "contactType": "customer service",
+      "email": "contact@LangoTop.ir",
+      "contactOption": "TollFree",
+      "areaServed": "IR",
+      "availableLanguage": "fa"
+    }
+  ]
+}
+    </script>
+}
+}
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<!-- ============================ Page Title Start================================== -->
+<section class="page-title gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title font-2">تماس با ما</h1>
+                    <nav class="transparent">
+                        <ol class="breadcrumb p-0">
+                            <li class="breadcrumb-item"><a asp-page="./Index">خانه</a></li>
+                            <li class="breadcrumb-item active theme-cl" aria-current="page">تماس با ما</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============================ Page Title End ================================== -->
+<!-- ============================ Contact Detail ================================== -->
+<section>
+    <div class="container">
+        <div class="row align-items-start">
+            <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12">
+                <form method="post">
+
+                    <div class="form-group">
+                        <h4>با ما در ارتباط باشید</h4>
+                        <span>پیام بفرستید تا حد امکان پاسخگو خواهیم بود... </span>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label>نام و نام خانوادگی</label>
+                                <input type="text" name="Name" class="form-control" placeholder="نام" />
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label>پست الکترونیکی</label>
+                                <input type="text" name="Email" class="form-control" placeholder="ایمیل" />
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <label>متن درخواست</label>
+                                <textarea type="text" name="Message" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group">
+                                <button class="btn theme-bg text-white btn-md" type="submit">ارسال پیام</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12">
+                <div class="lmp_caption pr-lg-5">
+                    <ol class="list-unstyled p-0">
+                        <li class="d-flex align-items-start my-3 my-md-4">
+                            <div class="rounded-circle p-3 p-sm-4 d-flex align-items-center justify-content-center theme-bg-light">
+                                <div class="position-absolute theme-cl h5 mb-0"><i class="fas fa-whatsapp-square"></i></div>
+                            </div>
+                            <div class="mr-3 mr-md-4">
+                                <h4>واتساپ</h4>
+                                <p>
+                                    <a href="https://api.whatsapp.com/send?phone=989200731235" target="_blank" rel="nofollow">989200731235+</a>
+                                </p>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-start my-3 my-md-4">
+                            <div class="rounded-circle p-3 p-sm-4 d-flex align-items-center justify-content-center theme-bg-light">
+                                <div class="position-absolute theme-cl h5 mb-0"><i class="fas fa-at"></i></div>
+                            </div>
+                            <div class="mr-3 mr-md-4">
+                                <h4>پست الکترونیکی</h4>
+                                <p>
+                                    contact@LangoTop.ir<br>langotop.ir@gmail.com
+                                </p>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-start my-3 my-md-4">
+                            <div class="rounded-circle p-3 p-sm-4 d-flex align-items-center justify-content-center theme-bg-light">
+                                <div class="position-absolute theme-cl h5 mb-0"><i class="fas fa-phone-alt rotate-img"></i></div>
+                            </div>
+                            <div class="mr-3 mr-md-4">
+                                <h4>شماره تماس</h4>
+                                <p>
+                                    989200731235+
+                                </p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============================ Contact Detail ================================== -->
+

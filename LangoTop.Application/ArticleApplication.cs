@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _0_Framework.Application;
 using LangoTop.Application.Contract.Article;
+using LangoTop.Application.Contract.Page;
 using LangoTop.Domain;
 using LangoTop.Interfaces;
 
@@ -10,11 +11,16 @@ namespace LangoTop.Application
     {
         private readonly IArticleRepository _articleRepository;
         private readonly IFileUploader _fileUploader;
+        private readonly IPageApplication _pageApplication;
+        private readonly IGenerateShortKey _generateShortKey;
 
-        public ArticleApplication(IArticleRepository articleRepository, IFileUploader fileUploader)
+        public ArticleApplication(IArticleRepository articleRepository, IFileUploader fileUploader,
+            IPageApplication pageApplication, IGenerateShortKey generateShortKey)
         {
             _articleRepository = articleRepository;
             _fileUploader = fileUploader;
+            _pageApplication = pageApplication;
+            _generateShortKey = generateShortKey;
         }
 
         public OperationResult Create(CreateArticle command)
@@ -25,6 +31,19 @@ namespace LangoTop.Application
                 return operation.Failed(ApplicationMessages.DuplicateRecord);
 
             var slug = command.Slug.Slugify();
+
+            var key = _generateShortKey.Generate();
+            var page = new CreatePage
+            {
+                Title = command.Title,
+                Slug = command.Slug,
+                ShortKey = key,
+                Description = command.Title,
+                Type = PageTypes.Article
+            };
+            _pageApplication.Create(page);
+
+
             var filePath = $"Articles/{slug}";
             var pictureSmallFilePath = $"Articles/{slug}-small";
             var fileName = _fileUploader.Upload(command.Picture, filePath);
@@ -36,7 +55,7 @@ namespace LangoTop.Application
                 fileName,
                 pictureSmallFileName,
                 command.PictureAlt, command.PictureTitle, command.CategoryId, command.Keywords, command.MetaDescription,
-                slug, command.ShortLink);
+                slug, $"https://Langotop.ir/p/{key}");
 
             _articleRepository.Create(article);
             _articleRepository.SaveChanges();
@@ -55,6 +74,7 @@ namespace LangoTop.Application
                 return operation.Failed(ApplicationMessages.DuplicateRecord);
 
             var slug = command.Slug.Slugify();
+
             var filePath = $"{slug}";
             var pictureSmallFilePath = $"Articles/{slug}-small";
             var fileName = _fileUploader.Upload(command.Picture, filePath);

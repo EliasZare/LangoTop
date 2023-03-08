@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using _0_Framework.Application;
+using _0_Framework.Domain;
 using LangoTop.Application.Contract.Role;
 using Microsoft.AspNetCore.Http;
 
 namespace LangoTop.Application.Contract.Account
 {
-    public class RegisterAccount
+    public class RegisterAccount : EntityBase
     {
         [Required(ErrorMessage = ValidationMessage.IsRequired)]
         [MaxLength(70, ErrorMessage = "تعداد کاراکترها بیشتر از حد مجاز می باشد")]

@@ -76,7 +76,7 @@
                     </li>
 
                     <li>
-                        <a asp-page="./Courses">دوره های آموزشی<span class="submenu-indicator"></span></a>
+                        <a asp-page="./Courses" asp-route-id="1">دوره های آموزشی<span class="submenu-indicator"></span></a>
                         <ul class="nav-dropdown nav-submenu">
                             @foreach (var item in Model.CourseCategories)
                             {
@@ -84,10 +84,10 @@
                             }
                         </ul>
                     </li>
-                    <li><a asp-page="./Blog">بلاگ</a></li>
+                    <li><a asp-page="./Blog" asp-route-id="1">وبلاگ</a></li>
                     <li><a asp-page="./AboutUs">درباره ما</a></li>
-                    <li><a >قوانین سایت</a></li>
-                    <li><a >تدریس در لنگوتاپ</a></li>
+                    <li><a asp-page="./contactus">تماس با ما</a></li>
+                    <li><a asp-page="./Teaching">تدریس در لنگوتاپ</a></li>
 
                 </ul>
 

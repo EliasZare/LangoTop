@@ -73,7 +73,7 @@
                                         </div>
                                         <div class="form-group smalls">
                                             <label>بیوگرافی</label>
-                                            <textarea class="form-control" name="biography" aria-valuetext="@Model.EditAccount.Biography" >@Model.EditAccount.Biography</textarea>
+                                            <textarea class="form-control summernote" name="biography" aria-valuetext="@Model.EditAccount.Biography" maxlength="100">@Model.EditAccount.Biography</textarea >
                                         </div>
                                         <input type="hidden" name="Id" value="@accountInfo.Id"/>
                                         <div class="form-group smalls">

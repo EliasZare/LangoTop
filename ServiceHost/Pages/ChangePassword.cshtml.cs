@@ -7,8 +7,10 @@ namespace ServiceHost.Pages
     public class ChangePasswordModel : PageModel
     {
         private readonly IAccountApplication _accountApplication;
-        [TempData] public string Message { get; set; }
+        [TempData] public string ErrorMessage { get; set; }
         [TempData] public string Code { get; set; }
+
+        [TempData] public string SuccessMessage { get; set; }
 
         public ChangePasswordModel(IAccountApplication accountApplication)
         {
@@ -26,8 +28,11 @@ namespace ServiceHost.Pages
             command.Code = Code;
             var result = _accountApplication.ChangePasswordByCode(command);
 
-            Message = result.Message;
-            RedirectToPage("/ChangePassword", Message);
+            if (result.IsSucceeded)
+                SuccessMessage = result.Message;
+            else
+                ErrorMessage = result.Message;
+            RedirectToPage("/ChangePassword", result.Message);
         }
     }
 }

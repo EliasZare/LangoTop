@@ -103,7 +103,7 @@
                         <div class="col-md-12">
                             <div class="form-group no-margin">
                                 <label asp-for="Command.Description" class="control-label">توضیحات</label>
-                                <textarea class="form-control" id="BodyContent" asp-for="Command.Description"></textarea>
+                                <textarea class="form-control" id="ckeditor" asp-for="Command.Description"></textarea>
                                 <span asp-validation-for="Command.Description" class="error"></span>
                             </div>
                         </div>
@@ -118,6 +118,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -142,3 +143,11 @@
         </div>
     </div>
 </div>
+@section Scripts
+{
+    <script src="~/AdminTheme/assets/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('ckeditor');
+    </script>
+
+}

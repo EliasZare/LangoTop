@@ -36,13 +36,12 @@ namespace ServiceHost.Pages
             LatestArticleCategories = _articleCategoryQuery.GetArticleCategories();
             LatestArticles = _articleQuery.LatestArticles();
             AdsBanner = _bannerQuery.GetBannerBy(3);
-            AdsBanner.Width = AdsBanner.Width + "px";
-            AdsBanner.Height = AdsBanner.Height + "px";
         }
+
         public IActionResult OnPost(AddComment command, string articleSlug)
         {
             command.Type = CommentType.Article;
-            var result = _commentApplication.AddComment(command);
+            _commentApplication.AddComment(command);
             return RedirectToPage("/Article", new { Id = articleSlug });
         }
     }

@@ -123,7 +123,10 @@
         </div>
     </div>
 </div>
-
+<form asp-page="uploadimage" method="post">
+    <input type="file" name="image" value="" />
+    <button type="submit"  class="btn btn-success waves-effect waves-light m-b-5"></button>
+</form>
 @section Scripts {
     <script src="~/adminTheme/assets/datatables/jquery.dataTables.min.js"></script>
     <script src="~/adminTheme/assets/datatables/dataTables.bootstrap.js"></script>

@@ -1,12 +1,43 @@
 ﻿@page
 @model ServiceHost.Pages.LoginModel
+@using Microsoft.Extensions.Options
+@using _0_Framework.Domain
+@inject IOptions<GoogleReCaptchaConfig> _googleReCaptchaConfig
 @{
     ViewData["Title"] = "ورود";
     ViewData["Image"] = "Theme/img/Logo.png";
     ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
     ViewData["metaDescription"] = "لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند.";
     ViewData["Url"] = "Login";
-    ViewData["author"] ="Elyas Zare";
+    ViewData["author"] = "Elyas Zare";
+@section Schema
+{
+    <script type="application/ld+json">
+{
+  "@@context": "https://schema.org",
+  "@@type": "Organization",
+  "name": "لنگوتاپ | LangoTop",
+  "url": "https://langotop.ir/",
+  "logo": "https://langotop.ir/Theme/img/logo.png",
+  "alternateName": "لنگوتاپ | LangoTop",
+  "sameAs": [
+    "https://instagram.com/langotop",
+    "https://youtube.com/@@langotop"
+  ],
+  "contactPoint": [
+    {
+      "@@type": "ContactPoint",
+      "telephone": "+98 920 073 1235",
+      "contactType": "customer service",
+      "email": "contact@LangoTop.ir",
+      "contactOption": "TollFree",
+      "areaServed": "IR",
+      "availableLanguage": "fa"
+    }
+  ]
+}
+    </script>
+}
 
 }
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
@@ -17,6 +48,7 @@
 
             <div class="col-xl-7 col-lg-8 col-md-12 col-sm-12">
                 <form method="post">
+
                     <div class="crs_log_wrap">
                         <div class="crs_log__thumb">
                             <img src="~/Theme/img/banner-8.jpg" class="img-fluid" alt="" />
@@ -33,19 +65,21 @@
                             }
                             <div class="rcs_log_124">
                                 <div class="Lpo09"><h4>ورود به حساب کاربری</h4></div>
+                                <a asp-page="Index" asp-page-handler="UploadImage" asp-route-upload="Elias" ></a>
                                 <div class="form-group">
                                     <label>ایمیل</label>
                                     <input type="email" name="email" class="form-control" placeholder="support@email.com" required="" />
                                 </div>
                                 <div class="form-group">
                                     <label>رمز عبور</label>
-                                    <input type="password" name="password" class="form-control" placeholder="*******" required=""/>
+                                    <input type="password" name="password" class="form-control" placeholder="*******" required="" />
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn full-width btn-md theme-bg text-white">ورود</button>
                                 </div>
+                                <input type="hidden" name="captcha" id="captchaInput" value="" />
                             </div>
-                            <div class="rcs_log_125">
+                            @*<div class="rcs_log_125">
                                 <span>یا ورود از طریق شبکه های اجتماعی</span>
                             </div>
                             <div class="rcs_log_126">
@@ -54,11 +88,15 @@
                                     <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-google text-danger"></i>Google</a></li>
                                     <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-twitter theme-cl"></i>Twitter</a></li>
                                 </ul>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="crs_log__footer d-flex justify-content-between mt-0">
-                            <div class="fhg_45"><p class="musrt">حساب کاربری ندارید؟ <a asp-page="./Signup" class="theme-cl">ثبت نام</a></p></div>
-                            <div class="fhg_45"><p class="musrt"><a asp-page="./ForgotPassword" class="text-danger">رمز عبور را فراموش کرده اید؟</a></p></div>
+                            <div class="fhg_45">
+                                <p class="musrt">حساب کاربری ندارید؟ <a asp-page="./Signup" class="theme-cl">ثبت نام</a></p>
+                            </div>
+                            <div class="fhg_45">
+                                <p class="musrt"><a asp-page="./ForgotPassword" class="text-danger">رمز عبور را فراموش کرده اید؟</a></p>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -67,3 +105,7 @@
         </div>
     </div>
 </section>
+@section Scripts
+{
+    <script src="https://www.google.com/recaptcha/api.js?render=@_googleReCaptchaConfig.Value.Sitekey"></script>
+}

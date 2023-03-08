@@ -7,7 +7,40 @@
     ViewData["metaDescription"] = Model.Article.MetaDescription;
     ViewData["Url"] = $"Article/{Model.Article.Slug}";
     ViewData["author"] = Model.Article.AuthorName;
+
+
+    @section Schema
+{
+        <script type="application/ld+json">
+        {
+          "@@context": "https://schema.org",
+          "@@type": "Article",
+          "mainEntityOfPage": {
+            "@@type": "WebPage",
+            "@@id": "https://langotop.ir/Article/@Model.Article.Slug"
+          },
+          "headline": "Heading",
+          "description": "Short Desc",
+          "image": "https://langotop.ir/ProductPictures/@Model.Article.Picture",
+          "author": {
+            "@@type": "Person",
+            "name": "@Model.Article.AuthorName",
+            "url": "https://langotop.ir/profile/@Model.Article.AuthorUsername"
+          },
+          "publisher": {
+            "@@type": "Organization",
+            "name": "Langotop",
+            "logo": {
+              "@@type": "ImageObject",
+              "url": "https://langotop.ir/Theme/img/Logo.png"
+            }
+          }
+        }
+        </script>
+    }
 }
+
+
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
 </section>
 <section class="gray">
@@ -57,7 +90,18 @@
                     </div>
 
                 </div>
-
+                @*<div class="article_detail_wrapss single_article_wrap format-standard">
+                        <div class="article_posts_thumb">
+                            <a href="https://instagram.com/langotop" rel="nofollow" target="_blank"> <img src="~/Theme/img/InstagramBannerLangotopArtboard 105.png" alt="" title="" style="width:100%;height: 100%" /></a>
+                        </div>
+                    </div>
+                    <div class="article_detail_wrapss single_article_wrap format-standard">
+                        <div class="article_posts_thumb">
+                            <div class="single_widgets widget_tags">
+                                <a href="https://instagram.com/langotop" rel="nofollow" target="_blank"> <img src="~/Theme/img/YoutubeBannerArtboard 105.png" alt="" title="" style="width:100%;height: 100%" /></a>
+                            </div>
+                        </div>
+                    </div>*@
                 <!-- Blog Comment -->
                 <div class="article_detail_wrapss single_article_wrap format-standard">
 
@@ -71,33 +115,12 @@
                             {
                                 <h5 class="comments-title alert alert-success">اولین دیدگاه را ثبت کنید</h5>
                             }
-                            <div class="comment-list">
-                                <ul>
-                                    @*<li class="article_comments_wrap">
-                                            <article>
-                                                <div class="article_comments_thumb">
-                                                    <img src="~/Theme/img/user-1.jpg" alt="">
-                                                </div>
-                                                <div class="comment-details">
-                                                    <div class="comment-meta">
-                                                        <div class="comment-left-meta">
-                                                            <h4 class="author-name">علی مرشدی <span class="selected"><i class="fas fa-bookmark"></i></span></h4>
-                                                            <div class="comment-date">19 آذر 1400</div>
-                                                        </div>
-                                                        <div class="comment-reply">
-                                                            <a href="#" class="reply"><span class="icona"><i class="ti-back-left"></i></span> پاسخ</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="comment-text">
-                                                        <p>مداد سفید تا صبح ماه کشید مهتاب کشید و انقدر ستاره کشید که کوچک و کوچکتر شد صبح توی جعبه مداد رنگی جای خالی او با هیچ رنگی  پر نشد، به یاد هم باشیم شاید فردا ما هم در کنار هم نباشیم…</p>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                        </li>*@
-
-                                </ul>
-                            </div>
                         </div>
+
+
+                        <!--</ul>
+                        </div>
+                        </div>-->
                         <div class="comment-box submit-form">
                             <h3 class="reply-title">ثبت دیدگاه</h3>
                             <div class="comment-form">
@@ -139,8 +162,8 @@
                 <!-- Searchbard -->
                 <div class="single_widgets widget_search">
                     <h4 class="title">جستجو</h4>
-                    <form action="#" class="sidebar-search-form">
-                        <input type="search" name="search" placeholder="عنوان مورد نظر...">
+                    <form method="get" asp-page="/SearchBlog" asp-route-id="1" class="sidebar-search-form">
+                        <input type="search" name="searchModel" id="searchModel" placeholder="عنوان مورد نظر...">
                         <button type="submit"><i class="ti-search"></i></button>
                     </form>
                 </div>
@@ -151,16 +174,23 @@
                     <ul>
                         @foreach (var item in Model.LatestArticleCategories)
                         {
-                            <li><a href="#">@item.Name<span>@item.ArticlesCounts</span></a></li>
+                            <li><a asp-page="/ArticleCategory" asp-route-slug="@item.Slug" asp-route-id="1">@item.Name<span>@item.ArticlesCounts</span></a></li>
 
                         }
                     </ul>
                 </div>
                 <!-- Ads -->
-                <div class="single_widgets widget_tags">
-                    <h4 class="title">تبلیغات</h4>
-                    <a href="@Model.AdsBanner.Link" rel="nofollow" target="_blank"> <img src="~/Pictures/@Model.AdsBanner.BannerPicture" alt="@Model.AdsBanner.PictureAlt" title="@Model.AdsBanner.PictureTitle" style="width:100%;height: 100%" /></a>
-                </div>
+                @if (Model.AdsBanner != null)
+                {
+                    <div class="single_widgets widget_tags">
+                        <h4 class="title">تبلیغات</h4>
+                        <a href="@Model.AdsBanner.Link" rel="nofollow" target="_blank"> <img src="~/Pictures/@Model.AdsBanner.BannerPicture" alt="@Model.AdsBanner.PictureAlt" title="@Model.AdsBanner.PictureTitle" style="width:100%;height: 100%" /></a>
+                    </div>
+                }
+                @*<div class="single_widgets widget_tags">
+                        <a href="https://instagram.com/langotop" rel="nofollow" target="_blank"> <img src="~/Theme/img/InstagramBannerLangotopArtboard 105.png" alt="" title="" style="width:100%;height: 100%" /></a>
+                    </div>*@
+
                 <!-- Trending Posts -->
                 <div class="single_widgets widget_thumb_post">
                     <h4 class="title">جدیدترین وبلاگ</h4>
@@ -172,7 +202,7 @@
                                     <img src="~/Pictures/@article.PictureSmall" alt="@article.PictureAlt" class="">
                                 </span>
                                 <span class="right">
-                                    <a class="feed-title" href="#">@article.Title</a>
+                                    <a class="feed-title" asp-page="Article" asp-route-id="@article.Slug">@article.Title</a>
                                     <span class="post-date"><i class="ti-calendar"></i>@article.PublishDate</span>
                                 </span>
                             </li>
@@ -191,6 +221,18 @@
                         }
                     </ul>
                 </div>
+                <div class="single_widgets widget_tags">
+                    <h4 class="title">لینک کوتاه</h4>
+                    <div class="foot-news-last">
+                        <div class="input-group">
+                            <input type="text" class="form-control" value="@Model.Article.ShortLink" id="ShortLink" readonly="">
+                            <div class="input-group-append">
+                                <button type="button" onclick="Copy()" class="input-group-text theme-bg b-0 text-light">کپی</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -200,3 +242,14 @@
     </div>
 
 </section>
+@section Copy
+{
+    <script>
+        function Copy() {
+            var copyText = document.getElementById("ShortLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+        }
+    </script>
+}

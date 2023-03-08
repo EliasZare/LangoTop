@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.Extensions.Options
+@using _0_Framework.Domain
+@inject IOptions<GoogleReCaptchaConfig> _googleReCaptchaConfig
+<!DOCTYPE html>
 <html lang="fa">
 
 <head>
@@ -9,7 +12,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
-
+    <link href="~/Theme/css/styles.css" rel="stylesheet" />
     <title>@ViewData["Title"] | لنگوتاپ</title>
     <link href="~/Theme/css/styles.css" rel="stylesheet">
 
@@ -44,6 +47,17 @@
 
     <!-- Custom CSS -->
 
+    @await RenderSectionAsync("Schema", required: false)
+
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-09TCVMR1HV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-09TCVMR1HV');
+    </script>
 </head>
 
 <body dir="rtl">
@@ -62,6 +76,9 @@
     </div>
 
     <script src="~/Theme/js/jquery.min.js"></script>
+    <script src="~/AdminTheme/assets/js/jquery.todo.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Theme/js/popper.min.js"></script>
     <script src="~/Theme/js/bootstrap.min.js"></script>
     <script src="~/Theme/js/select2.min.js"></script>
@@ -71,13 +88,18 @@
     <script src="~/Theme/js/summernote.min.js"></script>
     <script src="~/Theme/js/metisMenu.min.js"></script>
     <script src="~/Theme/js/plugins.js"></script>
-    <script src="~/Theme/js/custom.js"></script>>
-
-    <script src="~/AdminTheme/assets/js/jquery.todo.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
+    <script src="~/Theme/js/custom.js"></script>
+    <script src="~/Theme/js/customcart.js"></script>
+    <script src="~/Theme/js/customcart.js"></script>
+    @await RenderSectionAsync("Copy", false)
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('@_googleReCaptchaConfig.Value.Sitekey', { action: 'contact' }).then(function (token) {
+            $("#captchaInput").val(token);
+        });
+    });
+    </script>
     <script>
         $(document).ready(function () {
             updateCart();

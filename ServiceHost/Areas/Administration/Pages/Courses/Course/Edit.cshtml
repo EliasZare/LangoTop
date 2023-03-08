@@ -96,7 +96,7 @@
                             <div class="col-md-12">
                                 <div class="form-group no-margin">
                                     <label asp-for="Command.Description" class="control-label">توضیحات</label>
-                                    <textarea class="form-control autogrow" asp-for="Command.Description" onchange="fillField('Description', 'MetaDescription')" style="height: 104px; overflow: hidden; resize: horizontal; word-wrap: break-word;"></textarea>
+                                    <textarea class="form-control autogrow summernote" asp-for="Command.Description"  style="height: 104px; overflow: hidden; resize: horizontal; word-wrap: break-word;"></textarea>
                                     <span asp-validation-for="Command.Description" class="error"></span>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                             <div class="col-md-12">
                                 <div class="form-group no-margin">
                                     <label asp-for="Command.ShortDescription" class="control-label">توضیحات کوتاه</label>
-                                    <textarea class="form-control autogrow" asp-for="Command.ShortDescription" style="height: 104px; overflow: hidden; resize: horizontal; word-wrap: break-word;"></textarea>
+                                    <textarea class="form-control autogrow" asp-for="Command.ShortDescription" onchange="fillField('ShortDescription', 'MetaDescription')" style="height: 104px; overflow: hidden; resize: horizontal; word-wrap: break-word;"></textarea>
                                     <span asp-validation-for="Command.ShortDescription" class="error"></span>
                                 </div>
                             </div>

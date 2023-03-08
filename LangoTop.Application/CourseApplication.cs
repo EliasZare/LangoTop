@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _0_Framework.Application;
 using LangoTop.Application.Contract.Course;
+using LangoTop.Application.Contract.Page;
 using LangoTop.Domain;
 using LangoTop.Interfaces;
 
@@ -10,11 +11,16 @@ namespace LangoTop.Application
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IFileUploader _fileUploader;
+        private readonly IPageApplication _pageApplication;
+        private readonly IGenerateShortKey _generateShortKey;
 
-        public CourseApplication(IFileUploader fileUploader, ICourseRepository courseRepository)
+        public CourseApplication(IFileUploader fileUploader, ICourseRepository courseRepository,
+            IPageApplication pageApplication, IGenerateShortKey generateShortKey)
         {
             _fileUploader = fileUploader;
             _courseRepository = courseRepository;
+            _pageApplication = pageApplication;
+            _generateShortKey = generateShortKey;
         }
 
         public OperationResult Create(CreateCourse command)
@@ -25,15 +31,27 @@ namespace LangoTop.Application
                 return operation.Failed(ApplicationMessages.DuplicateRecord);
 
             var slug = command.Slug.Slugify();
+
+            var key = _generateShortKey.Generate();
+            var page = new CreatePage
+            {
+                Title = command.Title,
+                Slug = command.Slug,
+                ShortKey = key,
+                Description = command.Title,
+                Type = PageTypes.Course
+            };
+            _pageApplication.Create(page);
+
             var filePath = $"Courses//{slug}";
-            var pictureSmallFilePath = $"Courses//{slug}-small";
+            var pictureSmallFilePath = $"Courses//{slug}";
             var fileName = _fileUploader.Upload(command.Picture, filePath);
             var pictureSmallFileName = _fileUploader.Upload(command.PictureSmall, pictureSmallFilePath);
 
             var course = new Course(command.Title, command.PageTitle, command.TeacherId, command.ShortDescription,
                 command.Description, fileName, pictureSmallFileName,
                 command.PictureAlt, command.PictureTitle, command.Level, command.Time, command.Price,
-                command.CategoryId, command.Keywords, command.MetaDescription, slug, command.ShortLink);
+                command.CategoryId, command.Keywords, command.MetaDescription, slug, $"https://Langotop.ir/p/{key}");
             _courseRepository.Create(course);
             _courseRepository.SaveChanges();
             return operation.Success();
@@ -51,6 +69,7 @@ namespace LangoTop.Application
                 return operation.Failed(ApplicationMessages.DuplicateRecord);
 
             var slug = command.Slug.Slugify();
+
             var filePath = $"Courses//{slug}";
             var pictureSmallFilePath = $"Courses//{slug}-small";
             var fileName = _fileUploader.Upload(command.Picture, filePath);
