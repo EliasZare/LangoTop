@@ -31,7 +31,7 @@ namespace ServiceHost.Areas.Administration.Pages.Courses.Course
         public void OnGet(CourseSearchModel searchModel)
         {
             CourserCategories = new SelectList(_courseCategoryApplication.GetCourseCategories(), "Id", "Name");
-            Teachers = new SelectList(_accountApplication.GetAccounts(), "Id", "Fullname");
+            Teachers = new SelectList(_accountApplication.GetAdmins(), "Id", "Fullname");
             Courses = _courseApplication.Search(searchModel);
         }
 

@@ -33,7 +33,7 @@ namespace ServiceHost.Areas.Administration.Pages.Blog.Article
         {
             Articles = _articleApplication.Search(searchModel);
             ArticleCategories = new SelectList(_articleCategoryApplication.GetArticleCategories(), "Id", "Name");
-            Authors = new SelectList(_accountApplication.GetAccounts(), "Id", "Fullname");
+            Authors = new SelectList(_accountApplication.GetAdmins(), "Id", "Fullname");
         }
 
         public IActionResult OnGetRemove(long id)

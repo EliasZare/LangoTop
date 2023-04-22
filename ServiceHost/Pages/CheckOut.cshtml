@@ -1,6 +1,10 @@
 ﻿@page
 @using _0_Framework.Application
 @model ServiceHost.Pages.CheckOutModel
+@section Style
+{
+    <meta name='robots' content='noindex, nofollow' />
+}
 @{
     ViewData["Title"] = "تایید سبد خرید / پرداخت";
     ViewData["Image"] = "Theme/img/Logo.png";
@@ -55,7 +59,7 @@
                                 @foreach (var item in Model.Cart.Items)
                                 {
                                     <tr>
-                                        <td><a href="#" class="remove_cart"><i class="ti-close"></i></a></td>
+                                        <td><a class="remove_cart" asp-page-handler="RemoveFromCartItem" asp-route-id="@item.Id"><i class="ti-close"></i></a></td>
                                         <td>
                                             <div class="tb_course_thumb"><img src="~/Pictures/@item.Picture" class="img-fluid" alt="@item.Picture" /></div>
                                         </td>
@@ -88,7 +92,7 @@
                             </ul>
                             <br />
                             <form asp-page-handler="Pey" method="post">
-                                @if (Model.Cart.Items.Count>=1)
+                                @if (Model.Cart.Items.Count >= 1)
                                 {
                                     <button asp-page-handler="Pay" class="btn theme-bg btm-md">پرداخت</button>
                                 }

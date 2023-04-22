@@ -14,7 +14,9 @@
     <link rel="icon" type="image/x-icon" href="~/favicon.ico">
     <link href="~/Theme/css/styles.css" rel="stylesheet" />
     <title>@ViewData["Title"] | لنگوتاپ</title>
-    <link href="~/Theme/css/styles.css" rel="stylesheet">
+    @await RenderSectionAsync("Style", required: true)
+
+    <link href="~/Theme/css/styles.css" disabled="media" rel="stylesheet">
 
     <!--meta tags-->
     <meta name="description" content="@ViewData["metaDescription"]">
@@ -25,11 +27,11 @@
     <!--Open Graph meta tag-->
     <meta property="og:title" content="@ViewData["Title"] | لنگوتاپ" />
     <meta property="og:type" content="video_lecture" />
-    <meta property="og:url" content="https://www.langotop.ir/@ViewData["Url"]" />
+    <meta property="og:url" content="https://langotop.ir/@ViewData["Url"]" />
     <meta property="og:image" content="https://langotop.ir/@ViewData["Image"]" />
     <meta property="og:image:url" content="https://langotop.ir/@ViewData["Image"]">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="700">
+    <meta property="og:image:width" content="500">
     <meta property="og:image:height" content="500">
     <meta property="og:image:alt" content="@ViewData["Title"] | لنگوتاپ">
     <meta property="og:site_name" content="آموزش زبان انگلیسی | لنگوتاپ" />
@@ -43,13 +45,9 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@@langotop.ir" />
     <meta name="twitter:creator" content="لنگوتاپ" />
-
-
     <!-- Custom CSS -->
-
     @await RenderSectionAsync("Schema", required: false)
-
-        <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-09TCVMR1HV"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -75,6 +73,8 @@
 
     </div>
 
+    <!--Lazy Load-->
+
     <script src="~/Theme/js/jquery.min.js"></script>
     <script src="~/AdminTheme/assets/js/jquery.todo.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -85,12 +85,12 @@
     <script src="~/Theme/js/slick.js"></script>
     <script src="~/Theme/js/moment.min.js"></script>
     <script src="~/Theme/js/daterangepicker.js"></script>
-    <script src="~/Theme/js/summernote.min.js"></script>
     <script src="~/Theme/js/metisMenu.min.js"></script>
     <script src="~/Theme/js/plugins.js"></script>
     <script src="~/Theme/js/custom.js"></script>
     <script src="~/Theme/js/customcart.js"></script>
-    <script src="~/Theme/js/customcart.js"></script>
+
+
     @await RenderSectionAsync("Copy", false)
     @await RenderSectionAsync("Scripts", required: false)
     <script>
@@ -105,8 +105,7 @@
             updateCart();
         });
     </script>
+
 </body>
 
 </html>
-
-

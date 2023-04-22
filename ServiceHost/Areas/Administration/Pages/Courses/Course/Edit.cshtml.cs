@@ -28,7 +28,7 @@ namespace ServiceHost.Areas.Administration.Pages.Courses.Course
         public void OnGet(long id)
         {
             Command = _courseApplication.GetDetails(id);
-            Teachers = new SelectList(_accountApplication.GetAccounts(), "Id", "Fullname");
+            Teachers = new SelectList(_accountApplication.GetAdmins(), "Id", "Fullname");
             CourseCategories = new SelectList(_courseCategoryApplication.GetCourseCategories(), "Id", "Name");
         }
 

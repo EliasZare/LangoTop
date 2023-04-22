@@ -20,12 +20,13 @@ namespace _01_Query.Query
             _context = context;
         }
 
-        public List<ArticleQueryModel> LatestArticles()
+        public List<ArticleQueryModel> LatestArticles(int count)
         {
             return _context.Articles.Where(x => !x.IsRemoved).Include(x => x.ArticleCategory).Include(x => x.Author)
                 .Where(x => x.CreationDate <= DateTime.Now).Select(x =>
                     new ArticleQueryModel
                     {
+                        Id = x.Id,
                         Title = x.Title,
                         Picture = x.Picture,
                         PictureAlt = x.PictureAlt,
@@ -39,7 +40,7 @@ namespace _01_Query.Query
                         AuthorProfile = x.Author.ProfilePhoto,
                         AuthorName = x.Author.Fullname,
                         ShortLink = x.ShortLink
-                    }).AsEnumerable().OrderByDescending(x => x.Id).Take(6).ToList();
+                    }).AsEnumerable().OrderByDescending(x => x.Id).Take(count).ToList();
         }
 
         public PagingArticleQueryModel GetArticles(int pageId = 1)

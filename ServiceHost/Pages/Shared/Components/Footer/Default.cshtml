@@ -25,16 +25,16 @@
             <div class="row">
 
                 <div class="col-lg-6 col-md-7 ml-auto">
-                    <div class="row" style="margin-right: 0px; margin-left: 0px" >
-                        <div class="col-lg-4 col-md-6">
-                            <div class="footer_widget">
-                                <h4 class="widget_title">درباره لنگوتاپ</h4>
-                                <p>لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند
-                                    ما در لنگوتاپ تلاش داشته ایم بستری کاملا آموزشی و کاربردی برای تمام سطوح از مبتدی تا پیشرفته را با بهترین کیفیت آموزشی ایجاد کنیم.</p>
-                            </div>
-                        </div>
+                    <div class="row" style="margin-right: 0px; margin-left: 0px">
+                        @*<div class="col-lg-4 col-md-6">
+            <div class="footer_widget">
+                <h4 class="widget_title">درباره لنگوتاپ</h4>
+                <p>لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند
+                    ما در لنگوتاپ تلاش داشته ایم بستری کاملا آموزشی و کاربردی برای تمام سطوح از مبتدی تا پیشرفته را با بهترین کیفیت آموزشی ایجاد کنیم.</p>
+            </div>
+        </div>*@
 
-                        <div class="col-lg-4 col-md-4">
+                        <div class="col-lg-6 col-md-6">
                             <div class="footer_widget">
                                 <h4 class="widget_title">بخش ها</h4>
                                 <ul class="footer-menu">
@@ -42,23 +42,22 @@
                                     <li><a asp-page="./Aboutus">درباره ما</a></li>
                                     <li><a asp-page="./Contactus">تماس با ما</a></li>
                                     <li><a asp-page="./Courses" asp-route-id="1">آموزش زبان انگلیسی</a></li>
-                                    <li><a asp-page="./Blog"  asp-route-id="1">مقالات</a></li>
+                                    <li><a asp-page="./Blog" asp-route-id="1">مقالات</a></li>
                                 </ul>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-4">
+                        <div class="col-lg-6 col-md-6">
                             <div class="footer_widget">
                                 <h4 class="widget_title">لینک های مفید</h4>
                                 <ul class="footer-menu">
-                                   @foreach (var banner in Model.Banners)
-                                   {
-                                       <li><a href="@banner.Link" target="_blank">@banner.Title</a></li>
-                                   }
+                                    @foreach (var banner in Model.Banners)
+                                    {
+                                        <li><a href="@banner.Link" target="_blank">@banner.Title</a></li>
+                                    }
                                 </ul>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-5">

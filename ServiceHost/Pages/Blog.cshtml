@@ -1,5 +1,8 @@
 ﻿@page "{id}"
 @model ServiceHost.Pages.BlogModel
+@section Style
+{
+}
 @{
     ViewData["Title"] = "وبلاگ";
     ViewData["Image"] = "Theme/img/Logo.png";
@@ -83,7 +86,7 @@
                     @if (Model.Articles.CurrentPage > 1)
                     {
                         <li class="page-item">
-                            <a class="page-link" asp-page="Blog" asp-route-id="@(Model.Articles.CurrentPage - 1)"  aria-label="قبلی">
+                            <a class="page-link" asp-page="Blog" asp-route-id="@(Model.Articles.CurrentPage - 1)" aria-label="قبلی">
                                 <span class="ti-arrow-right"></span>
                                 <span class="sr-only">قبل</span>
                             </a>
@@ -96,13 +99,13 @@
                     @if (Model.Articles.CurrentPage < Model.Articles.PageCount)
                     {
                         <li class="page-item">
-                            <a class="page-link"asp-page="Blog" asp-route-id="@(Model.Articles.CurrentPage + 1)" aria-label="بعدی">
+                            <a class="page-link" asp-page="Blog" asp-route-id="@(Model.Articles.CurrentPage + 1)" aria-label="بعدی">
                                 <span class="ti-arrow-left"></span>
                                 <span class="sr-only">بعد</span>
                             </a>
                         </li>
                     }
-                      
+
                 </ul>
             </div>
         </div>

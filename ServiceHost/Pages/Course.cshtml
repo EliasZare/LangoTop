@@ -1,12 +1,16 @@
 ﻿@page "{id}"
 @using _0_Framework.Application
 @model ServiceHost.Pages.CourseModel
+@section Style
+{
+    <link rel="canonical" href="https://langotop.ir/Course/@Model.Course.Slug" />
+}
 @{
     ViewData["Title"] = Model.Course.PageTitle;
     ViewData["Image"] = $"ProductPictures/{@Model.Course.Picture}";
     ViewData["keywords"] = Model.Course.Keywords;
     ViewData["metaDescription"] = Model.Course.MetaDescription;
-    ViewData["Url"] = $"Article/{Model.Course.Slug}";
+    ViewData["Url"] = $"Course/{Model.Course.Slug}";
     ViewData["author"] = Model.Course.Teacher;
 }
 @inject IAuthHelper _authHelper
@@ -27,7 +31,7 @@
                     <div class="ed_detail_wrap">
                         <div class="crs_cates cl_1"><span>@Model.Course.Category</span></div>
                         <div class="ed_header_caption">
-                            <h2 class="ed_title">@Model.Course.Title</h2>
+                            <h1 class="ed_title">@Model.Course.Title</h1>
                         </div>
 
                     </div>
@@ -45,18 +49,10 @@
 
             <div class="col-lg-8 col-md-12 order-lg-first">
 
-                <div class="property_video radius lg mb-4">
+                <div class=" radius lg mb-4">
                     <div class="thumb">
-                        <img class="pro_img img-fluid w100" src="~/Pictures/@Model.Course.Picture" alt="@Model.Course.PictureAlt" title="@Model.Course.PictureTitle">
-                        <div class="overlay_icon">
-                            <div class="bb-video-box">
-                                <div class="bb-video-box-inner">
-                                    <div class="bb-video-box-innerup">
-                                        <a href="https://www.aparat.com/v/eME0K/%D8%A7%D9%86%D8%AA%D8%B4%D8%A7%D8%B1_%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D9%87_%D8%AF%D8%B1_%DA%AF%D9%88%DA%AF%D9%84_%D9%BE%D9%84%DB%8C_%D9%82%D8%AF%D9%85_%D8%A8%D9%87_%D9%82%D8%AF%D9%85-nazroid.ir" data-toggle="modal" data-target="#popup-video" class="theme-cl"><i class="ti-control-play"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <img style="border-radius: 40px" class="pro_img img-fluid w100" src="~/Pictures/@Model.Course.Picture" alt="@Model.Course.PictureAlt" title="@Model.Course.PictureTitle">
+
                     </div>
                 </div>
 
@@ -83,7 +79,7 @@
                         <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                             <!-- Overview -->
                             <div class="edu_wraper">
-                                <h4 class="edu_title">سرفصل و جزئیات آموزش</h4>
+                                <h4 class="edu_title">@Model.Course.Title</h4>
                                 <br /><br />
                                 @Html.Raw(@Model.Course.Description)
                             </div>
@@ -94,7 +90,7 @@
                         <!-- Curriculum Detail -->
                         <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
                             <div class="edu_wraper">
-                                <h4 class="edu_title">@Model.Course.Title</h4>
+                                <h4 class="edu_title">سرفصل و جزئیات آموزش</h4>
                                 <div id="accordionExample" class="accordion shadow circullum">
 
                                     @foreach (var item in Model.Course.Sections)
@@ -103,7 +99,7 @@
                                             <div id="headingOne" class="card-header bg-white shadow-sm border-0">
                                                 <h6 class="mb-0 accordion_title"><a href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="d-block position-relative text-dark collapsible-link py-2">@item.Title</a></h6>
                                             </div>
-                                            <div id="collapseOne" aria-labelledby="headingOne" data-parent="#accordionExample" class="collapse show">
+                                            <div @*id="collapseOne"*@ aria-labelledby="headingOne" data-parent="#accordionExample" class="collapse show">
                                                 <div class="card-body pl-3 pr-3">
                                                     <ul class="lectures_lists">
                                                         @foreach (var part in item.Parts)
@@ -112,7 +108,7 @@
                                                             {
                                                                 if (_authHelper.IsAuthenticated())
                                                                 {
-                                                                    <li class="progressing"><div class="lectures_lists_title"><i class="fa fa-lock-open dios"></i></div><a asp-page-handler="DownloadFile" asp-route-partId="@part.Id" asp-route-courseId="@Model.Course.Id" target="_blank">@part.Title</a><span class="cls_timing">@part.Time</span></li>
+                                                                    <li class="progressing"><div class="lectures_lists_title"><i class="fa fa-lock-open dios"></i></div><a asp-page-handler="FreeCourse" asp-route-partId="@part.Id" asp-route-courseId="@Model.Course.Id" target="_blank">@part.Title</a><span class="cls_timing">@part.Time</span></li>
                                                                 }
                                                                 else
                                                                 {
@@ -154,10 +150,6 @@
                                     </ul>
                                     <p>@Model.Course.TeacherBio</p>
                                     <ul class="social_info">
-                                        <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                        <li><a href="#"><i class="ti-twitter"></i></a></li>
-                                        <li><a href="#"><i class="ti-linkedin"></i></a></li>
-                                        <li><a href="#"><i class="ti-instagram"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -244,87 +236,92 @@
                 </div>
 
             </div>
-        <!-- Sidebar -->
-                <div class="col-lg-4 col-md-12 order-lg-last" style="position: sticky">
+            <!-- Sidebar -->
+            <div class="col-lg-4 col-md-12 order-lg-last" style="position: sticky">
 
-                    <div class="ed_view_box style_2 border ovrlio stick_top min" style="margin-top: 10px;">
-                        <div class="ed_author">
+                <div class="ed_view_box style_2 border ovrlio stick_top min" style="margin-top: 10px;">
+                    <div class="ed_author">
+                        @if (Model.Course.DoublePrice < 1)
+                        {
+                            <h2 class="theme-cl m-0">رایـــگان!</h2>
+                        }
+                        else
+                        {
+                            @if (Model.Course.HasDiscount)
+                            {
+
+                                <h2 class="theme-cl m-0">@Model.Course.PriceWithDiscount ت<span class="old_prc">@Model.Course.Price ت</span></h2>
+                            }
+                            else
+                            {
+
+                                <h2 class="theme-cl m-0">@Model.Course.Price ت</h2>
+                            }
+                        }
+
+
+                    </div>
+                    <div class="ed_view_link">
+                        @if (_authHelper.IsAuthenticated())
+                        {
+                            @if (Model.Course.DoublePrice > 1)
+                            {
+                                <a onclick="addToCart('@Model.Course.Id', '@Model.Course.Title', '@Model.Course.DoublePrice', '@Model.Course.Picture')" class="btn theme-bg enroll-btn">ثبت نام دوره<i class="ti-angle-left"></i></a>
+                            }
+                            else
+                            {
+                                <div class="alert alert-success">تبریــــک! این دوره برای شما رایگان است</div>
+                            }
+                        }
+                        else
+                        {
                             @if (Model.Course.DoublePrice < 1)
                             {
-                                <h2 class="theme-cl m-0">رایـــگان!</h2>
+                                <div class="alert alert-primary">تبریــــک! این دوره برای شما رایگان است <br /> جهت ثبت نام در دوره @Model.Course.Title وارد شوید</div>
                             }
                             else
                             {
-                                @if (Model.Course.HasDiscount)
-                                {
+                                <a asp-page="./Login" target="_blank" class="btn theme-bg enroll-btn">ثبت نام دوره<i class="ti-angle-left"></i></a>
 
-                                    <h2 class="theme-cl m-0">@Model.Course.PriceWithDiscount ت<span class="old_prc">@Model.Course.Price ت</span></h2>
-                                }
-                                else
-                                {
-
-                                    <h2 class="theme-cl m-0">@Model.Course.Price ت</h2>
-                                }
                             }
 
-
+                        }
+                    </div>
+                    <div class="ed_view_features">
+                        <div class="eld mb-3">
+                            <h6 class="font-medium">مشخصات آموزش</h6>
+                            <p>@Model.Course.ShortDescription</p>
                         </div>
-                        <div class="ed_view_link">
-                            @if (_authHelper.IsAuthenticated())
-                            {
-                                @if (Model.Course.DoublePrice > 1)
-                                {
-                                    <a onclick="addToCart('@Model.Course.Id', '@Model.Course.Title', '@Model.Course.DoublePrice', '@Model.Course.Picture')" class="btn theme-bg enroll-btn">ثبت نام دوره<i class="ti-angle-left"></i></a>
-                                }
-                                else
-                                {
-                                    <div class="alert alert-success">تبریــــک! این دوره برای شما رایگان است</div>
-                                }
-                            }
-                            else
-                            {
-                                @if (Model.Course.DoublePrice < 1)
-                                {
-                                    <div class="alert alert-primary">تبریــــک! این دوره برای شما رایگان است <br /> جهت ثبت نام در دوره @Model.Course.Title وارد شوید</div>
-                                }
-
-                            }
+                        <div class="eld mb-3">
+                            <ul class="edu_list right">
+                                <li><i class="ti-user"></i>تعداد شرکت کننده:<strong>@Model.Course.StudentsCount نفر</strong></li>
+                                <li><i class="ti-files"></i>موضوع:<strong>@Model.Course.Category</strong></li>
+                                <li><i class="ti-game"></i>زمان:<strong>@Model.Course.Time</strong></li>
+                                <li><i class="ti-time"></i>تعداد ویدئو:<strong>@Model.Course.PartCount قسمت</strong></li>
+                                <li><i class="ti-tag"></i>سطح:<strong>@Model.Course.Level</strong></li>
+                            </ul>
                         </div>
-                        <div class="ed_view_features">
-                            <div class="eld mb-3">
-                                <h6 class="font-medium">مشخصات آموزش</h6>
-                                <p>@Model.Course.ShortDescription</p>
-                            </div>
-                            <div class="eld mb-3">
-                                <ul class="edu_list right">
-                                    <li><i class="ti-user"></i>تعداد شرکت کننده:<strong>@Model.Course.StudentsCount نفر</strong></li>
-                                    <li><i class="ti-files"></i>موضوع:<strong>@Model.Course.Category</strong></li>
-                                    <li><i class="ti-game"></i>زمان:<strong>@Model.Course.Time</strong></li>
-                                    <li><i class="ti-time"></i>تعداد ویدئو:<strong>قسمت @Model.Course.PartCount</strong></li>
-                                    <li><i class="ti-tag"></i>سطح:<strong>@Model.Course.Level</strong></li>
-                                </ul>
-                            </div>
-                            <div>
-                                @*<input type="text" class="form-group" value="@Model.Course.ShortLink" id="myInput" readonly="">
+                        <div>
+                            @*<input type="text" class="form-group" value="@Model.Course.ShortLink" id="myInput" readonly="">
 
                                 <button onclick="myFunction()">Copy text</button>*@
-                                <div class="foot-news-last">
-                                    <label>لینک کوتاه</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control"value="@Model.Course.ShortLink" id="ShortLink" readonly="">
-                                        <div class="input-group-append">
-                                            <button type="button" onclick="Copy()" class="input-group-text theme-bg b-0 text-light">کپی</button>
-                                        </div>
+                            <div class="foot-news-last">
+                                <label>لینک کوتاه</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="@Model.Course.ShortLink" id="ShortLink" readonly="">
+                                    <div class="input-group-append">
+                                        <button type="button" onclick="Copy()" class="input-group-text theme-bg b-0 text-light">کپی</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
 
                 </div>
+
             </div>
         </div>
+    </div>
 </section>
 <section>
     <div class="container">
@@ -341,7 +338,7 @@
 
                     @foreach (var course in Model.LatestCourses)
                     {
-                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
+                        <div class="col-xl-12 col-lg-4 col-md-6 col-sm-12">
                             @*<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">*@
                             <div class="crs_grid ">
                                 <div class="crs_grid_thumb">

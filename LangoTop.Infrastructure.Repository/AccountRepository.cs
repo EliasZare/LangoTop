@@ -95,6 +95,26 @@ namespace LangoTop.Infrastructure.Repository
             }).ToList();
         }
 
+        public List<AccountViewModel> GetAdmins()
+        {
+            return _context.Accounts
+                .Where(x => x.RoleId == int.Parse(Roles.Administrator) || x.RoleId == int.Parse(Roles.Admin))
+                .Include(x => x.Role).Select(x => new AccountViewModel
+                {
+                    Id = x.Id,
+                    Fullname = x.Fullname,
+                    Username = x.Username,
+                    Mobile = x.Mobile,
+                    ProfilePhoto = x.ProfilePhoto,
+                    IsActive = x.IsActive,
+                    Email = x.Email,
+                    CreationDate = x.CreationDate.ToFarsi(),
+                    RoleId = x.RoleId,
+                    Role = x.Role.Name,
+                    Biography = x.Biography
+                }).ToList();
+        }
+
         public Account GetByCode(string activeCode)
         {
             return _context.Accounts.FirstOrDefault(x => x.ActiveCode == activeCode);

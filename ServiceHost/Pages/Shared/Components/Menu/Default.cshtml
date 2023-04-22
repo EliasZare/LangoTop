@@ -10,7 +10,7 @@
         <nav id="navigation" class="navigation navigation-landscape">
             <div class="nav-header">
                 <a class="nav-brand" asp-page="./Index">
-                    <img src="~/Theme/img/LangoTopLogoSite4Artboard 1.png" class="logo" alt=" لنگو تاپ" />
+                    <img src="~/Theme/img/LangoTopLogoSite4Artboard 1.png" class="logo" alt="لنگو تاپ" />
                 </a>
                 <div class="nav-toggle"></div>
                 <div class="mobile_nav">
@@ -46,10 +46,8 @@
                                             <h4>سلام، @accountInfo.Fullname</h4>
                                         </div>
                                         <ul>
-                                            <li><a href="/Dashboard"><i class="fa fa-tachometer-alt"></i>پیشخوان<span class="notti_coun style-1">4</span></a></li>
-                                            <li><a href="/Dashboard/Profile"><i class="fa fa-user-tie"></i>پروفایل کاربری</a></li>
-                                            <li><a href="/Dashboard/Courses"><i class="fas fa-shopping-basket"></i>دوره های من<span class="notti_coun style-2">7</span></a></li>
-                                            <li><a href="/Dashboard/Message"><i class="fas fa-comments"></i>پیام ها</a></li>
+                                            <li><a href="/Dashboard"><i class="fa fa-tachometer-alt"></i>پیشخوان</a></li>
+                                            <li><a href="/Dashboard/Courses"><i class="fas fa-shopping-basket"></i>دوره های من</a></li>
                                             <li><a asp-page="/Login" asp-page-handler="Logout"><i class="fa fa-unlock-alt"></i>خروج</a></li>
                                         </ul>
                                     </div>
@@ -80,7 +78,7 @@
                         <ul class="nav-dropdown nav-submenu">
                             @foreach (var item in Model.CourseCategories)
                             {
-                                <li><a asp-page="/CourseCategory" asp-route-id="@item.Slug">@item.Name</a></li>
+                                <li><a asp-page="/CourseCategory" asp-route-slug="@item.Slug" asp-route-id="1">@item.Name</a></li>
                             }
                         </ul>
                     </li>
@@ -125,10 +123,8 @@
                                             <h4>سلام، @accountInfo.Fullname</h4>
                                         </div>
                                         <ul>
-                                            <li><a href="/Dashboard"><i class="fa fa-tachometer-alt"></i>پیشخوان<span class="notti_coun style-1">4</span></a></li>
-                                            <li><a href="/Dashboard/Profile"><i class="fa fa-user-tie"></i>پروفایل کاربری</a></li>
-                                            <li><a href="/Dashboard/Courses"><i class="fas fa-shopping-basket"></i>دوره های من<span class="notti_coun style-2">7</span></a></li>
-                                            <li><a href="/Dashboard/Message"><i class="fas fa-comments"></i>پیام ها</a></li>
+                                            <li><a href="/Dashboard"><i class="fa fa-tachometer-alt"></i>پیشخوان</a></li>
+                                            <li><a href="/Dashboard/Courses"><i class="fas fa-shopping-basket"></i>دوره های من</a></li>
                                             <li><a asp-page="/Login" asp-page-handler="Logout"><i class="fa fa-unlock-alt"></i>خروج</a></li>
                                         </ul>
                                     </div>

@@ -1,11 +1,15 @@
-﻿@page "{id}"
+﻿@page "{slug}/{id}"
 @model ServiceHost.Pages.CourseCategoryModel
+@section Style
+{
+    <link rel="canonical" href="https://langotop.ir/CourseCategory/@Model.CourseCategory.Slug/@Model.PageId" />
+}
 @{
     ViewData["Title"] = Model.CourseCategory.Name;
     ViewData["Image"] = $"ProductPictures/{@Model.CourseCategory.Picture}";
     ViewData["keywords"] = Model.CourseCategory.Keywords;
     ViewData["metaDescription"] = Model.CourseCategory.MetaDescription;
-    ViewData["Url"] = $"Article/{Model.CourseCategory.Slug}";
+    ViewData["Url"] = $"CourseCategory/{Model.CourseCategory.Slug}/{Model.PageId}";
     ViewData["author"] = "Elyas Zare";
 }
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
@@ -36,7 +40,7 @@
 
         <div class="row justify-content-center">
 
-            @foreach (var course in Model.CourseCategory.Courses)
+            @foreach (var course in Model.Courses.Courses)
             {
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12">
                     <div class="crs_grid">
@@ -52,7 +56,7 @@
                             }
                         </div>
                         <div class="crs_grid_caption">
-                            
+
                             <div class="crs_title"><h4><a asp-page="./Course" asp-route-id="@course.Slug" class="crs_title_link">@course.Title</a></h4></div>
                             <div class="crs_info_detail">
                                 <ul>
@@ -76,7 +80,7 @@
                                                 <span class="theme-cl">رایگان!</span>
                                             </h4>
                                         </div>
-                                   
+
                                     }
                                     else
                                     {
@@ -107,30 +111,34 @@
 
         </div>
 
-        <!-- Pagination -->
-        @*<div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <ul class="pagination p-center">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <ul class="pagination p-center">
+                    @if (Model.Courses.CurrentPage > 1)
+                    {
                         <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
+                            <a class="page-link" asp-page="CourseCategory" asp-route-id="@(Model.Courses.CurrentPage - 1)" aria-label="قبلی">
                                 <span class="ti-arrow-right"></span>
                                 <span class="sr-only">قبل</span>
                             </a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">...</a></li>
-                        <li class="page-item"><a class="page-link" href="#">18</a></li>
+                    }
+                    @for (int i = 1; i <= Model.Courses.PageCount; i++)
+                    {
+                        <li class="page-item @((i==Model.Courses.CurrentPage)? "active" : "")"><a class="page-link" asp-page="CourseCategory" asp-route-id="@i">@i</a></li>
+                    }
+                    @if (Model.Courses.CurrentPage < Model.Courses.PageCount)
+                    {
                         <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
+                            <a class="page-link" asp-page="CourseCategory" asp-route-id="@(Model.Courses.CurrentPage + 1)" aria-label="بعدی">
                                 <span class="ti-arrow-left"></span>
                                 <span class="sr-only">بعد</span>
                             </a>
                         </li>
-                    </ul>
-                </div>
-            </div>*@
+                    }
 
+                </ul>
+            </div>
+        </div>
     </div>
 </section>

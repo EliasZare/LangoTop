@@ -124,7 +124,7 @@ namespace _01_Query.Query
                 TotalAmount = x.TotalAmount,
                 CreationDate = x.CreationDate.ToFarsi(),
                 OrderItems = MapItems(x.Items)
-            }).AsNoTracking().ToList();
+            }).AsNoTracking().Where(x => x.IsPaid).ToList();
 
 
             foreach (var item in orders.SelectMany(order => order.OrderItems))

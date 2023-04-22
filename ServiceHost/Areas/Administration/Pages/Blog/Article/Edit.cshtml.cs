@@ -30,7 +30,7 @@ namespace ServiceHost.Areas.Administration.Pages.Blog.Article
         {
             Command = _articleApplication.GetDetails(id);
             ArticleCategories = new SelectList(_articleCategoryApplication.GetArticleCategories(), "Id", "Name");
-            Authors = new SelectList(_accountApplication.GetAccounts(), "Id", "Fullname");
+            Authors = new SelectList(_accountApplication.GetAdmins(), "Id", "Fullname");
         }
 
         public IActionResult OnPost(EditArticle command)

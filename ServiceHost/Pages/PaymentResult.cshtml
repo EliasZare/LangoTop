@@ -1,0 +1,66 @@
+﻿@page
+@model ServiceHost.Pages.PaymentResultModel
+@section Style
+{
+    <meta name='robots' content='noindex, nofollow' />
+}
+@{
+    ViewData["Title"] = $"نتیجه تراکنش - {Model.Result.Message}";
+    ViewData["Image"] = "Theme/img/Logo.png";
+    ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
+    ViewData["metaDescription"] = "لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند.";
+    ViewData["Url"] = "PaymentResult";
+    ViewData["author"] ="Elyas Zare";
+}
+<section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
+</section>
+<section>
+    <div class="container">
+        @if (Model.Result.IsSuccessful)
+        {
+            <div class="alert alert-success">
+                <i class="fa fa-check"></i> خرید شما با موفقیت انجام شد!
+            </div>
+            <div class="alert alert-primary">
+                برای دریافت فایل محصول خریداری شده وارد   <a href="./Dashboard" class="btn btn-success">حساب کاربری</a>     خود شوید
+                و در قسمت دوره های خریداری شده استفاده بفرمایید با تشکر مدیریت لنگوتاپ
+            </div>
+
+            <div class="foot-news-last alert alert-danger col-md-4">
+                کد پیگیری خود را حتما ذخیره بفرمایید زیرا امکان بازیابی وجود ندارد.
+                <div class="input-group ">
+                    <input type="text" class="form-control" value="@Model.Result.IssueTrackingNo" id="IssueTrackingNo" readonly="">
+                    <div class="input-group-append">
+                        <button type="button" onclick="Copy()" class="input-group-text theme-bg b-0 text-light">کپی</button>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (!Model.Result.IsSuccessful)
+        {
+            <div class="alert alert-danger">
+                عملیات پرداخت با شکست مواجه شد!
+            </div>
+            <br />
+            <div class="alert alert-primary">
+                @Model.Result.Message
+            </div>
+            <div>
+                در صورت بروز خطا از سمت دریافت کننده می توانید با پشتیبانی سایت برای خرید دوره در تماس باشید
+                <br />
+                <a asp-page="./ContactUs" class="btn btn-primary"> تماس با ما </a>
+            </div>
+        }
+    </div>
+</section>
+@section Copy
+{
+    <script>
+        function Copy() {
+            var copyText = document.getElementById("IssueTrackingNo");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+        }
+    </script>
+}

@@ -21,14 +21,14 @@
                 <div class="crs_grid">
                     <div class="crs_grid_thumb">
                         <a asp-page="./Course" asp-route-id="@course.Slug" class="crs_detail_link">
-                            <img src="~/Pictures/@course.PictureSmall" title="@course.PictureTitle" class="img-fluid rounded" alt="@course.PictureAlt" />
+                            <img class="  img-fluid rounded "  src="~/Pictures/@course.PictureSmall"  title="@course.PictureTitle"  alt="@course.PictureAlt" />
                         </a>
                         @if (course.HasDiscount)
-                       {
-                           <div class="crs_locked_ico">
-                               <img src="~/Theme/img/giftIcon.gif" style="width: 30px; height: 30px" alt="تخفیف لنگوتاپ" />
-                           </div>
-                       }
+                        {
+                            <div class="crs_locked_ico">
+                                <img src="~/Theme/img/giftIcon.gif" style="width: 30px; height: 30px" alt="تخفیف لنگوتاپ" />
+                            </div>
+                        }
                     </div>
                     <div class="crs_grid_caption">
                         <div class="crs_title"><h4><a asp-page="./Course" asp-route-id="@course.Slug" class="crs_title_link">@course.Title</a></h4></div>
@@ -43,7 +43,7 @@
                         <div class="crs_flex">
                             <div class="crs_fl_first">
                                 <div class="crs_tutor">
-                                    <div class="crs_tutor_thumb"><a asp-page="./TeacherProfile" asp-route-id="@course.Teacher"><img src="~/Pictures/@course.TeacherProfile" class="img-fluid circle" alt="@course.Teacher" /></a></div><div class="crs_tutor_name"><a  asp-page="/Profile" asp-route-id="@course.TeacherUsername">@course.Teacher</a></div>
+                                    <div class="crs_tutor_thumb"><a asp-page="./TeacherProfile" asp-route-id="@course.Teacher"><img src="~/Pictures/@course.TeacherProfile" class="img-fluid circle" alt="@course.Teacher" /></a></div><div class="crs_tutor_name"><a asp-page="/Profile" asp-route-id="@course.TeacherUsername">@course.Teacher</a></div>
                                 </div>
                             </div>
                             <div class="crs_fl_last">
@@ -54,7 +54,7 @@
                                             <span class="theme-cl">رایگان!</span>
                                         </h4>
                                     </div>
-                                   
+
                                 }
                                 else
                                 {
@@ -76,7 +76,7 @@
                                         </div>
                                     }
                                 }
-                               
+
                             </div>
                         </div>
                     </div>

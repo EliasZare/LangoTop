@@ -28,16 +28,13 @@ namespace ServiceHost.Pages
 
         public async Task<RedirectToPageResult> OnPost(Login command, string captcha)
         {
-            //_emailService.SendEmail("langotop.ir@gmail.com", "دوس داشتم", "سلام نکبت من");
+            var captchaResult = await _captchaValidator.IsCaptchaPassedAsync(captcha);
 
-            if (!await _captchaValidator.IsCaptchaPassedAsync(captcha))
-                ModelState.AddModelError("captcha", "Captcha validation failed");
-            if (ModelState.IsValid)
+            //ModelState.AddModelError("captcha", "Captcha validation failed");
+            if (captchaResult)
             {
                 var result = _accountApplication.Login(command);
                 if (result.IsSucceeded) return RedirectToPage("/Index");
-
-                LoginMessage = result.Message;
             }
             else
             {

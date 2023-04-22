@@ -83,6 +83,7 @@ namespace _01_Query.Query
                 }
             }
 
+            category.Courses = category.Courses.Where(x => !x.IsRemoved).ToList();
             return category;
         }
 

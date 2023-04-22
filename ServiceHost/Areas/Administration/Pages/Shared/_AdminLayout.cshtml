@@ -35,7 +35,7 @@
     <link href="~/AdminTheme/assets/css/style.css" rel="stylesheet" type="text/css" />
     <link href="~/AdminTheme/assets/jquery-multi-select/multi-select.css" rel="stylesheet" type="text/css" />
     @await RenderSectionAsync("Css", false)
-<link href="~/AdminTheme/assets/ckeditor/prism_1.0.1/prism/lib/prism/prism_patched.min.css" rel="stylesheet" />
+    <link href="~/AdminTheme/assets/ckeditor/prism_1.0.1/prism/lib/prism/prism_patched.min.css" rel="stylesheet" />
 
     <script src="~/AdminTheme/assets/js/modernizr.min.js"></script>
     <link href="~/AdminTheme/assets/css/persian-datepicker.min.css" rel="stylesheet">
@@ -211,7 +211,6 @@
                             </ul>
                         </div>
 
-                        @*<p class="text-muted m-0">@currentAccount.Role</p>*@
                     </div>
                 </div>
                 <!--- Divider -->
@@ -323,6 +322,12 @@
                                 <i class="md md-message"></i><span> پیام ها </span>
                             </a>
                         </li>
+                        <li>
+                            <a asp-page="/ImageManager/Index" class="waves-effect">
+                                <i class="md md-file-upload"></i><span> مدیریت عکس </span>
+                            </a>
+                        </li>
+
                         <li>
                             <a asp-page="/Account" asp-page-handler="Logout" class="waves-effect">
                                 <i class="fa fa-times"></i><span> خروج </span>
@@ -459,12 +464,17 @@
             autoClose: true,
             initialValueType: "persian"
         });
-                    //$(document).ready(function () {
-                    //    $('#summernote').summernote();
-                    //});
+        //$(document).ready(function () {
+        //    $('#summernote').summernote();
+        //});
     </script>
-    <script type="text/javascript">
-                    //$(document).ready(function () { $('.dropdown-toggle').dropdown(); $('#summernote').summernote(''); });
+    <script>
+        function Copy() {
+            var copyText = document.getElementById("CopyText");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+        }
     </script>
 
 </body>

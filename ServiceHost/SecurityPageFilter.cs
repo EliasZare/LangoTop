@@ -32,7 +32,7 @@ namespace ServiceHost
 
             var ap = accountPermissions;
             if (accountPermissions.All(x => x != handlerPermission.Permission))
-                context.HttpContext.Response.Redirect("/Account");
+                context.HttpContext.Response.Redirect("https://langotop.ir");
         }
 
         public void OnPageHandlerSelected(PageHandlerSelectedContext context)

@@ -20,6 +20,7 @@ namespace LangoTop.Infrastructure
         public DbSet<Order> Orders { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Page> Pages { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public LangoTopContext(DbContextOptions<LangoTopContext> options) : base(options)
         {

@@ -1,4 +1,5 @@
 using _01_Query.Contracts.Course;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ServiceHost.Pages
@@ -13,9 +14,11 @@ namespace ServiceHost.Pages
         }
 
         public PagingCourseQueryModel Courses { get; set; }
+        [TempData] public string PageId { get; set; }
 
         public void OnGet(int id = 1)
         {
+            PageId = id.ToString();
             Courses = _courseQuery.GetCourses(id);
         }
     }

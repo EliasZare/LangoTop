@@ -1,5 +1,9 @@
 ﻿@page "{id}"
 @model ServiceHost.Pages.ArticleModel
+@section Style
+{
+    <link rel="canonical" href="https://langotop.ir/Article/@Model.Article.Slug" />
+}
 @{
     ViewData["Title"] = Model.Article.PageTitle;
     ViewData["Image"] = $"ProductPictures/{@Model.Article.Picture}";
@@ -232,8 +236,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
         </div>

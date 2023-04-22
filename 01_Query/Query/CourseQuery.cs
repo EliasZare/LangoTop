@@ -173,6 +173,63 @@ namespace _01_Query.Query
             return list;
         }
 
+        public PagingCourseQueryModel GetCoursesBy(string categorySlug, int pageId = 1)
+        {
+            IQueryable<Course> result = _context.Courses; //----lazy load
+
+            //-------paging---------//
+            var take = 9;
+            var skip = (pageId - 1) * take;
+
+            var list = new PagingCourseQueryModel();
+            list.CurrentPage = pageId;
+            list.PageCount = (int) Math.Ceiling(result.Count() / (double) take);
+            var discounts = _context.CustomerDiscounts
+                .Where(x => x.StartDate < DateTime.Now && x.EndDate > DateTime.Now)
+                .Select(x => new {x.DiscountRate, x.CourseId}).ToList();
+
+
+            list.Courses = _context.Courses.Include(x => x.CourseCategory).Include(x => x.Teacher).Select(x =>
+                    new CourseQueryModel
+                    {
+                        Id = x.Id,
+                        Title = x.Title,
+                        PictureTitle = x.PictureTitle,
+                        Picture = x.Picture,
+                        PictureAlt = x.PictureAlt,
+                        Category = x.CourseCategory.Name,
+                        Slug = x.Slug,
+                        IsRemoved = x.IsRemoved,
+                        PictureSmall = x.PictureSmall,
+                        Level = x.Level,
+                        Time = x.Time,
+                        Price = x.Price.ToMoney(),
+                        TeacherProfile = x.Teacher.ProfilePhoto,
+                        Teacher = x.Teacher.Fullname,
+                        DoublePrice = x.Price,
+                        ShortLink = x.ShortLink,
+                        CategorySlug = x.CourseCategory.Slug
+                    }).AsEnumerable().Where(x => !x.IsRemoved).Where(x => x.CategorySlug == categorySlug)
+                .OrderByDescending(x => x.Id)
+                .Skip(skip).Take(take).ToList();
+
+
+            foreach (var product in list.Courses)
+            {
+                var discount = discounts.FirstOrDefault(x => x.CourseId == product.Id);
+                if (discount != null)
+                {
+                    var discountRate = discount.DiscountRate;
+                    product.DiscountRate = discountRate;
+                    product.HasDiscount = discountRate > 0;
+                    var discountAmount = Math.Round(product.DoublePrice * discountRate / 100);
+                    product.PriceWithDiscount = (product.DoublePrice - discountAmount).ToMoney();
+                }
+            }
+
+            return list;
+        }
+
         public PagingCourseQueryModel Search(string searchModel, int pageId)
         {
             IQueryable<Course> result = _context.Courses; //----lazy load
@@ -280,6 +337,110 @@ namespace _01_Query.Query
                     Sections = MapSections(x.Sections),
                     ShortLink = x.ShortLink
                 }).Where(x => !x.IsRemoved).FirstOrDefault(x => x.Slug == slug);
+
+            foreach (var paidCourse in paidCourses)
+                if (paidCourse.Id == course.Id)
+                    course.IsPaid = true;
+
+
+            if (course == null) return new CourseQueryModel();
+
+
+            if (!string.IsNullOrWhiteSpace(course.Keywords))
+                course.KeywordList = course.Keywords.Split("،").ToList();
+
+            course.StudentsCount = _orderQuery.GetStudentCourseCount(course.Id);
+
+            var partCount = 0;
+            foreach (var section in course.Sections)
+            {
+                var parts = _context.Parts
+                    .Select(x => new PartQueryModel
+                    {
+                        Id = x.Id,
+                        Title = x.Title,
+                        IsRemoved = x.IsRemoved,
+                        SectionId = x.SectionId,
+                        Time = x.Time,
+                        DownloadLink = x.DownloadLink
+                    }).OrderBy(x => x.Id).Where(x => !x.IsRemoved && x.SectionId == section.Id).ToList();
+
+                section.Parts = parts;
+                partCount += parts.Count;
+            }
+
+            course.PartCount = partCount;
+
+            var discount = discounts.FirstOrDefault(x => x.CourseId == course.Id);
+            if (discount != null)
+            {
+                var discountRate = discount.DiscountRate;
+                course.DiscountRate = discountRate;
+                course.HasDiscount = discountRate > 0;
+                var discountAmount = Math.Round(course.DoublePrice * discountRate / 100);
+                course.PriceWithDiscount = (course.DoublePrice - discountAmount).ToMoney();
+            }
+
+
+            course.Comments = _context.Comments
+                .Where(x => !x.IsCanceled)
+                .Where(x => x.IsConfirmed)
+                .Where(x => x.Type == CommentType.Course)
+                .Where(x => x.OwnerRecordId == course.Id)
+                .Select(x => new CommentQueryModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Message = x.Message,
+                    CreationDate = x.CreationDate.ToFarsi()
+                }).OrderByDescending(x => x.Id).ToList();
+
+
+            return course;
+        }
+
+        public CourseQueryModel GetDetails(long id)
+        {
+            var discounts = _context.CustomerDiscounts
+                .Where(x => x.StartDate < DateTime.Now && x.EndDate > DateTime.Now)
+                .Select(x => new {x.DiscountRate, x.CourseId}).ToList();
+
+            var accountId = _authHelper.CurrentAccountId();
+
+            var paidCourses = _orderQuery.GetCoursesBy(accountId);
+
+            var course = _context.Courses.Include(x => x.CourseCategory).Include(x => x.Teacher).Select(x =>
+                new CourseQueryModel
+                {
+                    Id = x.Id,
+                    Title = x.Title,
+                    PictureTitle = x.PictureTitle,
+                    Picture = x.Picture,
+                    PictureAlt = x.PictureAlt,
+                    Category = x.CourseCategory.Name,
+                    Slug = x.Slug,
+                    IsRemoved = x.IsRemoved,
+                    PictureSmall = x.PictureSmall,
+                    Level = x.Level,
+                    Time = x.Time,
+                    Price = x.Price.ToMoney(),
+                    TeacherProfile = x.Teacher.ProfilePhoto,
+                    Teacher = x.Teacher.Fullname,
+                    ShortDescription = x.ShortDescription,
+                    Keywords = x.Keywords,
+                    DoublePrice = x.Price,
+                    CategorySlug = x.CourseCategory.Slug,
+                    Description = x.Description,
+                    MetaDescription = x.MetaDescription,
+                    TeacherCourseCount = x.Teacher.Courses.Count,
+                    TeacherJoinDate = x.Teacher.CreationDate.ToFarsi(),
+                    TeacherId = x.TeacherId,
+                    PageTitle = x.PageTitle,
+                    TeacherBio = x.Teacher.Biography,
+                    TeacherUsername = x.Teacher.Username,
+                    Sections = MapSections(x.Sections),
+                    ShortLink = x.ShortLink
+                }).Where(x => !x.IsRemoved).FirstOrDefault(x => x.Id == id);
 
             foreach (var paidCourse in paidCourses)
                 if (paidCourse.Id == course.Id)

@@ -1,11 +1,15 @@
 ﻿@page "{id}"
 @model ServiceHost.Pages.ProfileModel
+@section Style
+{
+    <link rel="canonical" href="https://langotop.ir/Profile/@Model.Account.Username" />
+}
 @{
     ViewData["Title"] = $"حساب کاربری {Model.Account.Fullname}";
     ViewData["Image"] = $"/Pictures/{Model.Account.ProfilePhoto}";
     ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
     ViewData["metaDescription"] = $"{Model.Account.Biography}";
-    ViewData["Url"] = "Profile";
+    ViewData["Url"] = $"Profile/{Model.Account.Username}";
     ViewData["author"] = "Elyas Zare";
 }
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
@@ -33,26 +37,6 @@
                         </div>
                         <div class="ed_header_short">
                             <p>@Model.Account.Biography</p>
-                        </div>
-
-                        <div class="ed_rate_info">
-                            <div class="star_info">
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                                <i class="fas fa-star filled"></i>
-                            </div>
-                            <div class="review_counter">
-                                امتیاز
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="dlkio_last">
-                        <div class="ed_view_link">
-                            <a href="#" class="btn theme-bg enroll-btn">ثبت نام<i class="ti-angle-left"></i></a>
-                            <a href="#" class="btn theme-border enroll-btn">اشتراک گذاری<i class="fas fa-share"></i></a>
                         </div>
                     </div>
                 </div>
@@ -139,34 +123,34 @@
         </div>
 
         @*<div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-                <ul class="pagination p-center">
-                    @if (Model.Courses.CurrentPage > 1)
-                    {
-                        <li class="page-item">
-                            <a class="page-link" asp-page="Courses" asp-route-id="@(Model.Courses.CurrentPage - 1)" aria-label="قبلی">
-                                <span class="ti-arrow-right"></span>
-                                <span class="sr-only">قبل</span>
-                            </a>
-                        </li>
-                    }
-                    @for (int i = 1; i <= Model.Courses.PageCount; i++)
-                    {
-                        <li class="page-item @((i==Model.Courses.CurrentPage)? "active" : "")"><a class="page-link" asp-page="Courses" asp-route-id="@i">@i</a></li>
-                    }
-                    @if (Model.Courses.CurrentPage < Model.Courses.PageCount)
-                    {
-                        <li class="page-item">
-                            <a class="page-link" asp-page="Courses" asp-route-id="@(Model.Courses.CurrentPage + 1)" aria-label="بعدی">
-                                <span class="ti-arrow-left"></span>
-                                <span class="sr-only">بعد</span>
-                            </a>
-                        </li>
-                    }
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <ul class="pagination p-center">
+                        @if (Model.Courses.CurrentPage > 1)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-page="Courses" asp-route-id="@(Model.Courses.CurrentPage - 1)" aria-label="قبلی">
+                                    <span class="ti-arrow-right"></span>
+                                    <span class="sr-only">قبل</span>
+                                </a>
+                            </li>
+                        }
+                        @for (int i = 1; i <= Model.Courses.PageCount; i++)
+                        {
+                            <li class="page-item @((i==Model.Courses.CurrentPage)? "active" : "")"><a class="page-link" asp-page="Courses" asp-route-id="@i">@i</a></li>
+                        }
+                        @if (Model.Courses.CurrentPage < Model.Courses.PageCount)
+                        {
+                            <li class="page-item">
+                                <a class="page-link" asp-page="Courses" asp-route-id="@(Model.Courses.CurrentPage + 1)" aria-label="بعدی">
+                                    <span class="ti-arrow-left"></span>
+                                    <span class="sr-only">بعد</span>
+                                </a>
+                            </li>
+                        }
 
-                </ul>
-            </div>
-        </div>*@
+                    </ul>
+                </div>
+            </div>*@
 
     </div>
 </section>

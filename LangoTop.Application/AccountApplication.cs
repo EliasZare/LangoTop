@@ -60,7 +60,7 @@ namespace LangoTop.Application
             _accountRepository.Create(account);
             _accountRepository.SaveChanges();
             _emailService.SendEmail(command.Email, "ثبت نام موفق!",
-                $"سلام و درود به شما کاربر عزیز سایت لنگوتاپ :) \n به سایت لنگوتاپ خوش آمدید \n باعث افتخار ماست که برای یادگیری زبان انگلیسی لنگوتاپ را انتخاب کرده اید... \n جهت فعال سازی حساب کاربری خود از لینک {"https://langotop.ir/ActiveAccount/" + activeCode} وارد شوید \n باتشکر، مدیریت دیجی آجیلی");
+                $"سلام و درود به شما کاربر عزیز سایت لنگوتاپ :) \n به سایت لنگوتاپ خوش آمدید \n باعث افتخار ماست که برای یادگیری زبان انگلیسی لنگوتاپ را انتخاب کرده اید... \n جهت فعال سازی حساب کاربری خود از لینک {"https://langotop.ir/ActiveAccount/" + activeCode} وارد شوید \n باتشکر، مدیریت لنگوتاپ");
             return operation.Success(
                 "کاربر گرامی \n لینک فعالسازی حساب کربری به ایمیل شما ارسال شده است جهت فعالسازی وارد لینک ارسالی شوید و سپس وارد حساب کاربری خود شوید.  ");
         }
@@ -80,7 +80,7 @@ namespace LangoTop.Application
             var path = $"ProfilePhotos//{command.Fullname}";
             var fileName = _fileUploader.Upload(command.ProfilePhoto, path);
             account.Edit(command.Fullname, command.Username, command.Email, command.Mobile, fileName, command.Biography,
-                command.RoleId,
+                account.RoleId,
                 account.ActiveCode);
             _accountRepository.SaveChanges();
             return operation.Success();
@@ -210,6 +210,11 @@ namespace LangoTop.Application
         public List<AccountViewModel> GetAccounts()
         {
             return _accountRepository.GetAccounts();
+        }
+
+        public List<AccountViewModel> GetAdmins()
+        {
+            return _accountRepository.GetAdmins();
         }
 
         public List<AccountViewModel> Search(AccountSearchModel searchModel)

@@ -1,7 +1,11 @@
 ﻿@page
 @model ServiceHost.Pages.SearchBlogModel
+@section Style
+{
+    <meta name='robots' content='noindex, nofollow' />
+}
 @{
-    ViewData["Title"] = "وبلاگ";
+    ViewData["Title"] = $"نتیجه جستجو : {@Model.SearchModelInput}";
     ViewData["Image"] = "Theme/img/Logo.png";
     ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
     ViewData["metaDescription"] = "لنگوتاپ علاوه بر آموزش های ویدئوی زبان انگلیسی آموزش های متنی خود را در بخش مقالات سایت منتشر می کند تا کسانی که علاقه مند هستند از آنها استفاده کنند";

@@ -41,7 +41,7 @@ function updateCart() {
             `<div class="ground ground-list-single">
                       <div class="grd_thum"><img src="/Pictures/${x.picture}" class="img-fluid rounded" width="90px" style="border-radius: 10px;" alt="${x.name}" /></div>
                       <div class="ground-content">
-                          <h6>${x.name}<small class="float-left text-fade">${x.unitPrice}Ъ</small></h6>
+                          <h6>${x.name}<small class="float-left text-fade">${x.unitPrice}</small></h6>
                           <a  class="small text-danger" onclick="removeFromCart('${x.id}')>Эан</a>
                       </div>
              </div>`;

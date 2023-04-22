@@ -15,6 +15,7 @@ namespace LangoTop.Application.Contract.Account
         OperationResult Active(long id);
         EditAccount GetDetails(long id);
         List<AccountViewModel> GetAccounts();
+        List<AccountViewModel> GetAdmins();
         List<AccountViewModel> Search(AccountSearchModel searchModel);
         void Logout();
     }

@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using _0_Framework.Application;
 using _0_Framework.Application.ZarinPal;
 using _01_Query.Contracts;
 using _01_Query.Contracts.Course;
 using LangoTop.Application.Contract.Order;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Nancy.Json;
@@ -53,7 +56,21 @@ namespace ServiceHost.Pages
                 _cartService.Set(Cart);
             }
         }
-       
+
+        public IActionResult OnGetRemoveFromCartItem(long id)
+        {
+            var serializer = new JavaScriptSerializer();
+            var value = Request.Cookies[CookieName];
+            Response.Cookies.Delete(CookieName);
+            var cartItems = serializer.Deserialize<List<CartItem>>(value);
+            var itemToRemove = cartItems.FirstOrDefault(x => x.Id == id);
+            cartItems.Remove(itemToRemove);
+            var options = new CookieOptions {Expires = DateTime.Now.AddDays(1)};
+            var serializeResult = serializer.Serialize(cartItems);
+            Response.Cookies.Append("cart-items", serializeResult);
+            return RedirectToPage("/Index");
+        }
+
         public IActionResult OnPostPay()
         {
             var cart = _cartService.Get();
@@ -62,7 +79,7 @@ namespace ServiceHost.Pages
             var orderId = _orderApplication.PlaceOrder(cart);
 
             var paymentResponse = _zarinPalFactory.CreatePaymentRequest(cart.PayAmount.ToString(), accountMobile,
-                accountEmail, "خرید از سایت دیجی آجیلی", orderId);
+                accountEmail, "خرید دوره آموزش زبان انگلیسی از وبسایت لنگوتاپ", orderId);
 
             return Redirect($"https://{_zarinPalFactory.Prefix}.zarinpal.com/pg/StartPay/{paymentResponse.Authority}");
         }

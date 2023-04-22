@@ -1,40 +1,44 @@
 ﻿@page
 @model ServiceHost.Pages.SignupModel
+@section Style
+{
+    <link rel="canonical" href="https://langotop.ir/Signup" />
+}
 @{
     ViewData["Title"] = "ثبت نام";
     ViewData["Image"] = "Theme/img/Logo.png";
     ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
     ViewData["metaDescription"] = "لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند.";
     ViewData["Url"] = "Signup";
-    ViewData["author"] ="Elyas Zare";
-@section Schema
+    ViewData["author"] = "Elyas Zare";
+    @section Schema
 {
-    <script type="application/ld+json">
-{
-  "@@context": "https://schema.org",
-  "@@type": "Organization",
-  "name": "لنگوتاپ | LangoTop",
-  "url": "https://langotop.ir/",
-  "logo": "https://langotop.ir/Theme/img/logo.png",
-  "alternateName": "لنگوتاپ | LangoTop",
-  "sameAs": [
-    "https://instagram.com/langotop",
-    "https://youtube.com/@@langotop"
-  ],
-  "contactPoint": [
-    {
-      "@@type": "ContactPoint",
-      "telephone": "+98 920 073 1235",
-      "contactType": "customer service",
-      "email": "contact@LangoTop.ir",
-      "contactOption": "TollFree",
-      "areaServed": "IR",
-      "availableLanguage": "fa"
+        <script type="application/ld+json">
+            {
+              "@@context": "https://schema.org",
+              "@@type": "Organization",
+              "name": "لنگوتاپ | LangoTop",
+              "url": "https://langotop.ir/",
+              "logo": "https://langotop.ir/Theme/img/logo.png",
+              "alternateName": "لنگوتاپ | LangoTop",
+              "sameAs": [
+                "https://instagram.com/langotop",
+                "https://youtube.com/@@langotop"
+              ],
+              "contactPoint": [
+                {
+                  "@@type": "ContactPoint",
+                  "telephone": "+98 920 073 1235",
+                  "contactType": "customer service",
+                  "email": "contact@LangoTop.ir",
+                  "contactOption": "TollFree",
+                  "areaServed": "IR",
+                  "availableLanguage": "fa"
+                }
+              ]
+            }
+        </script>
     }
-  ]
-}
-    </script>
-}
 
 }
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
@@ -53,7 +57,7 @@
                             <div class="rcs_log_123">
                                 <div class="rcs_ico"><i class="fas fa-user"></i></div>
                             </div>
-                           
+
                             @if (Model.RegisterMessage != null)
                             {
                                 <div class="alert alert-danger">@Model.RegisterMessage</div>
@@ -68,46 +72,46 @@
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label>نام و نام خانوادگی</label>
-                                            <input type="text" name="fullname" class="form-control" placeholder="محمد محمدی" required="" maxlength="70"/>
+                                            <input type="text" name="fullname" class="form-control" placeholder="محمد محمدی" required="" maxlength="70" />
                                         </div>
                                     </div>
                                     <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                                         <div class="form-group">
                                             <label>نام کاربری</label>
-                                            <input type="text" name="username" class="form-control" placeholder="mohammad_m" required="" maxlength="100"/>
+                                            <input type="text" name="username" class="form-control" placeholder="mohammad_m" required="" maxlength="100" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>ایمیل</label>
-                                    <input type="text" name="email" class="form-control" placeholder="support@example.com" required=""  maxlength="200"/>
+                                    <input type="text" name="email" class="form-control" placeholder="support@example.com" required="" maxlength="200" />
                                 </div>
                                 <div class="form-group">
                                     <label>شماره همراه</label>
-                                    <input type="number" name="mobile" class="form-control" placeholder="09*********" required=""  maxlength="30"/>
+                                    <input type="number" name="mobile" class="form-control" placeholder="09*********" required="" maxlength="30" />
                                 </div>
                                 <div class="form-group">
                                     <label>رمز عبور</label>
-                                    <input type="password" name="password" class="form-control" placeholder="*******" required=""/>
+                                    <input type="password" name="password" class="form-control" placeholder="*******" required="" />
                                 </div>
                                 <div class="form-group">
                                     <label> تکرار رمز عبور</label>
-                                    <input type="password" name="repassword" class="form-control" placeholder="*******" required=""/>
+                                    <input type="password" name="repassword" class="form-control" placeholder="*******" required="" />
                                 </div>
                                 <div class="form-group">
                                     <button type="submit" class="btn full-width btn-md theme-bg text-white">ثبت نام</button>
                                 </div>
                             </div>
                             @*<div class="rcs_log_125">
-                                <span>یا ورود از طریق شبکه های اجتماعی</span>
-                            </div>
-                            <div class="rcs_log_126">
-                                <ul class="social_log_45 row">
-                                    <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-facebook text-info"></i>Facebook</a></li>
-                                    <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-google text-danger"></i>Google</a></li>
-                                    <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-twitter theme-cl"></i>Twitter</a></li>
-                                </ul>
-                            </div>*@
+                                    <span>یا ورود از طریق شبکه های اجتماعی</span>
+                                </div>
+                                <div class="rcs_log_126">
+                                    <ul class="social_log_45 row">
+                                        <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-facebook text-info"></i>Facebook</a></li>
+                                        <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-google text-danger"></i>Google</a></li>
+                                        <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-twitter theme-cl"></i>Twitter</a></li>
+                                    </ul>
+                                </div>*@
                         </div>
                         <div class="crs_log__footer d-flex justify-content-between">
                             <div class="fhg_45"><p class="musrt">آیا حساب  کاربری دارید؟ <a asp-page="./Login" class="theme-cl">ورود</a></p></div>

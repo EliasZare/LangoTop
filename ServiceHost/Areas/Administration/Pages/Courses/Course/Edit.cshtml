@@ -71,7 +71,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label asp-for="Command.PictureSmall" class="control-label">عکس کوچک</label>
-                                    <input  type="file" class="form-control" asp-for="Command.PictureSmall" accept="image/*">
+                                    <input type="file" class="form-control" asp-for="Command.PictureSmall" accept="image/*">
                                     <span asp-validation-for="Command.PictureSmall" class="error"></span>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                             <div class="col-md-12">
                                 <div class="form-group no-margin">
                                     <label asp-for="Command.Description" class="control-label">توضیحات</label>
-                                    <textarea class="form-control autogrow summernote" asp-for="Command.Description"  style="height: 104px; overflow: hidden; resize: horizontal; word-wrap: break-word;"></textarea>
+                                    <textarea class="form-control autogrow" id="ckeditor" asp-for="Command.Description" style="height: 104px; overflow: hidden; resize: horizontal; word-wrap: break-word;"></textarea>
                                     <span asp-validation-for="Command.Description" class="error"></span>
                                 </div>
                             </div>
@@ -169,7 +169,7 @@
                     </div>
                     <input type="hidden" asp-for="Command.Id" value="@Model.Command.Id" />
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success waves-effect waves-light m-b-5">ایجاد</button>
+                        <button type="submit" class="btn btn-success waves-effect waves-light m-b-5">ویرایش</button>
                         <a asp-page="./Index" class="btn btn-dark waves-effect waves-light m-b-5">بازگشت</a>
                     </div>
                 </form>
@@ -178,3 +178,10 @@
         </div>
     </div>
 </div>
+@section Scripts
+{
+    <script src="~/AdminTheme/assets/ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace("ckeditor");
+    </script>
+}

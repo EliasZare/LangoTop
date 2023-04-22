@@ -11,6 +11,7 @@ namespace LangoTop.Interfaces
         EditAccount GetDetails(long id);
         List<AccountViewModel> Search(AccountSearchModel searchModel);
         List<AccountViewModel> GetAccounts();
+        List<AccountViewModel> GetAdmins();
         Account GetByCode(string activeCode);
     }
 }

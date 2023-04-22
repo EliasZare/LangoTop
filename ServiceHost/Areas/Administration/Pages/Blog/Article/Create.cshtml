@@ -1,5 +1,10 @@
 ﻿@page
+@using Microsoft.AspNetCore.Antiforgery
 @model ServiceHost.Areas.Administration.Pages.Blog.Article.CreateModel
+@*@inject IAntiforgery _antiforgery
+@{
+    var token = _antiforgery.ValidateRequestAsync(HttpContext);
+}*@
 @{
     Layout = "Shared/_AdminLayout";
     ViewData["Title"] = "ایجاد مقاله جدید";
@@ -145,11 +150,10 @@
         </div>
     </div>
 </div>
-
 @section Scripts
 {
-    <script src="~/lib/ckeditor/ckeditor.js"></script>
+    <script src="~/AdminTheme/assets/ckeditor/ckeditor.js"></script>
     <script>
         CKEDITOR.replace("ckeditor");
     </script>
-}
+    }

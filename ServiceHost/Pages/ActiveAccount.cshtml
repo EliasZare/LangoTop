@@ -1,6 +1,14 @@
 ﻿@page "{activeCode}"
 @model ServiceHost.Pages.ActiveAccountModel
+@section Style
+{
+    <meta name='robots' content='noindex, nofollow' />
+}
 @{
+    ViewData["Title"] = "فعالسازی حساب کاربری";
+    ViewData["Image"] = "Theme/img/Logo.png";
+    ViewData["keywords"] = "آموزش زبان انگلیسی,آموزشگاه زبان انگلیسی,کلاس زبان انگلیسی,یادگیری زبان انگلیسی,آموزش زبان انگلیسی رایگان,آموزش زبان انگلیسی از صفر,آموزش زبان انگلیسی برای کودکان";
+    ViewData["Url"] = "ActiveAccount";
 }
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
 </section>
@@ -13,7 +21,7 @@
             </div>
             <br />
             <div class="col-md-12">
-                <a class="btn btn-success" asp-page="/Account">ورود </a>
+                <a class="btn btn-success" asp-page="./Login">ورود </a>
             </div>
             <br />
         }

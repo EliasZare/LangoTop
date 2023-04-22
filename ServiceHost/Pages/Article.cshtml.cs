@@ -34,7 +34,7 @@ namespace ServiceHost.Pages
         {
             Article = _articleQuery.GetArticleDetails(id);
             LatestArticleCategories = _articleCategoryQuery.GetArticleCategories();
-            LatestArticles = _articleQuery.LatestArticles();
+            LatestArticles = _articleQuery.LatestArticles(3);
             AdsBanner = _bannerQuery.GetBannerBy(3);
         }
 

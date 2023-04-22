@@ -31,5 +31,20 @@ namespace _01_Query.Query
                     IsRemoved = x.IsRemoved
                 }).Take(12).ToList();
         }
+
+        public ArticleCategoryQueryModel GetArticleCategory(string slug)
+        {
+            return _context.ArticleCategories.Select(x => new ArticleCategoryQueryModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Slug = x.Slug,
+                MetaDescription = x.MetaDescription,
+                Keywords = x.Keywords,
+                Description = x.Description,
+                IsRemoved = x.IsRemoved,
+                Picture = x.Picture
+            }).Where(x => !x.IsRemoved).FirstOrDefault(x => x.Slug == slug);
+        }
     }
 }

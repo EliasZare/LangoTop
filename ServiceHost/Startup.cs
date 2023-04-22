@@ -25,6 +25,7 @@ using LangoTop.Application.Contract.Course;
 using LangoTop.Application.Contract.CourseCategory;
 using LangoTop.Application.Contract.CustomerDiscount;
 using LangoTop.Application.Contract.DiscountCode;
+using LangoTop.Application.Contract.Image;
 using LangoTop.Application.Contract.Order;
 using LangoTop.Application.Contract.Page;
 using LangoTop.Application.Contract.Part;
@@ -38,6 +39,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -127,6 +129,9 @@ namespace ServiceHost
             services.AddTransient<IPageApplication, PageApplication>();
             services.AddTransient<IPageRepository, PageRepository>();
 
+            services.AddTransient<IImageApplication, ImageApplication>();
+            services.AddTransient<IImageRepository, ImageRepository>();
+
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Arabic));
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddTransient<IFileUploader, FileUploader>();
@@ -200,10 +205,12 @@ namespace ServiceHost
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
-
+            var options = new RewriteOptions().AddRedirectToHttpsPermanent();
+            options.Rules.Add(new NonWwwRule());
+            app.UseRewriter(options);
             if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
             }
             else
             {

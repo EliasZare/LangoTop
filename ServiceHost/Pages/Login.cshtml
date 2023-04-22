@@ -3,6 +3,10 @@
 @using Microsoft.Extensions.Options
 @using _0_Framework.Domain
 @inject IOptions<GoogleReCaptchaConfig> _googleReCaptchaConfig
+@section Style
+{
+    <link rel="canonical" href="https://langotop.ir/Login" />
+}
 @{
     ViewData["Title"] = "ورود";
     ViewData["Image"] = "Theme/img/Logo.png";
@@ -10,34 +14,34 @@
     ViewData["metaDescription"] = "لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند.";
     ViewData["Url"] = "Login";
     ViewData["author"] = "Elyas Zare";
-@section Schema
+    @section Schema
 {
-    <script type="application/ld+json">
-{
-  "@@context": "https://schema.org",
-  "@@type": "Organization",
-  "name": "لنگوتاپ | LangoTop",
-  "url": "https://langotop.ir/",
-  "logo": "https://langotop.ir/Theme/img/logo.png",
-  "alternateName": "لنگوتاپ | LangoTop",
-  "sameAs": [
-    "https://instagram.com/langotop",
-    "https://youtube.com/@@langotop"
-  ],
-  "contactPoint": [
-    {
-      "@@type": "ContactPoint",
-      "telephone": "+98 920 073 1235",
-      "contactType": "customer service",
-      "email": "contact@LangoTop.ir",
-      "contactOption": "TollFree",
-      "areaServed": "IR",
-      "availableLanguage": "fa"
+        <script type="application/ld+json">
+            {
+              "@@context": "https://schema.org",
+              "@@type": "Organization",
+              "name": "لنگوتاپ | LangoTop",
+              "url": "https://langotop.ir/",
+              "logo": "https://langotop.ir/Theme/img/logo.png",
+              "alternateName": "لنگوتاپ | LangoTop",
+              "sameAs": [
+                "https://instagram.com/langotop",
+                "https://youtube.com/@@langotop"
+              ],
+              "contactPoint": [
+                {
+                  "@@type": "ContactPoint",
+                  "telephone": "+98 920 073 1235",
+                  "contactType": "customer service",
+                  "email": "contact@LangoTop.ir",
+                  "contactOption": "TollFree",
+                  "areaServed": "IR",
+                  "availableLanguage": "fa"
+                }
+              ]
+            }
+        </script>
     }
-  ]
-}
-    </script>
-}
 
 }
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
@@ -65,7 +69,7 @@
                             }
                             <div class="rcs_log_124">
                                 <div class="Lpo09"><h4>ورود به حساب کاربری</h4></div>
-                                <a asp-page="Index" asp-page-handler="UploadImage" asp-route-upload="Elias" ></a>
+                                <a asp-page="Index" asp-page-handler="UploadImage" asp-route-upload="Elias"></a>
                                 <div class="form-group">
                                     <label>ایمیل</label>
                                     <input type="email" name="email" class="form-control" placeholder="support@email.com" required="" />
@@ -79,23 +83,13 @@
                                 </div>
                                 <input type="hidden" name="captcha" id="captchaInput" value="" />
                             </div>
-                            @*<div class="rcs_log_125">
-                                <span>یا ورود از طریق شبکه های اجتماعی</span>
-                            </div>
-                            <div class="rcs_log_126">
-                                <ul class="social_log_45 row">
-                                    <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-facebook text-info"></i>Facebook</a></li>
-                                    <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-google text-danger"></i>Google</a></li>
-                                    <li class="col-xl-4 col-lg-4 col-md-4 col-4"><a href="javascript:void(0);" class="sl_btn"><i class="ti-twitter theme-cl"></i>Twitter</a></li>
-                                </ul>
-                            </div>*@
                         </div>
                         <div class="crs_log__footer d-flex justify-content-between mt-0">
                             <div class="fhg_45">
                                 <p class="musrt">حساب کاربری ندارید؟ <a asp-page="./Signup" class="theme-cl">ثبت نام</a></p>
                             </div>
                             <div class="fhg_45">
-                                <p class="musrt"><a asp-page="./ForgotPassword" class="text-danger">رمز عبور را فراموش کرده اید؟</a></p>
+                                <p class="musrt"><a asp-page="./ForgotPassword" class="text-danger">رمز عبور را فراموش کرده اید ؟</a></p>
                             </div>
                         </div>
                     </div>
@@ -108,4 +102,5 @@
 @section Scripts
 {
     <script src="https://www.google.com/recaptcha/api.js?render=@_googleReCaptchaConfig.Value.Sitekey"></script>
+
 }

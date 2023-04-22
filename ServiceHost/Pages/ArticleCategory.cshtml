@@ -1,6 +1,16 @@
 ﻿@page "{slug}/{id}"
 @model ServiceHost.Pages.ArticleCategoryModel
+@section Style
+{
+    <link rel="canonical" href="https://langotop.ir/Article/@Model.ArticleCategory.Slug/@Model.PageId" />
+}
 @{
+    ViewData["Title"] = Model.ArticleCategory.Name;
+    ViewData["Image"] = $"ProductPictures/{@Model.ArticleCategory.Picture}";
+    ViewData["keywords"] = Model.ArticleCategory.Keywords;
+    ViewData["metaDescription"] = Model.ArticleCategory.MetaDescription;
+    ViewData["Url"] = $"Article/{Model.ArticleCategory.Slug}/{Model.PageId}";
+    ViewData["author"] = "Elyas Zare";
 }
 <section class="page-title bg-cover bg-header" style="background: url(/Theme/img/Banner11.jpg)no-repeat;" data-overlay="8">
 </section>

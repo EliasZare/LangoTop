@@ -1,5 +1,9 @@
 ﻿@page
 @model ServiceHost.Pages.AboutusModel
+@section Style
+{
+    <link rel="canonical" href="https://langotop.ir/Aboutus" />
+}
 @{
     ViewData["Title"] = "درباره ما";
     ViewData["Image"] = "Theme/img/Logo.png";
@@ -44,7 +48,7 @@
             <div class="col-lg-12 col-md-12">
 
                 <div class="breadcrumbs-wrap">
-                    <h1 class="breadcrumb-title font-2">درباره ما</h1>
+                    <h1 class="breadcrumb-title font-2">درباره لنگوتاپ</h1>
                     <nav class="transparent">
                         <ol class="breadcrumb p-0">
                             <li class="breadcrumb-item"><a asp-page="./Index">خانه</a></li>
@@ -62,11 +66,12 @@
         <div class="row align-items-center justify-content-between mt-5">
             <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
                 <div class="lmp_thumb">
-                    <img src="~/Theme/img/news.png" class="img-fluid" alt="" />
+                    <img src="~/Theme/img/AboutBanner-min.png" class="img-fluid" alt="" />
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                 <div class="lmp_caption">
+
                     <h1 class="mb-3 font-2">آموزش زبان انگلیسی</h1>
                     <p>
                         لنگوتاپ به عنوان یک پلتفرم متفاوت آموزش زبان انگلیسی ایجاد شده است، که با بهره گیری از اساتید با تجربه و حرفه ای دوره های آموزش زبان انگلیسی برگزار می کند

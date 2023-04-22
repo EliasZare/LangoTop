@@ -22,29 +22,5 @@ namespace ServiceHost.Pages
         {
 
         }
-
-        [HttpPost]
-        public async Task<JsonResult> UploadImage([FromForm] IFormFile upload, string CKEditor,
-            int CKEditorFuncNum,
-            string langCode)
-        {
-            //var url = _fileUploader.Upload(upload, "Uploaded/");
-
-            //var success = new UploadSuccess
-            //{
-            //    Uploaded = true,
-            //    FileName = upload.FileName,
-            //    Url = url
-            //};
-            //return new JsonResult(success);
-            return new(1);
-        }
-    }
-
-    public class UploadSuccess
-    {
-        public bool Uploaded { get; set; }
-        public string FileName { get; set; }
-        public string Url { get; set; }
     }
 }

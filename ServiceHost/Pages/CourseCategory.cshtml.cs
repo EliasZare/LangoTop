@@ -1,4 +1,6 @@
+using _01_Query.Contracts.Course;
 using _01_Query.Contracts.CourseCategory;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ServiceHost.Pages
@@ -7,15 +9,22 @@ namespace ServiceHost.Pages
     {
         public CourseCategoryQueryModel CourseCategory;
         private readonly ICourseCategoryQuery _courseCategoryQuery;
+        private readonly ICourseQuery _courseQuery;
+        public PagingCourseQueryModel Courses { get; set; }
 
-        public CourseCategoryModel(ICourseCategoryQuery courseCategoryQuery)
+        [TempData] public string PageId { get; set; }
+
+        public CourseCategoryModel(ICourseCategoryQuery courseCategoryQuery, ICourseQuery courseQuery)
         {
             _courseCategoryQuery = courseCategoryQuery;
+            _courseQuery = courseQuery;
         }
 
-        public void OnGet(string id)
+        public void OnGet(string slug, int id = 1)
         {
-            CourseCategory = _courseCategoryQuery.GetProductCategoryWithProductsBy(id);
+            PageId = id.ToString();
+            Courses = _courseQuery.GetCoursesBy(slug, id);
+            CourseCategory = _courseCategoryQuery.GetProductCategoryWithProductsBy(slug);
         }
     }
 }
